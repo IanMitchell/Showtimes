@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fansub_id: 
+  channel_id: 
+  status: 1
+  type: 1
+  parent: 1
+
+two:
+  fansub_id: 
+  channel_id: 
+  status: 1
+  type: 1
+  parent: 1

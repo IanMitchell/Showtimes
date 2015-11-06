@@ -1,0 +1,7 @@
+<%- @groups.each do |group| %>
+  <div class="row">
+    <p><strong><%= group.name %></strong> (<%= group.acronym %>)</p>
+    &middot;
+    <%= link_to 'Link', group_path(group) %>
+  </div>
+<%- end %>

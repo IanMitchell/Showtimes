@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  position_id: 
+  release_id: 
+  status: 1
+
+two:
+  user_id: 
+  position_id: 
+  release_id: 
+  status: 1
