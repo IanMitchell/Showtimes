@@ -1,2 +1,6 @@
 <h1><%= @group.name %></h1>
-<%= @group.fansubs.count %> Shows Subbed
+<ul>
+  <%- @group.fansubs.each do |fansub| %>
+    <li><%= link_to fansub.show.name, fansub_path(fansub) %> - <%= fansub.current_release.source.number %></li>
+  <%- end %>
+</ul>

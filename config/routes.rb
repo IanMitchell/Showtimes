@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'home#show'
   resources :groups, only: [:index, :show]
+  resources :fansubs, only: [:show]
+  resources :releases, only: [:show]
   devise_for :users
 
   # The priority is based upon order of creation: first created -> highest priority.

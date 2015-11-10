@@ -1,0 +1,2 @@
+module FansubsHelper
+end

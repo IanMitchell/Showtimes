@@ -1,0 +1,10 @@
+<h1><%= @fansub.show.name %></h1>
+<ul>
+  <%- @fansub.releases.each do |release| %>
+    <%- if release.released? %>
+      <li><%= link_to "Episode #{release.source.number} Released", release_path(release) %></li>
+    <%- else %>
+      <li><%= link_to "Episode #{release.source.number} Pending", release_path(release) %></li>
+    <%- end %>
+  <%- end %>
+</ul>

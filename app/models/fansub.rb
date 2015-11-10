@@ -9,4 +9,8 @@ class Fansub < ActiveRecord::Base
     blurays: 2,
     dropped: 3
   }
+
+  def current_release
+    self.releases.pending.order('id ASC').limit(1).first
+  end
 end

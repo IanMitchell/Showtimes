@@ -1,0 +1,10 @@
+<h1>Releases#show</h1>
+<p>Group: <%= @release.fansub.group.name %></p>
+<p>Show: <%= @release.fansub.show.name %></p>
+<p>Episode: <%= @release.source.number %></p>
+<p>Staff:</p>
+<ul>
+  <%- @release.staff.each do |staff| %>
+    <li><%= staff.user.name %> - <%= staff.position.name %>
+  <%- end %>
+</ul>

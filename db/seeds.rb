@@ -29,6 +29,15 @@ Channel.create([
   end
 end
 
+# Make Positions
+Position.create([
+  { name: 'Translator' },
+  { name: 'Editor' },
+  { name: 'Typesetter' },
+  { name: 'Timer' },
+  { name: 'Encoder' },
+  { name: 'Quality Control' }
+])
 
 # Make Groups
 Group.create([
@@ -36,7 +45,24 @@ Group.create([
 ])
 
 # Make Users
+desch = User.create(name: 'Desch', email: 'test@test.com', password: 'password')
+fyurie = User.create(name: 'Fyurie', email: 'test2@test.com', password: 'password')
 
 # Make Members
 
+
 # Make a Show
+show = Show.new(season: Season.first, name: "Desch's Slice of Life", link: nil)
+fansub = Fansub.new(group: Group.first, show: show)
+(1..12).each do |ep|
+  Episode.create(show: show, number: ep, air_date: Time.now - (15 - ep.days))
+  rel = Release.create(fansub: fansub,
+                       channel: Channel.first,
+                       source: Episode.find(ep),
+                       status: ep < 6 ? 1 : 0)
+
+  Staff.create([
+    { user: desch, release: rel, position: Position.first },
+    { user: fyurie, release: rel, position: Position.last }
+  ])
+end
