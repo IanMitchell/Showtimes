@@ -49,7 +49,10 @@ desch = User.create(name: 'Desch', email: 'test@test.com', password: 'password')
 fyurie = User.create(name: 'Fyurie', email: 'test2@test.com', password: 'password')
 
 # Make Members
-
+Member.create([
+  { group: Group.first, user: User.first, title: 'Technowizard' },
+  { group: Group.first, user: User.second, title: 'Taskmaster' }
+])
 
 # Make a Show
 show = Show.new(season: Season.first, name: "Desch's Slice of Life", link: nil)
@@ -63,6 +66,6 @@ fansub = Fansub.new(group: Group.first, show: show)
 
   Staff.create([
     { user: desch, release: rel, position: Position.first },
-    { user: fyurie, release: rel, position: Position.last }
+    { user: fyurie, release: rel, position: Position.last, status: 1 }
   ])
 end
