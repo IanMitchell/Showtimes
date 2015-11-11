@@ -9,7 +9,7 @@
 <ul>
   <%- @group.fansubs.each do |fansub| %>
     <li>
-      <%= link_to fansub.show.name, fansub_path(fansub) %> - <%= fansub.current_release.source.number %>
+      <%= fansub.show.name %> - <%= fansub.current_release.source.number %>
       <ul>
         <%- fansub.current_release.staff.each do |staff| %>
           <%- if staff.finished? %>
