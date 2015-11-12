@@ -1,29 +1,29 @@
 # Make Channels
 Channel.create([
-  { name: 'Tokyo MX' },
-  { name: 'TV Tokyo' },
-  { name: 'BS11' },
-  { name: 'Fuji TV' },
+  { name: 'AT-X' },
   { name: 'BS-Fuji' },
+  { name: 'BS-TBS' },
+  { name: 'BS11' },
+  { name: 'Crunchyroll' },
+  { name: 'Daisuki' },
+  { name: 'Fuji TV' },
+  { name: 'Funimation' },
+  { name: 'KBS' },
+  { name: 'MBS' },
+  { name: 'SUN TV' },
+  { name: 'TBS' },
   { name: 'TV Aichi' },
   { name: 'TV Asahi' },
-  { name: 'Yomiuri TV' },
-  { name: 'KBS' },
-  { name: 'SUN TV' },
-  { name: 'AT-X' },
-  { name: 'TBS' },
-  { name: 'MBS' },
-  { name: 'BS-TBS' },
-  { name: 'Crunchyroll' },
-  { name: 'Funimation' },
-  { name: 'Daisuki' },
-  { name: 'WOWOW' },
+  { name: 'TV Tokyo' },
   { name: 'TVK' },
   { name: 'TVS' },
+  { name: 'Tokyo MX' },
+  { name: 'WOWOW' },
+  { name: 'Yomiuri TV' },
 ])
 
 # Make Seasons
-(2010..2020).each do |year|
+(2010..2025).each do |year|
   [:winter, :spring, :summer, :fall].each do |season|
     Season.create(name: season, year: year)
   end
