@@ -1,13 +1,13 @@
 <h1><%= @group.name %></h1>
 <h3>Staff</h3>
 <ul>
-  <%- @group.members.each do |member| %>
+  <%- @group.members.order(:role).reverse_order.each do |member| %>
     <li><%= member.user.name %> - <%= member.title %> (<%= member.role %>)</li>
   <%- end %>
 </ul>
-<h3>Fansubs</h3>
+<h3>Current Fansubs</h3>
 <ul>
-  <%- @group.fansubs.each do |fansub| %>
+  <%- @group.fansubs.active.each do |fansub| %>
     <li>
       <%= fansub.show.name %> - <%= fansub.current_release.source.number %>
       <ul>

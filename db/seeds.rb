@@ -41,7 +41,7 @@ Position.create([
 
 # Make Groups
 Group.create([
-  { name: 'Good Job Media', acronym: 'GJM', irc: '#goodjob' }
+  { name: 'Good Job! Media', acronym: 'GJM', irc: '#goodjob' }
 ])
 
 # Make Users
@@ -51,7 +51,7 @@ fyurie = User.create(name: 'Fyurie', email: 'test2@test.com', password: 'passwor
 # Make Members
 Member.create([
   { group: Group.first, user: User.first, title: 'Technowizard' },
-  { group: Group.first, user: User.second, title: 'Taskmaster' }
+  { group: Group.first, user: User.second, title: 'Taskmaster', role: 2 }
 ])
 
 # Make a Show
