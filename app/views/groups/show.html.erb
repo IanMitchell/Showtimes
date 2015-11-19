@@ -7,18 +7,5 @@
 </ul>
 <h3>Current Fansubs</h3>
 <ul>
-  <%- @group.fansubs.active.each do |fansub| %>
-    <li>
-      <%= fansub.show.name %> - <%= fansub.current_release.source.number %>
-      <ul>
-        <%- fansub.current_release.staff.each do |staff| %>
-          <%- if staff.finished? %>
-            <li>✓ <%= staff.user.name %> - <%= staff.position.name %></li>
-          <%- else %>
-            <li><%= staff.user.name %> - <%= staff.position.name %></li>
-          <%- end %>
-        <%- end %>
-      </ul>
-    </li>
-  <%- end %>
+  <%= render partial: 'fansubs/fansub', collection: @group.fansubs.active %>
 </ul>

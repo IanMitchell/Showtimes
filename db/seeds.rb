@@ -32,6 +32,7 @@ end
 # Make Positions
 Position.create([
   { name: 'Translator' },
+  { name: 'Translator Check' },
   { name: 'Editor' },
   { name: 'Typesetter' },
   { name: 'Timer' },
