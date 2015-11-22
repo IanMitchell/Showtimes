@@ -53,4 +53,7 @@ class FansubDashboard < Administrate::BaseDashboard
   # def display_resource(fansub)
   #   "Fansub ##{fansub.id}"
   # end
+  def display_resource(fansub)
+    "[#{fansub.group.acronym}] #{fansub.show.name}"
+  end
 end

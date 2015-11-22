@@ -12,6 +12,9 @@ module Admin
     # def find_resource(param)
     #   Group.find_by!(slug: param)
     # end
+    def find_resource(param)
+      Group.friendly.find(params[:id])
+    end
 
     # See https://administrate-docs.herokuapp.com/customizing_controller_actions
     # for more information
