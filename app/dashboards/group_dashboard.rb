@@ -9,7 +9,6 @@ class GroupDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     members: Field::HasMany,
-    users: Field::HasMany,
     fansubs: Field::HasMany,
     id: Field::Number,
     name: Field::String,
@@ -27,7 +26,6 @@ class GroupDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :members,
-    :users,
     :fansubs,
     :id,
   ]
@@ -41,7 +39,6 @@ class GroupDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :members,
-    :users,
     :fansubs,
     :name,
     :acronym,

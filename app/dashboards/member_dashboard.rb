@@ -51,4 +51,7 @@ class MemberDashboard < Administrate::BaseDashboard
   # def display_resource(member)
   #   "Member ##{member.id}"
   # end
+  def display_resource(member)
+    "[#{member.group.acronym}] #{member.user.name}"
+  end
 end
