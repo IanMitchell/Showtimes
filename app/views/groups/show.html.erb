@@ -1,11 +1,6 @@
 <h1><%= @group.name %></h1>
-<h3>Staff</h3>
-<ul>
-  <%- @group.members.order(:role).reverse_order.each do |member| %>
-    <li><%= member.user.name %> - <%= member.title %> (<%= member.role %>)</li>
-  <%- end %>
-</ul>
-<h3>Current Fansubs</h3>
-<ul>
-  <%= render partial: 'fansubs/fansub', collection: @group.fansubs.active %>
-</ul>
+<%- @group.fansubs.active.in_groups_of(2, false) do |fansubs| %>
+  <div class="row">
+    <%= render partial: 'fansubs/fansub', collection: fansubs %>
+  </div>
+<%- end %>
