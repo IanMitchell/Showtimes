@@ -1,6 +1,6 @@
-class CreateStaffs < ActiveRecord::Migration
+class CreateStaff < ActiveRecord::Migration
   def change
-    create_table :staffs do |t|
+    create_table :staff do |t|
       t.references :user, index: true, foreign_key: true
       t.references :position, index: true, foreign_key: true
       t.references :release, index: true, foreign_key: true

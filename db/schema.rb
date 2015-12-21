@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(version: 20151106181604) do
 
   add_index "shows", ["season_id"], name: "index_shows_on_season_id"
 
-  create_table "staffs", force: :cascade do |t|
+  create_table "staff", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "position_id"
     t.integer  "release_id"
@@ -137,9 +137,9 @@ ActiveRecord::Schema.define(version: 20151106181604) do
     t.datetime "updated_at",              null: false
   end
 
-  add_index "staffs", ["position_id"], name: "index_staffs_on_position_id"
-  add_index "staffs", ["release_id"], name: "index_staffs_on_release_id"
-  add_index "staffs", ["user_id"], name: "index_staffs_on_user_id"
+  add_index "staff", ["position_id"], name: "index_staff_on_position_id"
+  add_index "staff", ["release_id"], name: "index_staff_on_release_id"
+  add_index "staff", ["user_id"], name: "index_staff_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
