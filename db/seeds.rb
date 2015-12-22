@@ -31,13 +31,13 @@ end
 
 # Make Positions
 Position.create([
-  { name: 'Translator' },
-  { name: 'Translator Check' },
-  { name: 'Editor' },
-  { name: 'Typesetter' },
-  { name: 'Timer' },
-  { name: 'Encoder' },
-  { name: 'Quality Control' }
+  { name: 'Translator', acronym: 'TL' },
+  { name: 'Translator Check', acronym: 'TLC' },
+  { name: 'Editor', acronym: 'ED' },
+  { name: 'Typesetter', acronym: 'TS' },
+  { name: 'Timer', acronym: 'TI' },
+  { name: 'Encoder', acronym: 'EN' },
+  { name: 'Quality Control', acronym: 'QC' }
 ])
 
 # Make Groups
@@ -67,6 +67,7 @@ fansub = Fansub.new(group: Group.first, show: show)
 
   Staff.create([
     { user: desch, release: rel, position: Position.first },
+    { user: desch, release: rel, position: Position.second },
     { user: fyurie, release: rel, position: Position.last, status: 1 }
   ])
 end
