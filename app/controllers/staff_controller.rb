@@ -5,7 +5,7 @@ class StaffController < ApplicationController
       @group = Group.where('lower(irc) = ?', params[:irc].downcase).first
 
       if @group.nil?
-        render json: { message: 'Unknown IRC channel' }, status: 401
+        render json: { message: 'Unknown IRC channel' }, status: 400
         return
       else
         logger.info @group.name
@@ -14,21 +14,26 @@ class StaffController < ApplicationController
       @user = User.find_by(name: params[:username])
 
       if @user.nil?
-        render json: { message: 'Unknown user; please use main IRC nick' }, status: 401
+        render json: { message: 'Unknown user; please use main IRC nick' }, status: 400
         return
       else
         logger.info @user.name
       end
 
-      @staff = Show.where('lower(name) = ?', params[:name].downcase).first
-                .fansubs.where(group: @group).first
-                .current_release.staff
-                .where(user: @user)
+      @show = Show.where('lower(name) = ?', params[:name].downcase).first
+
+      if @show.nil?
+        render json: { message: 'Unknown show.' }, status: 400
+        return
+      end
+
+      @staff = @show.fansubs.where(group: @group).first.
+                     current_release.staff.where(user: @user)
 
       if params[:position]
         @position = Position.where('lower(name) = ?', params[:position].downcase).first
         if @position.nil?
-          render json: { message: 'Invalid position.' }, status: 401
+          render json: { message: 'Invalid position.' }, status: 400
           return
         end
 
