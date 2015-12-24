@@ -2,13 +2,37 @@ class StaffController < ApplicationController
   def update
     # TODO: Update passphrase and move to ENV variable
     if params[:auth].eql? 'secretpassword'
-      @staff = Show.find_by(name: params[:name])
-                .fansubs.where(group: Group.find_by(irc: params[:irc])).first
+      @group = Group.where('lower(irc) = ?', params[:irc].downcase).first
+
+      if @group.nil?
+        render json: { message: 'Unknown IRC channel' }, status: 401
+        return
+      else
+        logger.info @group.name
+      end
+
+      @user = User.find_by(name: params[:username])
+
+      if @user.nil?
+        render json: { message: 'Unknown user; please use main IRC nick' }, status: 401
+        return
+      else
+        logger.info @user.name
+      end
+
+      @staff = Show.where('lower(name) = ?', params[:name].downcase).first
+                .fansubs.where(group: @group).first
                 .current_release.staff
-                .where(user: User.find_by(name: params[:username]))
+                .where(user: @user)
 
       if params[:position]
-        @staff = @staff.where(position: Position.find_by(acronym: params[:position])).first
+        @position = Position.where('lower(name) = ?', params[:position].downcase).first
+        if @position.nil?
+          render json: { message: 'Invalid position.' }, status: 401
+          return
+        end
+
+        @staff = @staff.where(position: @position).first
       else
         if @staff.count > 1
           render json: { message: 'Please specify position' }, status: 400
