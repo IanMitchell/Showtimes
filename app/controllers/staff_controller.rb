@@ -2,13 +2,11 @@ class StaffController < ApplicationController
   def update
     # TODO: Update passphrase and move to ENV variable
     if params[:auth].eql? 'secretpassword'
-      @group = Group.where('lower(irc) = ?', params[:irc].downcase).first
+      @group = Group.where('lower(staff_irc) = ?', params[:irc].downcase).first
 
       if @group.nil?
         render json: { message: 'Unknown IRC channel' }, status: 400
         return
-      else
-        logger.info @group.name
       end
 
       @user = User.find_by(name: params[:username])
@@ -16,8 +14,6 @@ class StaffController < ApplicationController
       if @user.nil?
         render json: { message: 'Unknown user; please use main IRC nick' }, status: 400
         return
-      else
-        logger.info @user.name
       end
 
       @show = Show.where('lower(name) = ?', params[:name].downcase).first

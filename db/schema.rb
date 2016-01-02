@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151222063442) do
+ActiveRecord::Schema.define(version: 20160102204019) do
 
   create_table "aliases", force: :cascade do |t|
     t.integer  "show_id"
@@ -69,10 +69,11 @@ ActiveRecord::Schema.define(version: 20151222063442) do
   create_table "groups", force: :cascade do |t|
     t.string   "name"
     t.string   "acronym"
-    t.string   "irc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "slug"
+    t.string   "public_irc"
+    t.string   "staff_irc"
   end
 
   add_index "groups", ["slug"], name: "index_groups_on_slug", unique: true

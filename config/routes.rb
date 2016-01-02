@@ -11,8 +11,8 @@ Rails.application.routes.draw do
   resources :groups, only: [:index, :show]
   resources :fansubs, only: [:show]
   resources :releases, only: [:show]
-  # resources :staff, only: [:update]
   put 'staff' => 'staff#update'
+  put 'release' => 'releases#update'
   devise_for :users
   get 'about' => 'about#show'
 

@@ -36,13 +36,18 @@ Position.create([
   { name: 'Editor', acronym: 'ED' },
   { name: 'Typesetter', acronym: 'TS' },
   { name: 'Timer', acronym: 'TI' },
-  { name: 'Encoder', acronym: 'EN' },
+  { name: 'Encoder', acronym: 'ENC' },
   { name: 'Quality Control', acronym: 'QC' }
 ])
 
 # Make Groups
 Group.create([
-  { name: 'Good Job! Media', acronym: 'GJM', irc: '#goodjob' }
+  {
+    name: 'Good Job! Media',
+    acronym: 'GJM',
+    public_irc: '#goodjob',
+    staff_irc: '#goodjobclub'
+  }
 ])
 
 # Make Users
