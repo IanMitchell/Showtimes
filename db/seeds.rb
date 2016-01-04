@@ -33,10 +33,10 @@ end
 Position.create([
   { name: 'Translator', acronym: 'TL' },
   { name: 'Translator Check', acronym: 'TLC' },
-  { name: 'Editor', acronym: 'ED' },
-  { name: 'Typesetter', acronym: 'TS' },
-  { name: 'Timer', acronym: 'TI' },
   { name: 'Encoder', acronym: 'ENC' },
+  { name: 'Editor', acronym: 'ED' },
+  { name: 'Timer', acronym: 'TI' },
+  { name: 'Typesetter', acronym: 'TS' },
   { name: 'Quality Control', acronym: 'QC' }
 ])
 
