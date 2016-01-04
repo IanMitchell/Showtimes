@@ -4,6 +4,36 @@ class ReleasesController < ApplicationController
     redirect_to group_path(Group.first)
   end
 
+  def blame
+    @group = Group.find_by(public_irc: params[:irc])
+
+    if @group.nil?
+      render json: { message: 'Unknown IRC channel' }, status: 400
+      return
+    end
+
+    @show = Show.find_by(name: params[:show])
+
+    if @show.nil?
+      render json: { message: "Unknown Show #{params[:show]}" }, status: 400
+      return
+    end
+
+    @fansub = @group.fansubs.where(show: @show).first
+
+    if @fansub.nil?
+      render json: { message: 'This group is not fansubbing that show' }, status: 400
+      return
+    end
+
+    @release = @fansub.current_release
+
+    if @release.nil?
+      render json: { message: 'The fansub is complete!' }, status: 200
+      return
+    end
+  end
+
   def update
     if params[:auth].eql? 'secretpassword'
       @group = Group.where('lower(staff_irc) = ?', params[:irc].downcase).first
