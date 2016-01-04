@@ -57,6 +57,12 @@ class ReleasesController < ApplicationController
         return
       end
 
+      if @current.staff.pending.present?
+        positions = @current.staff.pending.map(&:user).map(&:name).join(', ')
+        render json: { message: "Positions still pending: #{positions}" }, status: 400
+        return
+      end
+
       @current.update_attribute :status, :released
       render json: { message: "Updated #{params[:show]}" }, status: 200
     else
