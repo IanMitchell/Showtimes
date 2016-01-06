@@ -24,17 +24,29 @@ class StaffController < ApplicationController
         return
       end
 
-      @staff = @show.fansubs.where(group: @group).first.
+      @staff = @show.fansubs.where(group: @group).first&.
                      current_release.staff.where(user: @user)
+
+      if @staff.nil?
+        render json: { message: "No staff for #{@show.name}" }, status: 400
+        return
+      end
 
       if params[:position]
         @position = Position.where('lower(name) = ?', params[:position].downcase).first
+        @position ||= Position.where('lower(acronym) = ?', params[:position].downcase).first
+
         if @position.nil?
           render json: { message: 'Invalid position.' }, status: 400
           return
         end
 
         @staff = @staff.where(position: @position).first
+
+        if @staff.nil?
+          render json: { message: "That's not your position!" }, status: 400
+          return
+        end
       else
         if @staff.count > 1
           render json: { message: 'Please specify position' }, status: 400
@@ -45,7 +57,7 @@ class StaffController < ApplicationController
       end
 
       fin = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:status])
-      
+
       if @staff.update_attribute :finished, fin
         render json: { message: "Updated #{@show.name}" }, status: 200
       else
