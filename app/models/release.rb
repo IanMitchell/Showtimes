@@ -1,7 +1,7 @@
 class Release < ActiveRecord::Base
   belongs_to :source, polymorphic: true
   belongs_to :fansub
-  belongs_to :channel
+  belongs_to :station
   has_many :staff
 
   enum status: {

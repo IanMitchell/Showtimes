@@ -1,5 +1,5 @@
-# Make Channels
-Channel.create([
+# Make Stations
+Station.create([
   { name: 'AT-X' },
   { name: 'BS-Fuji' },
   { name: 'BS-TBS' },
@@ -44,9 +44,24 @@ Position.create([
 Group.create([
   {
     name: 'Good Job! Media',
-    acronym: 'GJM',
-    public_irc: '#goodjob',
-    staff_irc: '#goodjobclub'
+    acronym: 'GJM'
+  }
+])
+
+Channel.create([
+  {
+    name: '#goodjob',
+    group: Group.first
+  },
+  {
+    name: '#gjmdev',
+    group: Group.first,
+    staff: true
+  },
+  {
+    name: '#goodjobclub',
+    group: Group.first,
+    staff: true
   }
 ])
 
@@ -67,7 +82,7 @@ fansub = Fansub.new(group: Group.first, show: show)
 (1..12).each do |ep|
   Episode.create(show: show, number: ep, air_date: Time.now - (15 - ep.days))
   rel = Release.create(fansub: fansub,
-                       channel: Channel.first,
+                       station: Station.first,
                        source: Episode.find(ep),
                        status: ep < 6 ? 1 : 0)
 

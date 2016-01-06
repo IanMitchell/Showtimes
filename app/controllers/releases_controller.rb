@@ -6,8 +6,7 @@ class ReleasesController < ApplicationController
 
   def blame
     # TODO: combine into one line
-    @group = Group.find_by(public_irc: params[:irc])
-    @group ||= Group.find_by(staff_irc: params[:irc])
+    @group = Channel.find_by(name: params[:irc])&.group
 
     if @group.nil?
       render json: { message: 'Unknown IRC channel' }, status: 400
@@ -39,7 +38,7 @@ class ReleasesController < ApplicationController
 
   def update
     if params[:auth].eql? 'secretpassword'
-      @group = Group.where('lower(staff_irc) = ?', params[:irc].downcase).first
+      @group = Channel.find_by(name: params[:irc], staff: true)&.group
 
       if @group.nil?
         render json: { message: 'Unknown IRC channel' }, status: 400

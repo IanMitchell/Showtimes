@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160102204019) do
+ActiveRecord::Schema.define(version: 20160106162731) do
 
   create_table "aliases", force: :cascade do |t|
     t.integer  "show_id"
@@ -24,9 +24,13 @@ ActiveRecord::Schema.define(version: 20160102204019) do
 
   create_table "channels", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "group_id"
+    t.boolean  "staff",      default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
+
+  add_index "channels", ["group_id"], name: "index_channels_on_group_id"
 
   create_table "episodes", force: :cascade do |t|
     t.integer  "show_id"
@@ -72,8 +76,6 @@ ActiveRecord::Schema.define(version: 20160102204019) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "slug"
-    t.string   "public_irc"
-    t.string   "staff_irc"
   end
 
   add_index "groups", ["slug"], name: "index_groups_on_slug", unique: true
@@ -100,18 +102,18 @@ ActiveRecord::Schema.define(version: 20160102204019) do
 
   create_table "releases", force: :cascade do |t|
     t.integer  "fansub_id"
-    t.integer  "channel_id"
     t.integer  "source_id"
     t.string   "source_type"
     t.integer  "status",      default: 0
     t.integer  "category",    default: 0
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.integer  "station_id"
   end
 
-  add_index "releases", ["channel_id"], name: "index_releases_on_channel_id"
   add_index "releases", ["fansub_id"], name: "index_releases_on_fansub_id"
   add_index "releases", ["source_type", "source_id"], name: "index_releases_on_source_type_and_source_id"
+  add_index "releases", ["station_id"], name: "index_releases_on_station_id"
 
   create_table "seasons", force: :cascade do |t|
     t.integer  "name",       default: 0
@@ -142,6 +144,12 @@ ActiveRecord::Schema.define(version: 20160102204019) do
   add_index "staff", ["position_id"], name: "index_staff_on_position_id"
   add_index "staff", ["release_id"], name: "index_staff_on_release_id"
   add_index "staff", ["user_id"], name: "index_staff_on_user_id"
+
+  create_table "stations", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

@@ -3,6 +3,7 @@ class Group < ActiveRecord::Base
 
   has_many :members
   has_many :fansubs
+  has_many :channels
 
   friendly_id :name, use: :slugged
 
