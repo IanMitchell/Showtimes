@@ -17,6 +17,7 @@ class StaffController < ApplicationController
       end
 
       @show = Show.where('lower(name) = ?', params[:name].downcase).first
+      @show ||= Alias.where('lower(name) = ?', params[:name].downcase).first&.show
 
       if @show.nil?
         render json: { message: 'Unknown show.' }, status: 400
@@ -45,7 +46,7 @@ class StaffController < ApplicationController
 
       if [:pending, :finished].include? params[:status].to_sym
         @staff.update_attribute :status, params[:status].to_sym
-        render json: { message: "Updated #{params[:name]}" }, status: 200
+        render json: { message: "Updated #{@show.name}" }, status: 200
       else
         render json: { message: 'Invalid; Use `pending` or `finished`' }, status: 400
       end

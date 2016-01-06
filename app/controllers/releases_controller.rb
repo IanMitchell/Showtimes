@@ -5,14 +5,17 @@ class ReleasesController < ApplicationController
   end
 
   def blame
+    # TODO: combine into one line
     @group = Group.find_by(public_irc: params[:irc])
+    @group ||= Group.find_by(staff_irc: params[:irc])
 
     if @group.nil?
       render json: { message: 'Unknown IRC channel' }, status: 400
       return
     end
 
-    @show = Show.find_by(name: params[:show])
+    @show = Show.where('lower(name) = ?', params[:show].downcase).first
+    @show ||= Alias.where('lower(name) = ?', params[:show].downcase).first&.show
 
     if @show.nil?
       render json: { message: "Unknown Show #{params[:show]}" }, status: 400
@@ -44,6 +47,7 @@ class ReleasesController < ApplicationController
       end
 
       @show = Show.where('lower(name) = ?', params[:name].downcase).first
+      @show ||= Alias.where('lower(name) = ?', params[:name].downcase).first&.show
 
       if @show.nil?
         render json: { message: 'Unknown show.' }, status: 400
@@ -64,7 +68,7 @@ class ReleasesController < ApplicationController
       end
 
       @current.update_attribute :status, :released
-      render json: { message: "Updated #{params[:show]}" }, status: 200
+      render json: { message: "Updated #{@show.name}" }, status: 200
     else
       render json: { message: 'Unauthorized Request' }, status: 401
     end

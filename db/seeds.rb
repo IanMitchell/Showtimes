@@ -62,6 +62,7 @@ Member.create([
 
 # Make a Show
 show = Show.new(season: Season.first, name: "Desch's Slice of Life", link: nil)
+Alias.create(name: 'AOTY', show: show)
 fansub = Fansub.new(group: Group.first, show: show)
 (1..12).each do |ep|
   Episode.create(show: show, number: ep, air_date: Time.now - (15 - ep.days))
