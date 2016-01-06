@@ -6,14 +6,12 @@
 # you're free to overwrite the RESTful controller actions.
 module Admin
   class ApplicationController < Administrate::ApplicationController
+    include ApplicationHelper
+    
     before_filter :authenticate_admin
 
     def authenticate_admin
-      if user_signed_in?
-        unless current_user.members.where(role: 2).present?
-          redirect_to root_url
-        end
-      else
+      unless user_is_admin?
         redirect_to root_url
       end
     end
