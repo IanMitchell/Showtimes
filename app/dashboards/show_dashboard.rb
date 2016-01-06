@@ -9,6 +9,7 @@ class ShowDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     season: Field::BelongsTo,
+    fansubs: Field::HasMany,
     aliases: Field::HasMany,
     episodes: Field::HasMany,
     volumes: Field::HasMany,
@@ -26,6 +27,7 @@ class ShowDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :season,
+    :fansubs,
     :aliases,
     :episodes,
     :volumes,
@@ -40,6 +42,7 @@ class ShowDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :season,
+    :fansubs,
     :aliases,
     :episodes,
     :volumes,

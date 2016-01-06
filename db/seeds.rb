@@ -71,7 +71,7 @@ fyurie = User.create(name: 'Fyurie', email: 'test2@test.com', password: 'passwor
 
 # Make Members
 Member.create([
-  { group: Group.first, user: User.first, title: 'Technowizard' },
+  { group: Group.first, user: User.first, title: 'Technowizard', role: 2 },
   { group: Group.first, user: User.second, title: 'Taskmaster', role: 2 }
 ])
 

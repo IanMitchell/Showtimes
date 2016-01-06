@@ -10,7 +10,7 @@ class ReleaseDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     source: Field::Polymorphic,
     fansub: Field::BelongsTo,
-    channel: Field::BelongsTo,
+    station: Field::BelongsTo,
     staff: Field::HasMany,
     id: Field::Number,
     status: EnumField,
@@ -27,7 +27,7 @@ class ReleaseDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :source,
     :fansub,
-    :channel,
+    :station,
     :staff,
   ]
 
@@ -41,7 +41,7 @@ class ReleaseDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :source,
     :fansub,
-    :channel,
+    :station,
     :staff,
     :status,
     :category,

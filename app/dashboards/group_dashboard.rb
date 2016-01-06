@@ -10,10 +10,10 @@ class GroupDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     members: Field::HasMany,
     fansubs: Field::HasMany,
+    channels: Field::HasMany,
     id: Field::Number,
     name: Field::String,
     acronym: Field::String,
-    irc: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     slug: Field::String,
@@ -27,6 +27,7 @@ class GroupDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :members,
     :fansubs,
+    :channels,
     :id,
   ]
 
@@ -40,9 +41,9 @@ class GroupDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :members,
     :fansubs,
+    :channels,
     :name,
     :acronym,
-    :irc,
     :slug,
   ]
 

@@ -21,7 +21,8 @@ class DashboardManifest
     :releases,
     :seasons,
     :shows,
-    :staffs,
+    :staff,
+    :stations,
     :volumes,
   ]
 

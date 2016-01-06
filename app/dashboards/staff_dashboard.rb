@@ -43,7 +43,7 @@ class StaffDashboard < Administrate::BaseDashboard
     :status,
   ]
 
-  # Overwrite this method to customize how staffs are displayed
+  # Overwrite this method to customize how staff are displayed
   # across all pages of the admin dashboard.
   #
   # def display_resource(staff)

@@ -5,7 +5,7 @@ gem 'rails', '4.2.4'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Admin Interface
-gem 'administrate', github: 'thoughtbot/administrate', ref: '476b12f'
+gem 'administrate'
 
 # Accounts
 gem 'devise'

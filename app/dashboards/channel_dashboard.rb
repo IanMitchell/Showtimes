@@ -8,9 +8,10 @@ class ChannelDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    releases: Field::HasMany,
+    group: Field::BelongsTo,
     id: Field::Number,
     name: Field::String,
+    staff: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }
@@ -21,10 +22,10 @@ class ChannelDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :releases,
+    :group,
     :id,
     :name,
-    :created_at,
+    :staff,
   ]
 
   # SHOW_PAGE_ATTRIBUTES
@@ -35,8 +36,9 @@ class ChannelDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :releases,
+    :group,
     :name,
+    :staff,
   ]
 
   # Overwrite this method to customize how channels are displayed
