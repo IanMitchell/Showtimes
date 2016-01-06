@@ -52,6 +52,6 @@ class EpisodeDashboard < Administrate::BaseDashboard
   #   "Episode ##{episode.id}"
   # end
   def display_resource(episode)
-    "Ep ##{episode.id}"
+    "Ep ##{episode.number}"
   end
 end
