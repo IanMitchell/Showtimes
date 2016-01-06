@@ -54,7 +54,7 @@ Channel.create([
     group: Group.first
   },
   {
-    name: '#gjmdev',
+    name: '#gjm-dev',
     group: Group.first,
     staff: true
   },
