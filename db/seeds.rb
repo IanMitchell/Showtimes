@@ -84,11 +84,11 @@ fansub = Fansub.new(group: Group.first, show: show)
   rel = Release.create(fansub: fansub,
                        station: Station.first,
                        source: Episode.find(ep),
-                       status: ep < 6 ? 1 : 0)
+                       released: ep < 6 ? 1 : 0)
 
   Staff.create([
     { user: desch, release: rel, position: Position.first },
-    { user: desch, release: rel, position: Position.second },
-    { user: fyurie, release: rel, position: Position.last, status: 1 }
+    { user: fyurie, release: rel, position: Position.second },
+    { user: fyurie, release: rel, position: Position.last, finished: 1 }
   ])
 end
