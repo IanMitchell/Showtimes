@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160106162731) do
+ActiveRecord::Schema.define(version: 20160106215422) do
 
   create_table "aliases", force: :cascade do |t|
     t.integer  "show_id"
@@ -83,11 +83,11 @@ ActiveRecord::Schema.define(version: 20160106162731) do
   create_table "members", force: :cascade do |t|
     t.integer  "group_id"
     t.integer  "user_id"
-    t.integer  "status",     default: 0
     t.integer  "role",       default: 0
     t.string   "title"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.boolean  "active",     default: true
   end
 
   add_index "members", ["group_id"], name: "index_members_on_group_id"
@@ -104,11 +104,11 @@ ActiveRecord::Schema.define(version: 20160106162731) do
     t.integer  "fansub_id"
     t.integer  "source_id"
     t.string   "source_type"
-    t.integer  "status",      default: 0
     t.integer  "category",    default: 0
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "station_id"
+    t.boolean  "released",    default: false
   end
 
   add_index "releases", ["fansub_id"], name: "index_releases_on_fansub_id"
@@ -136,9 +136,9 @@ ActiveRecord::Schema.define(version: 20160106162731) do
     t.integer  "user_id"
     t.integer  "position_id"
     t.integer  "release_id"
-    t.integer  "status",      default: 0
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "finished",    default: false
   end
 
   add_index "staff", ["position_id"], name: "index_staff_on_position_id"

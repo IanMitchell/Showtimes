@@ -11,11 +11,11 @@ class MemberDashboard < Administrate::BaseDashboard
     group: Field::BelongsTo,
     user: Field::BelongsTo,
     id: Field::Number,
-    status: EnumField,
     role: EnumField,
     title: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    active: Field::Boolean,
   }
 
   # COLLECTION_ATTRIBUTES
@@ -27,7 +27,7 @@ class MemberDashboard < Administrate::BaseDashboard
     :group,
     :user,
     :id,
-    :status,
+    :role,
   ]
 
   # SHOW_PAGE_ATTRIBUTES
@@ -40,9 +40,9 @@ class MemberDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :group,
     :user,
-    :status,
     :role,
     :title,
+    :active,
   ]
 
   # Overwrite this method to customize how members are displayed

@@ -5,8 +5,6 @@ class Staff < ActiveRecord::Base
 
   default_scope { order(position_id: :asc) }
 
-  enum status: {
-    pending: 0,
-    finished: 1
-  }
+  scope :pending, -> { where(finished: false) }
+  scope :finished, -> { where(finished: true) }
 end

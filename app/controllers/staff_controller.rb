@@ -44,11 +44,12 @@ class StaffController < ApplicationController
         end
       end
 
-      if [:pending, :finished].include? params[:status].to_sym
-        @staff.update_attribute :status, params[:status].to_sym
+      fin = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:status])
+      
+      if @staff.update_attribute :finished, fin
         render json: { message: "Updated #{@show.name}" }, status: 200
       else
-        render json: { message: 'Invalid; Use `pending` or `finished`' }, status: 400
+        render json: { message: "Error updating #{@show.name}" }, status: 500
       end
     else
       render json: { message: 'Unauthorized Request' }, status: 401

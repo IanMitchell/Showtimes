@@ -12,9 +12,9 @@ class StaffDashboard < Administrate::BaseDashboard
     position: Field::BelongsTo,
     release: Field::BelongsTo,
     id: Field::Number,
-    status: EnumField,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    finished: Field::Boolean,
   }
 
   # COLLECTION_ATTRIBUTES
@@ -40,7 +40,7 @@ class StaffDashboard < Administrate::BaseDashboard
     :user,
     :position,
     :release,
-    :status,
+    :finished,
   ]
 
   # Overwrite this method to customize how staff are displayed

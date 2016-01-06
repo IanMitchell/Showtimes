@@ -10,5 +10,5 @@ json.status @release.staff do |staff|
   json.position staff.position.name
   json.acronym staff.position.acronym
   json.staff staff.user.name
-  json.status staff.status
+  json.finished staff.finished
 end

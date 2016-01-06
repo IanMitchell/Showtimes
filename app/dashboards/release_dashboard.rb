@@ -13,10 +13,10 @@ class ReleaseDashboard < Administrate::BaseDashboard
     station: Field::BelongsTo,
     staff: Field::HasMany,
     id: Field::Number,
-    status: EnumField,
     category: EnumField,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    released: Field::Boolean,
   }
 
   # COLLECTION_ATTRIBUTES
@@ -43,8 +43,8 @@ class ReleaseDashboard < Administrate::BaseDashboard
     :fansub,
     :station,
     :staff,
-    :status,
     :category,
+    :released,
   ]
 
   # Overwrite this method to customize how releases are displayed
