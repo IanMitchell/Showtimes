@@ -29,7 +29,7 @@
         <ul class="right">
           <li><%= link_to 'Home', root_url %></li>
           <%- if user_is_admin? %>
-            <li><%= link_to 'Admin', admin_root_path %></li>
+            <li><%= link_to 'Admin', root_url %></li>
           <%- end %>
           <!-- <li><%= link_to 'Groups', groups_path %></li> -->
           <%- if user_signed_in? %>
