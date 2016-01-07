@@ -24,8 +24,13 @@ class StaffController < ApplicationController
         return
       end
 
-      @staff = @show.fansubs.where(group: @group).first&.
-                     current_release.staff.where(user: @user)
+      if @user.members.where(group: @group).first.founder?
+        @staff = @show.fansubs.where(group: @group).first&.
+                       current_release.staff
+     else
+        @staff = @show.fansubs.where(group: @group).first&.
+                       current_release.staff.where(user: @user)
+     end
 
       if @staff.nil?
         render json: { message: "No staff for #{@show.name}" }, status: 400

@@ -57,7 +57,7 @@ namespace :data_import do
         if @release.nil?
           puts "No release for episode #{@episode.number}. Creating release..."
           @release = Release.create(fansub: @fansub,
-                                    channel: Channel.find_by(name: row['CHANNEL']),
+                                    station: Station.find_by(name: row['CHANNEL']),
                                     source: @episode)
         end
 
