@@ -2,6 +2,8 @@ class StaffController < ApplicationController
   def update
     # TODO: Update passphrase and move to ENV variable
     if params[:auth].eql? 'secretpassword'
+      fin = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:status])
+
       @group = Channel.find_by(name: params[:irc], staff: true)&.group
 
       if @group.nil?
@@ -27,10 +29,10 @@ class StaffController < ApplicationController
       if @user.members.where(group: @group).first.founder?
         @staff = @show.fansubs.where(group: @group).first&.
                        current_release.staff
-     else
+      else
         @staff = @show.fansubs.where(group: @group).first&.
                        current_release.staff.where(user: @user)
-     end
+      end
 
       if @staff.nil?
         render json: { message: "No staff for #{@show.name}" }, status: 400
@@ -46,11 +48,23 @@ class StaffController < ApplicationController
           return
         end
 
-        @staff = @staff.where(position: @position).first
+        @staff = @staff.where(position: @position)
 
         if @staff.nil?
           render json: { message: "That's not your position!" }, status: 400
           return
+        end
+
+        if @staff.count > 1
+          # Admin - first, find by own name. If none, or if one and done, then
+          if @staff.where(user: @user, finished: fin).present?
+            @staff = @staff.where(user: @user, finished: fin).first
+          else
+            # TODO: Allow the found to specify a user they're overriding.
+            @staff = @staff.where(finished: fin).first
+          end
+        else
+          @staff = @staff.first
         end
       else
         if @staff.count > 1
@@ -60,8 +74,6 @@ class StaffController < ApplicationController
           @staff = @staff.first
         end
       end
-
-      fin = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:status])
 
       if @staff.update_attribute :finished, fin
         render json: { message: "Updated #{@show.name}" }, status: 200
