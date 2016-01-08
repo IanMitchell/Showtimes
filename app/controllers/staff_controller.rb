@@ -57,11 +57,12 @@ class StaffController < ApplicationController
 
         if @staff.count > 1
           # Admin - first, find by own name. If none, or if one and done, then
-          if @staff.where(user: @user, finished: fin).present?
-            @staff = @staff.where(user: @user, finished: fin).first
+          staff = @staff.where(user: @user, finished: !fin)
+          if staff.present?
+            @staff = staff.first
           else
             # TODO: Allow the found to specify a user they're overriding.
-            @staff = @staff.where(finished: fin).first
+            @staff = @staff.where(finished: !fin).first
           end
         else
           @staff = @staff.first
