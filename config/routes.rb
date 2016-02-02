@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'home#show'
+  resources :shows, only: [:index, :show]
   resources :groups, only: [:index, :show]
   resources :fansubs, only: [:show]
   resources :releases, only: [:show]
