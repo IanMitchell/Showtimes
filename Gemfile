@@ -24,14 +24,17 @@ gem 'jbuilder', '~> 2.0'
 # gem 'unicorn'
 # gem 'capistrano-rails', group: :development
 
+# Database
+gem 'pg'
+
 group :development, :test do
+  gem 'dotenv-rails'
+  
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-  gem 'sqlite3'
 end
 
 group :production do
-  gem 'pg'
   gem 'unicorn'
 end
 
