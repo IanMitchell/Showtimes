@@ -67,7 +67,7 @@ class ReleasesController < ApplicationController
       end
 
       @current.update_attribute :released, true
-      render json: { message: "Updated #{@show.name}" }, status: 200
+      render json: { message: "#{@show.name} ##{@current.source.number} has been released!" }, status: 200
     else
       render json: { message: 'Unauthorized Request' }, status: 401
     end
