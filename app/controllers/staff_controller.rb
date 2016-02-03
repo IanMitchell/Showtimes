@@ -77,7 +77,7 @@ class StaffController < ApplicationController
       end
 
       if @staff.update_attribute :finished, fin
-        render json: { message: "Updated #{@show.name}" }, status: 200
+        render json: { message: "Updated #{@show.name} ##{@staff.release.source.number}" }, status: 200
       else
         render json: { message: "Error updating #{@show.name}" }, status: 500
       end
