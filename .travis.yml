@@ -1,3 +1,12 @@
 language: ruby
 rvm:
   - 2.3.0
+
+addons:
+  postgresql: '9.4'
+
+services:
+  - postgresql
+
+before_script:
+  - psql -c 'create database showtimes_test;' -U postgres
