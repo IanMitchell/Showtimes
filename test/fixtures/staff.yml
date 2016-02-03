@@ -1,13 +1,35 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+desch_ep_1:
+  user: desch
+  position: editor
+  release: release_one
+  finished: true
 
-one:
-  user_id: 
-  position_id: 
-  release_id: 
-  status: 1
+arx_ep_1:
+  user: arx
+  position: translator
+  release: release_one
+  finished: true
 
-two:
-  user_id: 
-  position_id: 
-  release_id: 
-  status: 1
+desch_ep_2:
+  user: desch
+  position: editor
+  release: release_two
+  finished: false
+
+arx_ep_2:
+  user: arx
+  position: translator
+  release: release_two
+  finished: true
+
+desch_ep_3:
+  user: desch
+  position: editor
+  release: release_three
+  finished: false
+
+arx_ep_3:
+  user: arx
+  position: translator
+  release: release_three
+  finished: false

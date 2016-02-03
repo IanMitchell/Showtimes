@@ -1,11 +1,9 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+cartel_staff:
+  name: \#cartel-staff
+  group: cartel
+  staff: true
 
-one:
-  name: MyString
-  group_id: 
-  category: 1
-
-two:
-  name: MyString
-  group_id: 
-  category: 1
+cartel:
+  name: \#cartel
+  group: cartel
+  staff: false

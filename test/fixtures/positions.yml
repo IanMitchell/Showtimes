@@ -1,7 +1,29 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: 
+translator:
+  name: Translator
+  acronym: TL
 
-two:
-  name: 
+translator_check:
+  name: Translator Check
+  acronym: TLC
+
+encoder:
+  name: Encoder
+  acronym: ENC
+
+editor:
+  name: Editor
+  acronym: ED
+
+timer:
+  name: Timer
+  acronym: TM
+
+typesetter:
+  name: Typesetter
+  acronym: TS
+
+quality_control:
+  name: Quality Control
+  acronym: QC

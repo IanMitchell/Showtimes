@@ -1,11 +1,29 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  show_id: 
+desch_episode_one:
+  show: desch
   number: 1
-  air_date: 2015-11-04 07:07:12
+  air_date: <%= DateTime.now - 7.days %>
 
-two:
-  show_id: 
+desch_episode_two:
+  show: desch
+  number: 2
+  air_date: <%= DateTime.now %>
+
+desch_episode_three:
+  show: desch
+  number: 3
+  air_date: <%= DateTime.now + 7.days %>
+
+fmp_episode_one:
+  show: fmp
   number: 1
-  air_date: 2015-11-04 07:07:12
+  air_date: <%= DateTime.now - 7.days %>
+
+fmp_episode_two:
+  show: fmp
+  number: 2
+  air_date: <%= DateTime.now %>
+
+fmp_episode_three:
+  show: fmp
+  number: 3
+  air_date: <%= DateTime.now + 7.days %>

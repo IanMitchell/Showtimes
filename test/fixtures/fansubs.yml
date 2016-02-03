@@ -1,15 +1,6 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  group_id: 
-  show_id: 
-  tag: MyString
-  nyaa_link: MyString
-  status: 1
-
-two:
-  group_id: 
-  show_id: 
-  tag: MyString
-  nyaa_link: MyString
-  status: 1
+ aoty_fansub:
+  group: cartel
+  show: aoty
+  tag: Desch
+  nyaa_link: Desch
+  status: 0

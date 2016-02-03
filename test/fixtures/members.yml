@@ -1,13 +1,13 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+member_one:
+  group: cartel
+  user: desch
+  role: 2
+  title: Wizard
+  active: true
 
-one:
-  group_id: 
-  user_id: 
-  status: 1
+member_two:
+  group: cartel
+  user: arx
   role: 1
-
-two:
-  group_id: 
-  user_id: 
-  status: 1
-  role: 1
+  title: Bot
+  active: true

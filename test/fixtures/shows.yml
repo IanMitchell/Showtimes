@@ -1,11 +1,9 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+desch:
+  name: Desch's Slice of Life
+  season: winter
+  link:
 
-one:
-  season_id: 
-  name: MyString
-  link: MyString
-
-two:
-  season_id: 
-  name: MyString
-  link: MyString
+fmp:
+  name: Full Metal Panic! The Second Raid
+  season: winter
+  link:

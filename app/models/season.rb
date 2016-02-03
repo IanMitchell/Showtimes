@@ -9,29 +9,26 @@ class Season < ActiveRecord::Base
   }
 
   def self.current
-    year = DateTime.now.year
-    month = DateTime.now.month
-
-    case month
-    when 1..3
-      puts "winter"
-      name = Season.names[:winter]
-    when 4..6
-      puts "spring"
-      name = Season.names[:spring]
-    when 7..9
-      puts "summer"
-      name = Season.names[:summer]
-    when 10..12
-      puts "fall"
-      name = Season.names[:fall]
-    end
-    puts name
-
-    Season.find_by(name: name, year: year)
+    Season.find_by(name: Season.month_to_season(DateTime.now.month),
+                   year: DateTime.now.year)
   end
 
   def full_name
     "#{self.name.capitalize} #{self.year}"
+  end
+
+  private
+
+  def self.month_to_season(month)
+    case month
+    when 1..3
+      Season.names[:winter]
+    when 4..6
+      Season.names[:spring]
+    when 7..9
+      Season.names[:summer]
+    when 10..12
+      Season.names[:fall]
+    end
   end
 end
