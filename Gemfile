@@ -31,16 +31,13 @@ gem 'jbuilder', '~> 2.0'
 
 # Database
 gem 'pg'
+gem 'unicorn'
 
 group :development, :test do
   gem 'dotenv-rails'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-end
-
-group :production do
-  gem 'puma'
 end
 
 group :development do
