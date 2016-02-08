@@ -28,4 +28,12 @@ class ShowsControllerTest < ActionController::TestCase
     assert body['alias']
     assert body['air_date']
   end
+
+  test 'should handle incorrect show' do
+    get :show, { id: 'GJM', format: :json }
+    assert_response :not_found
+
+    body = JSON.parse(response.body)
+    assert body['message']
+  end
 end

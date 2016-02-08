@@ -18,8 +18,7 @@ class StaffController < ApplicationController
         return
       end
 
-      @show = Show.where('lower(name) = ?', params[:name].downcase).first
-      @show ||= Alias.where('lower(name) = ?', params[:name].downcase).first&.show
+      @show = Show.find_by_name_or_alias(params[:name])
 
       if @show.nil?
         render json: { message: 'Unknown show.' }, status: 400
@@ -65,6 +64,7 @@ class StaffController < ApplicationController
             @staff = @staff.where(finished: !fin).first
           end
         else
+          ### HERE
           @staff = @staff.first
         end
       else
