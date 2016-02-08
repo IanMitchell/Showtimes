@@ -7,7 +7,7 @@ class Show < ActiveRecord::Base
 
 
   def self.find_by_name_or_alias(name)
-    show = Show.where('lower(name) = ?', name.downcase).first
+    show = self.where('lower(name) = ?', name.downcase).first
     show ||= Alias.where('lower(name) = ?', name.downcase).first&.show
   end
 
