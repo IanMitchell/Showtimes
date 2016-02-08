@@ -1,43 +1,30 @@
 class ReleasesController < ApplicationController
+  before_action :require_authorization, only: [:update]
+
   def show
     # @release = Release.find(params[:id])
     redirect_to group_path(Group.first)
   end
 
   def update
-    if params[:auth].eql? 'secretpassword'
-      @group = Channel.find_by(name: params[:irc], staff: true)&.group
+    @group = Channel.find_by(name: params[:irc], staff: true)&.group
+    return render json: { message: 'Unknown IRC channel' }, status: 400 if @group.nil?
 
-      if @group.nil?
-        render json: { message: 'Unknown IRC channel' }, status: 400
-        return
-      end
+    @show = Show.find_by_name_or_alias(params[:name])
+    return render json: { message: 'Unknown show.' }, status: 400 if @show.nil?
 
-      @show = Show.where('lower(name) = ?', params[:name].downcase).first
-      @show ||= Alias.where('lower(name) = ?', params[:name].downcase).first&.show
+    @fansub = @show.fansubs.where(group: @group).first
+    return render json: { message: 'No associated fansub' }, status: 400 if @fansub.nil?
 
-      if @show.nil?
-        render json: { message: 'Unknown show.' }, status: 400
-        return
-      end
+    @current = @fansub.current_release
+    return render json: { message: 'No pending releases' }, status: 400 if @current.nil?
 
-      @current = @show.fansubs.where(group: @group).first.current_release
-
-      if @current.nil?
-        render json: { message: 'No pending releases' }, status: 400
-        return
-      end
-
-      if @current.staff.pending.present?
-        positions = @current.staff.pending.map(&:user).map(&:name).join(', ')
-        render json: { message: "Positions still pending: #{positions}" }, status: 400
-        return
-      end
-
-      @current.update_attribute :released, true
-      render json: { message: "#{@show.name} ##{@current.source.number} has been released!" }, status: 200
-    else
-      render json: { message: 'Unauthorized Request' }, status: 401
+    if @current.staff.pending.present?
+      positions = @current.staff.pending.map(&:user).map(&:name).join(', ')
+      return render json: { message: "Positions still pending: #{positions}" }, status: 400
     end
+
+    @current.update_attribute :released, true
+    render json: { message: "#{@show.name} ##{@current.source.number} released!" }, status: 200
   end
 end
