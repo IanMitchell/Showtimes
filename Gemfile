@@ -33,6 +33,9 @@ gem 'jbuilder', '~> 2.0'
 gem 'pg'
 gem 'unicorn'
 
+# Server
+gem 'heroku'
+
 group :development, :test do
   gem 'dotenv-rails'
 
