@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   private
 
     def require_authorization
-      unless params[:auth].eql? 'secretpassword'
+      unless params[:auth].eql? ENV['AUTH']
         return render json: { message: 'Unauthorized Request' }, status: 401
       end
     end
