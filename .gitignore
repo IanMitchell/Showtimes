@@ -21,3 +21,6 @@
 
 # Debug
 .byebug_history
+
+# Heroku files
+heroku_backup.dump

@@ -11,3 +11,17 @@ member_two:
   role: 1
   title: Bot
   active: true
+
+member_three:
+  group: cartel
+  user: skiddiks
+  role: 1
+  title: Torn
+  active: true
+
+member_four:
+  group: cartel
+  user: jukey
+  role: 0
+  title: Dude, nice
+  active: false

@@ -1,9 +1,9 @@
 cartel_staff:
-  name: \#cartel-staff
+  name: "#cartel-staff"
   group: cartel
   staff: true
 
 cartel:
-  name: \#cartel
+  name: "#cartel"
   group: cartel
   staff: false
