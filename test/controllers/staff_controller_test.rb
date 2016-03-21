@@ -149,6 +149,26 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should allow founders to update any position for any show' do
+    put :update, {
+      auth: ENV['AUTH'],
+      irc: '#cartel-staff',
+      username: 'Desch',
+      name: 'aoty',
+      position: 'translator',
+      status: 'true',
+      format: :json
+    }
+
+    assert_response 200
+
+    body = JSON.parse(response.body)
+    assert body['message'].downcase.include?('updated'), 'Incorrect success message'
+
+    show = Show.find_by(name: "Desch's Slice of Life")
+    release = show.fansubs.first.current_release
+    staff = release.staff.where(position: Position.find_by(name: 'Translator')).first
+
+    assert staff.finished, 'Staff not updated correctly'
   end
 
   test 'should correctly update show' do

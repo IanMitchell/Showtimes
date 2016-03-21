@@ -30,7 +30,7 @@ class StaffController < ApplicationController
         if staff.present?
           @staff = staff.first
         else
-          # TODO: Allow the found to specify a user they're overriding.
+          # TODO: Allow the founder to specify a user they're overriding.
           @staff = @staff.where(finished: !fin).first
         end
       else
