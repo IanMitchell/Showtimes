@@ -22,7 +22,7 @@ class StaffController < ApplicationController
       return render json: { message: 'Invalid position.' }, status: 400 if @position.nil?
 
       @staff = @staff.where(position: @position)
-      return render json: { message: "That's not your position!" }, status: 400 if @staff.nil?
+      return render json: { message: "That's not your position!" }, status: 400 if @staff.empty?
 
       if @staff.count > 1
         # Admin - first, find by own name. If none, or if one and done, then
