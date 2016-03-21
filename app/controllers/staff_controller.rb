@@ -13,7 +13,7 @@ class StaffController < ApplicationController
     @show = Show.find_by_name_or_alias(params[:name])
     return render json: { message: 'Unknown show.' }, status: 400 if @show.nil?
 
-    @staff = @show.fansubs.where(group: @group).first&.current_release.staff
+    @staff = @show.fansubs.where(group: @group).first&.current_release&.staff
     @staff = @staff.where(user: @user) unless @user.members.where(group: @group).first.founder?
     return render json: { message: "No staff for #{@show.name}" }, status: 400 if @staff.nil?
 

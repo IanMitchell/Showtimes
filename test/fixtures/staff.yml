@@ -10,6 +10,18 @@ arx_ep_1:
   release: release_one
   finished: true
 
+skiddiks_ep_1_tm:
+  user: skiddiks
+  position: timer
+  release: release_one
+  finished: true
+
+skiddiks_ep_1_ts:
+  user: skiddiks
+  position: typesetter
+  release: release_one
+  finished: true
+
 desch_ep_2:
   user: desch
   position: editor
@@ -22,6 +34,18 @@ arx_ep_2:
   release: release_two
   finished: true
 
+skiddiks_ep_2_tm:
+  user: skiddiks
+  position: timer
+  release: release_two
+  finished: false
+
+skiddiks_ep_2_ts:
+  user: skiddiks
+  position: typesetter
+  release: release_two
+  finished: false
+
 desch_ep_3:
   user: desch
   position: editor
@@ -31,5 +55,17 @@ desch_ep_3:
 arx_ep_3:
   user: arx
   position: translator
+  release: release_three
+  finished: false
+
+skiddiks_ep_3_tm:
+  user: skiddiks
+  position: timer
+  release: release_three
+  finished: false
+
+skiddiks_ep_3_ts:
+  user: skiddiks
+  position: typesetter
   release: release_three
   finished: false

@@ -3,15 +3,18 @@ release_one:
   source: desch_episode_one (Episode)
   category: 0
   station: deschtv
+  released: true
 
 release_two:
   fansub: aoty_fansub
   source: desch_episode_two (Episode)
   category: 0
   station: deschtv
+  released: false
 
 release_three:
   fansub: aoty_fansub
   source: desch_episode_three (Episode)
   category: 0
   station: deschtv
+  released: false
