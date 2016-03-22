@@ -11,6 +11,6 @@ class Fansub < ActiveRecord::Base
   }
 
   def current_release
-    self.releases.pending.order('id ASC').limit(1).first
+    self.releases.pending.sort_by { |release| release.source.number }.first
   end
 end

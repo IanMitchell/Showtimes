@@ -1,6 +1,11 @@
- aoty_fansub:
+aoty_fansub:
   group: cartel
   show: desch
   tag: Desch
   nyaa_link: Desch
   status: 0
+
+shigatsu_fansub:
+  group: cartel
+  show: shigatsu
+  status: 1

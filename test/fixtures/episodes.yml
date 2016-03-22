@@ -27,3 +27,8 @@ fmp_episode_three:
   show: fmp
   number: 3
   air_date: <%= DateTime.now + 7.days %>
+
+shigatsu_episode_one:
+  show: shigatsu
+  number: 1
+  air_date: <%= DateTime.now - 1.year %>

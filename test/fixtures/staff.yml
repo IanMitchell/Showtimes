@@ -69,3 +69,9 @@ skiddiks_ep_3_ts:
   position: typesetter
   release: release_three
   finished: false
+
+desch_shigatsu:
+  user: desch
+  position: translator
+  release: shigatsu_release
+  finished: true

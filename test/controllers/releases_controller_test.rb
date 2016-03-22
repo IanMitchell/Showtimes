@@ -18,7 +18,7 @@ class ReleasesControllerTest < ActionController::TestCase
   test 'should fail with incorrect channel' do
     put :update, {
       username: 'Desch',
-      auth: 'secretpassword',
+      auth: ENV['AUTH'],
       irc: '#gjm',
       name: 'aoty',
       format: :json
@@ -32,7 +32,7 @@ class ReleasesControllerTest < ActionController::TestCase
   test 'should fail with non-staff channel' do
     put :update, {
       username: 'Desch',
-      auth: 'secretpassword',
+      auth: ENV['AUTH'],
       irc: '#cartel',
       name: 'aoty',
       format: :json
@@ -46,7 +46,7 @@ class ReleasesControllerTest < ActionController::TestCase
   test 'should fail with incorrect show' do
     put :update, {
       username: 'Desch',
-      auth: 'secretpassword',
+      auth: ENV['AUTH'],
       irc: '#cartel-staff',
       name: 'aoty2',
       format: :json
@@ -58,12 +58,47 @@ class ReleasesControllerTest < ActionController::TestCase
   end
 
   test 'should fail with incorrect fansub' do
+    put :update, {
+      username: 'Desch',
+      auth: ENV['AUTH'],
+      irc: '#cartel-staff',
+      name: 'fmp',
+      format: :json
+    }
+    assert_response 400
+
+    body = JSON.parse(response.body)
+    assert body['message'].downcase.include?('associated fansub'), 'Incorrect error message'
   end
 
   test 'should fail with finished show' do
+    put :update, {
+      username: 'Desch',
+      auth: ENV['AUTH'],
+      irc: '#cartel-staff',
+      name: 'shigatsu',
+      format: :json
+    }
+    assert_response 400
+
+    body = JSON.parse(response.body)
+    assert body['message'].downcase.include?('no pending'), 'Incorrect error message'
   end
 
   test 'should require all positions to be complete' do
+    put :update, {
+      username: 'Desch',
+      auth: ENV['AUTH'],
+      irc: '#cartel-staff',
+      name: 'aoty',
+      format: :json
+    }
+    assert_response 400
+
+    body = JSON.parse(response.body)
+    assert body['message'].downcase.include?('still pending'), 'Incorrect error message'
+    assert body['message'].downcase.include?('desch, skiddiks, skiddiks'), 'Not all jobs listed'
+    assert !body['message'].downcase.include?('arx-7'), 'Incorrect jobs listed'
   end
 
   test 'should succeed for correct show' do
