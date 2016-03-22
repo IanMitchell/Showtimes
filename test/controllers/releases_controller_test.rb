@@ -102,5 +102,23 @@ class ReleasesControllerTest < ActionController::TestCase
   end
 
   test 'should succeed for correct show' do
+    # Artificially set it as ready for release
+    show = Show.find_by(name: "Desch's Slice of Life")
+    release = show.fansubs.first.current_release
+    release.staff.each do |staff|
+      staff.update_attribute :finished, true
+    end
+
+    put :update, {
+      username: 'Desch',
+      auth: ENV['AUTH'],
+      irc: '#cartel-staff',
+      name: 'aoty',
+      format: :json
+    }
+    assert_response 200
+
+    body = JSON.parse(response.body)
+    assert body['message'].downcase.include?('#2 released'), 'Incorrect success message'
   end
 end
