@@ -3,8 +3,8 @@ json.shows @shows do |show|
 
   json.name show.name
 
-  unless @show.aliases.empty?
-    json.alias @show.aliases.first.name
+  unless show.aliases.empty?
+    json.alias show.aliases.first.name
   end
 
   json.episode_number show.next_episode.number
