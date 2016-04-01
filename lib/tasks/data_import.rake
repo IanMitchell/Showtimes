@@ -46,22 +46,30 @@ namespace :data_import do
             air_date = DateTime.new(year, month, day, hour, minute, 0, '+9')
             puts air_date
           else
-            air_date = DateTime.new
+            air_date = @show.episodes.where(number: row['EPISODE'].to_i - 1).first.air_date + 7.days
           end
+
           @episode = Episode.create(show: @show,
                                     number: row['EPISODE'],
                                     air_date: air_date)
+        end
+
+        @station = Station.find_by(name: row['CHANNEL']) # TODO: Rename row to STATION
+        if @station.nil?
+          puts "No station found for #{row['CHANNEL']}. Creating station..."
+          @station = Station.create(name: row['CHANNEL'])
         end
 
         @release = @fansub.releases.where(source: @episode).first
         if @release.nil?
           puts "No release for episode #{@episode.number}. Creating release..."
           @release = Release.create(fansub: @fansub,
-                                    station: Station.find_by(name: row['CHANNEL']),
-                                    source: @episode)
+                                    station: @station,
+                                    source: @episode,
+                                    released: !row['RELEASE'].empty?)
         end
 
-        [:TL, :TLC, :ENC, :ED, :TI, :TS, :QC].each do |position|
+        [:TL, :TLC, :ENC, :ED, :TM, :TS, :QC].each do |position|
           @position = Position.find_by(acronym: position.to_s)
 
           # Handle multiple users
