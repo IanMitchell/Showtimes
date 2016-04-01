@@ -35,7 +35,7 @@ Position.create([
   { name: 'Translator Check', acronym: 'TLC' },
   { name: 'Encoder', acronym: 'ENC' },
   { name: 'Editor', acronym: 'ED' },
-  { name: 'Timer', acronym: 'TI' },
+  { name: 'Timer', acronym: 'TM' },
   { name: 'Typesetter', acronym: 'TS' },
   { name: 'Quality Control', acronym: 'QC' }
 ])
@@ -43,31 +43,21 @@ Position.create([
 # Make Groups
 Group.create([
   {
-    name: 'Good Job! Media',
-    acronym: 'GJM'
+    name: "Desch's Test Fansub",
+    acronym: 'DTF'
   }
 ])
 
 Channel.create([
   {
-    name: '#goodjob',
+    name: '#arx-7',
     group: Group.first
-  },
-  {
-    name: '#gjm-dev',
-    group: Group.first,
-    staff: true
-  },
-  {
-    name: '#goodjobclub',
-    group: Group.first,
-    staff: true
   }
 ])
 
 # Make Users
 desch = User.create(name: 'Desch', email: 'test@test.com', password: 'password')
-fyurie = User.create(name: 'Fyurie', email: 'test2@test.com', password: 'password')
+arx = User.create(name: 'ARX-7', email: 'test2@test.com', password: 'password')
 
 # Make Members
 Member.create([
@@ -88,7 +78,7 @@ fansub = Fansub.new(group: Group.first, show: show)
 
   Staff.create([
     { user: desch, release: rel, position: Position.first },
-    { user: fyurie, release: rel, position: Position.second },
-    { user: fyurie, release: rel, position: Position.last, finished: 1 }
+    { user: arx, release: rel, position: Position.second },
+    { user: arx, release: rel, position: Position.last, finished: 1 }
   ])
 end
