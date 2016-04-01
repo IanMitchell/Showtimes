@@ -11,7 +11,7 @@ namespace :data_import do
         @show = Show.find_by(name: row['NAME'])
         if @show.nil?
           puts "No show for #{row['NAME']}. Creating record..."
-          @season = Season.find_by(name: row['SEASON'].split(' ')[0],
+          @season = Season.find_by(name: Season.names[row['SEASON'].split(' ')[0].downcase],
                                    year: row['SEASON'].split(' ')[1])
           @show = Show.create(name: row['NAME'], season: @season)
         end
