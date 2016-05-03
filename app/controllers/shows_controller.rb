@@ -1,8 +1,13 @@
 class ShowsController < ApplicationController
   def index
-    # TODO: Limit by channel
-    @shows = Show.where(season: Season.current)
-    return render(json: { message: "Unknown Season" }, status: 404) if @shows.nil?
+    @group = Channel.find_by(name: params[:irc])&.group
+    return render json: { message: 'Unknown IRC channel' }, status: 400 if @group.nil?
+
+    @shows = Show.joins(:fansubs).where(season: Season.current,
+                                        fansubs: {
+                                          group: @group,
+                                          status: Fansub.statuses[:active]
+                                        })
   end
 
   def show
