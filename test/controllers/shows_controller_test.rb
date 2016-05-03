@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ShowsControllerTest < ActionController::TestCase
   test "should get all shows" do
-    get :index, { format: :json }
+    get :index, { irc: '#cartel', format: :json }
     assert_response :success
 
     body = JSON.parse(response.body)
