@@ -14,6 +14,7 @@ namespace :data_import do
           @season = Season.find_by(name: Season.names[row['SEASON'].split(' ')[0].downcase],
                                    year: row['SEASON'].split(' ')[1])
           @show = Show.create(name: row['NAME'], season: @season)
+          puts "Created record for #{@season.full_name}"
         end
 
         @fansub = Fansub.find_by(group: Group.first, show: @show)
@@ -66,14 +67,18 @@ namespace :data_import do
           @release = Release.create(fansub: @fansub,
                                     station: @station,
                                     source: @episode,
-                                    released: !row['RELEASE'].empty?)
+                                    released: !row['RELEASE'].nil?)
         end
 
         [:TL, :TLC, :ENC, :ED, :TM, :TS, :QC].each do |position|
+          next if row[position.to_s].nil?
+
           @position = Position.find_by(acronym: position.to_s)
 
           # Handle multiple users
           row[position.to_s].split(', ').each do |name|
+            next if row[position.to_s].eql? 'N/A'
+
             @user = User.find_by(name: name)
 
             if @user.nil?
@@ -89,7 +94,10 @@ namespace :data_import do
             @staff = Staff.find_by(user: @user, position: @position, release: @release)
             if @staff.nil?
               puts "Adding #{name} to Episode #{@episode.number} staff..."
-              @staff = Staff.create(user: @user, position: @position, release: @release)
+              @staff = Staff.create(user: @user,
+                                    position: @position,
+                                    release: @release,
+                                    finished: @release.released)
             end
           end
         end
