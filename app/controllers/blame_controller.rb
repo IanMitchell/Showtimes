@@ -1,7 +1,8 @@
 class BlameController < ApplicationController
   def show
-    @group = Channel.find_by(name: params[:irc])&.group
-    return render json: { message: 'Unknown IRC channel' }, status: 400 if @group.nil?
+    @group = Channel.find_by(name: params[:channel] || params[:irc],
+                             platform: Channel.from_platform(params[:platform]))&.group
+    return render json: { message: 'Unknown channel' }, status: 400 if @group.nil?
 
     @show = Show.find_by_name_or_alias(params[:show])
     return render json: { message: 'Unknown Show' }, status: 400 if @show.nil?

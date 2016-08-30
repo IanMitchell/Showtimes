@@ -17,7 +17,7 @@ class BlameControllerTest < ActionController::TestCase
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('irc'), 'Incorrect error message'
+    assert body['message'].downcase.include?('channel'), 'Incorrect error message'
   end
 
   test 'should fail with incorrect show' do
