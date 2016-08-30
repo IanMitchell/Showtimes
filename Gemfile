@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.0'
+ruby '2.3.1'
 
 gem 'rails', '4.2.4'
 # Use ActiveModel has_secure_password
@@ -32,9 +32,6 @@ gem 'jbuilder', '~> 2.0'
 # Database
 gem 'pg'
 gem 'unicorn'
-
-# Server
-gem 'heroku'
 
 group :development, :test do
   gem 'dotenv-rails'

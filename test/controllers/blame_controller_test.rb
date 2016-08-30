@@ -33,9 +33,14 @@ class BlameControllerTest < ActionController::TestCase
     assert_response 400
 
     body = JSON.parse(response.body)
+    assert body['message'].downcase.include?('fansub'), 'Incorrect error message'
   end
 
   test 'should fail with completed fansub' do
+    get :show, { irc: '#cartel', show: 'shigatsu', format: :json }
+    assert_response 200
 
+    body = JSON.parse(response.body)
+    assert body['message'].downcase.include?('complete'), 'Incorrect error message'
   end
 end

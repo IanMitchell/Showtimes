@@ -1,25 +1,21 @@
 desch:
   name: Desch
   email: desch@test.test
-  irc_nick: Desch
   twitter: Desch
   timezone:
 
 arx:
   name: ARX-7
   email: arx@test.test
-  irc_nick: ARX-7
   twitter: ARX7
   timezone:
 
 skiddiks:
   name: skiddiks
   email: skiddiks@test.com
-  irc_nick: skiddiks
   twitter:
   timezone:
 
 jukey:
   name: Jukey
   email: jukey@test.com
-  irc_nick: Jukey

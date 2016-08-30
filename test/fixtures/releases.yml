@@ -18,3 +18,10 @@ release_three:
   category: 0
   station: deschtv
   released: false
+
+shigatsu_release:
+  fansub: shigatsu_fansub
+  source: shigatsu_episode_one (Episode)
+  category: 0
+  station: deschtv
+  released: true

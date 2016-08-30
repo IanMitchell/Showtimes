@@ -1,9 +1,17 @@
 cartel_staff:
   name: "#cartel-staff"
   group: cartel
+  platform: 0
   staff: true
 
 cartel:
   name: "#cartel"
   group: cartel
+  platform: 0
   staff: false
+
+cartel_discord:
+  name: '11111111111111122'
+  group: cartel
+  platform: 1
+  staff: true

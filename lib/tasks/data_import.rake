@@ -11,9 +11,10 @@ namespace :data_import do
         @show = Show.find_by(name: row['NAME'])
         if @show.nil?
           puts "No show for #{row['NAME']}. Creating record..."
-          @season = Season.find_by(name: row['SEASON'].split(' ')[0],
+          @season = Season.find_by(name: Season.names[row['SEASON'].split(' ')[0].downcase],
                                    year: row['SEASON'].split(' ')[1])
           @show = Show.create(name: row['NAME'], season: @season)
+          puts "Created record for #{@season.full_name}"
         end
 
         @fansub = Fansub.find_by(group: Group.first, show: @show)
@@ -46,26 +47,38 @@ namespace :data_import do
             air_date = DateTime.new(year, month, day, hour, minute, 0, '+9')
             puts air_date
           else
-            air_date = DateTime.new
+            air_date = @show.episodes.where(number: row['EPISODE'].to_i - 1).first.air_date + 7.days
           end
+
           @episode = Episode.create(show: @show,
                                     number: row['EPISODE'],
                                     air_date: air_date)
+        end
+
+        @station = Station.find_by(name: row['CHANNEL']) # TODO: Rename row to STATION
+        if @station.nil?
+          puts "No station found for #{row['CHANNEL']}. Creating station..."
+          @station = Station.create(name: row['CHANNEL'])
         end
 
         @release = @fansub.releases.where(source: @episode).first
         if @release.nil?
           puts "No release for episode #{@episode.number}. Creating release..."
           @release = Release.create(fansub: @fansub,
-                                    station: Station.find_by(name: row['CHANNEL']),
-                                    source: @episode)
+                                    station: @station,
+                                    source: @episode,
+                                    released: !row['RELEASE'].nil?)
         end
 
-        [:TL, :TLC, :ENC, :ED, :TI, :TS, :QC].each do |position|
+        [:TL, :TLC, :ENC, :ED, :TM, :TS, :QC].each do |position|
+          next if row[position.to_s].nil?
+
           @position = Position.find_by(acronym: position.to_s)
 
           # Handle multiple users
           row[position.to_s].split(', ').each do |name|
+            next if row[position.to_s].eql? 'N/A'
+
             @user = User.find_by(name: name)
 
             if @user.nil?
@@ -81,7 +94,10 @@ namespace :data_import do
             @staff = Staff.find_by(user: @user, position: @position, release: @release)
             if @staff.nil?
               puts "Adding #{name} to Episode #{@episode.number} staff..."
-              @staff = Staff.create(user: @user, position: @position, release: @release)
+              @staff = Staff.create(user: @user,
+                                    position: @position,
+                                    release: @release,
+                                    finished: @release.released)
             end
           end
         end
