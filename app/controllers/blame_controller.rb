@@ -4,7 +4,7 @@ class BlameController < ApplicationController
     return render json: { message: 'Unknown IRC channel' }, status: 400 if @group.nil?
 
     @show = Show.find_by_name_or_alias(params[:show])
-    return render json: { message: "Unknown Show" }, status: 400 if @show.nil?
+    return render json: { message: 'Unknown Show' }, status: 400 if @show.nil?
 
     @fansub = @group.fansubs.where(show: @show).first
     return render json: { message: 'No associated fansub' }, status: 400 if @fansub.nil?

@@ -1,5 +1,5 @@
-class Channel < ActiveRecord::Base
-  belongs_to :group
+class Account < ActiveRecord::Base
+  belongs_to :user
 
   enum platform: {
     irc: 0,

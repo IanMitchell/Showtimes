@@ -4,11 +4,14 @@ class StaffController < ApplicationController
   def update
     fin = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:status])
 
-    @group = Channel.find_by(name: params[:irc], staff: true)&.group
-    return render json: { message: 'Unknown IRC channel' }, status: 400 if @group.nil?
+    @group = Channel.find_by(name: params[:channel] || params[:irc],
+                             platform: Channel.from_platform(params[:platform]),
+                             staff: true)&.group
+    return render json: { message: 'Unknown channel' }, status: 400 if @group.nil?
 
-    @user = User.find_by(name: params[:username])
-    return render json: { message: 'Unknown IRC nick' }, status: 400 if @user.nil?
+    @user = Account.find_by(name: params[:username],
+                            platform: Account.from_platform(params[:platform]))&.user
+    return render json: { message: 'Unknown user.' }, status: 400 if @user.nil?
 
     @show = Show.find_by_name_or_alias(params[:name])
     return render json: { message: 'Unknown show.' }, status: 400 if @show.nil?

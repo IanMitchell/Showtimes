@@ -33,7 +33,7 @@ class StaffControllerTest < ActionController::TestCase
     assert body['message'].downcase.include?('channel'), 'Incorrect error message'
   end
 
-  test 'should not allow non-staff nicks' do
+  test 'should not allow non-staff users' do
     put :update, {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
@@ -46,7 +46,7 @@ class StaffControllerTest < ActionController::TestCase
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('nick'), 'Incorrect error message'
+    assert body['message'].downcase.include?('user'), 'Incorrect error message'
   end
 
   test 'should not allow non-fansubbed shows' do
@@ -169,6 +169,22 @@ class StaffControllerTest < ActionController::TestCase
     staff = release.staff.where(position: Position.find_by(name: 'Translator')).first
 
     assert staff.finished, 'Staff not updated correctly'
+  end
+
+
+  test 'should allow discord users' do
+    put :update, {
+      auth: ENV['AUTH'],
+      channel: '11111111111111122',
+      username: '90339695967350784',
+      platform: 'discord',
+      name: 'aoty',
+      position: 'translator',
+      status: 'true',
+      format: :json
+    }
+
+    assert_response 200
   end
 
   test 'should correctly update show' do

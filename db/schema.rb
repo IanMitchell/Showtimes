@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160106215422) do
+ActiveRecord::Schema.define(version: 20160830224515) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "accounts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.integer  "platform",   default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
 
   create_table "aliases", force: :cascade do |t|
     t.integer  "show_id"
@@ -20,7 +33,7 @@ ActiveRecord::Schema.define(version: 20160106215422) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "aliases", ["show_id"], name: "index_aliases_on_show_id"
+  add_index "aliases", ["show_id"], name: "index_aliases_on_show_id", using: :btree
 
   create_table "channels", force: :cascade do |t|
     t.string   "name"
@@ -28,9 +41,10 @@ ActiveRecord::Schema.define(version: 20160106215422) do
     t.boolean  "staff",      default: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.integer  "platform",   default: 0
   end
 
-  add_index "channels", ["group_id"], name: "index_channels_on_group_id"
+  add_index "channels", ["group_id"], name: "index_channels_on_group_id", using: :btree
 
   create_table "episodes", force: :cascade do |t|
     t.integer  "show_id"
@@ -41,8 +55,8 @@ ActiveRecord::Schema.define(version: 20160106215422) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "episodes", ["show_id"], name: "index_episodes_on_show_id"
-  add_index "episodes", ["volume_id"], name: "index_episodes_on_volume_id"
+  add_index "episodes", ["show_id"], name: "index_episodes_on_show_id", using: :btree
+  add_index "episodes", ["volume_id"], name: "index_episodes_on_volume_id", using: :btree
 
   create_table "fansubs", force: :cascade do |t|
     t.integer  "group_id"
@@ -54,8 +68,8 @@ ActiveRecord::Schema.define(version: 20160106215422) do
     t.datetime "updated_at",             null: false
   end
 
-  add_index "fansubs", ["group_id"], name: "index_fansubs_on_group_id"
-  add_index "fansubs", ["show_id"], name: "index_fansubs_on_show_id"
+  add_index "fansubs", ["group_id"], name: "index_fansubs_on_group_id", using: :btree
+  add_index "fansubs", ["show_id"], name: "index_fansubs_on_show_id", using: :btree
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
@@ -65,10 +79,10 @@ ActiveRecord::Schema.define(version: 20160106215422) do
     t.datetime "created_at"
   end
 
-  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
-  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
-  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
-  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.string   "name"
@@ -78,7 +92,7 @@ ActiveRecord::Schema.define(version: 20160106215422) do
     t.string   "slug"
   end
 
-  add_index "groups", ["slug"], name: "index_groups_on_slug", unique: true
+  add_index "groups", ["slug"], name: "index_groups_on_slug", unique: true, using: :btree
 
   create_table "members", force: :cascade do |t|
     t.integer  "group_id"
@@ -90,8 +104,8 @@ ActiveRecord::Schema.define(version: 20160106215422) do
     t.boolean  "active",     default: true
   end
 
-  add_index "members", ["group_id"], name: "index_members_on_group_id"
-  add_index "members", ["user_id"], name: "index_members_on_user_id"
+  add_index "members", ["group_id"], name: "index_members_on_group_id", using: :btree
+  add_index "members", ["user_id"], name: "index_members_on_user_id", using: :btree
 
   create_table "positions", force: :cascade do |t|
     t.string   "name"
@@ -111,9 +125,9 @@ ActiveRecord::Schema.define(version: 20160106215422) do
     t.boolean  "released",    default: false
   end
 
-  add_index "releases", ["fansub_id"], name: "index_releases_on_fansub_id"
-  add_index "releases", ["source_type", "source_id"], name: "index_releases_on_source_type_and_source_id"
-  add_index "releases", ["station_id"], name: "index_releases_on_station_id"
+  add_index "releases", ["fansub_id"], name: "index_releases_on_fansub_id", using: :btree
+  add_index "releases", ["source_type", "source_id"], name: "index_releases_on_source_type_and_source_id", using: :btree
+  add_index "releases", ["station_id"], name: "index_releases_on_station_id", using: :btree
 
   create_table "seasons", force: :cascade do |t|
     t.integer  "name",       default: 0
@@ -130,7 +144,7 @@ ActiveRecord::Schema.define(version: 20160106215422) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "shows", ["season_id"], name: "index_shows_on_season_id"
+  add_index "shows", ["season_id"], name: "index_shows_on_season_id", using: :btree
 
   create_table "staff", force: :cascade do |t|
     t.integer  "user_id"
@@ -141,9 +155,9 @@ ActiveRecord::Schema.define(version: 20160106215422) do
     t.boolean  "finished",    default: false
   end
 
-  add_index "staff", ["position_id"], name: "index_staff_on_position_id"
-  add_index "staff", ["release_id"], name: "index_staff_on_release_id"
-  add_index "staff", ["user_id"], name: "index_staff_on_user_id"
+  add_index "staff", ["position_id"], name: "index_staff_on_position_id", using: :btree
+  add_index "staff", ["release_id"], name: "index_staff_on_release_id", using: :btree
+  add_index "staff", ["user_id"], name: "index_staff_on_user_id", using: :btree
 
   create_table "stations", force: :cascade do |t|
     t.string   "name"
@@ -165,13 +179,12 @@ ActiveRecord::Schema.define(version: 20160106215422) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "name"
-    t.string   "irc_nick"
     t.string   "twitter"
     t.string   "timezone"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "volumes", force: :cascade do |t|
     t.integer  "show_id"
@@ -181,6 +194,7 @@ ActiveRecord::Schema.define(version: 20160106215422) do
     t.datetime "updated_at",   null: false
   end
 
-  add_index "volumes", ["show_id"], name: "index_volumes_on_show_id"
+  add_index "volumes", ["show_id"], name: "index_volumes_on_show_id", using: :btree
 
+  add_foreign_key "accounts", "users"
 end
