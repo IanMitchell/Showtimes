@@ -1,7 +1,14 @@
 require 'csv'
 
 namespace :data_import do
-  task :import_csv => :environment do
+  task :import_csv, [:group_acronym]  => :environment do |t, args|
+    @group = Group.find_by(acronym: args[:group_acronym])
+
+    if @group.nil?
+      puts "No group found with acronym: #{args[:group_acronym]}"
+      return
+    end
+
     puts 'Checking for CSV files...'
 
     Dir.glob(File.dirname(__FILE__) + '/../assets/csv/**/*.csv').each do |f|
@@ -9,18 +16,21 @@ namespace :data_import do
 
       CSV.foreach(f, headers: true) do |row|
         @show = Show.find_by(name: row['NAME'])
+
         if @show.nil?
           puts "No show for #{row['NAME']}. Creating record..."
           @season = Season.find_by(name: Season.names[row['SEASON'].split(' ')[0].downcase],
                                    year: row['SEASON'].split(' ')[1])
+
           @show = Show.create(name: row['NAME'], season: @season)
           puts "Created record for #{@season.full_name}"
         end
 
-        @fansub = Fansub.find_by(group: Group.first, show: @show)
+        @fansub = Fansub.find_by(group: @group, show: @show)
+
         if @fansub.nil?
           puts "No fansub for #{row['NAME']}. Creating record..."
-          @fansub = Fansub.create(group: Group.first,
+          @fansub = Fansub.create(group: @group,
                                   show: @show,
                                   tag: row['TAG'],
                                   nyaa_link: row['NYAA'])
@@ -56,12 +66,14 @@ namespace :data_import do
         end
 
         @station = Station.find_by(name: row['CHANNEL']) # TODO: Rename row to STATION
+
         if @station.nil?
           puts "No station found for #{row['CHANNEL']}. Creating station..."
           @station = Station.create(name: row['CHANNEL'])
         end
 
         @release = @fansub.releases.where(source: @episode).first
+
         if @release.nil?
           puts "No release for episode #{@episode.number}. Creating release..."
           @release = Release.create(fansub: @fansub,
@@ -86,12 +98,17 @@ namespace :data_import do
               @user = User.create(email: "#{name}@test.com",
                                   password: 'password',
                                   name: name,
-                                  irc_nick: row[position.to_s],
                                   twitter: 'Unknown')
-              @member = Member.create(group: Group.first, user: @user)
+                                  
+              @account = Account.create(user: @user,
+                                        platform: 0,
+                                        name: row[position.to_s])
+
+              @member = Member.create(group: @group, user: @user)
             end
 
             @staff = Staff.find_by(user: @user, position: @position, release: @release)
+
             if @staff.nil?
               puts "Adding #{name} to Episode #{@episode.number} staff..."
               @staff = Staff.create(user: @user,
