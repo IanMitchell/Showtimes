@@ -19,10 +19,12 @@ class Rack::Attack
     end
   end
 
-  Fail2Ban.filter("pentesters-#{req.ip}",
-                  :maxretry => 5,
-                  :findtime => 10.minutes,
-                  :bantime => 3.hours) do
-    req.path == '/users/sign_in' && req.post?
+  blocklist('fail2ban pentesters') do |req|
+    Fail2Ban.filter("pentesters-#{req.ip}",
+                    :maxretry => 5,
+                    :findtime => 10.minutes,
+                    :bantime => 3.hours) do
+      req.path == '/users/sign_in' && req.post?
+    end
   end
 end
