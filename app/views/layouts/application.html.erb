@@ -13,33 +13,6 @@
   </head>
 
   <body>
-    <nav class="top-bar" data-topbar role="navigation">
-      <ul class="title-area">
-        <li class="name">
-          <%- if user_signed_in? %>
-            <h1><%= link_to "Showtimes | #{current_user.name}", root_url %></h1>
-          <%- else %>
-            <h1><%= link_to 'Showtimes', root_url %></a></h1>
-          <%- end %>
-        </li>
-        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-      </ul>
-
-      <section class="top-bar-section">
-        <ul class="right">
-          <li><%= link_to 'Home', root_url %></li>
-          <%- if user_is_admin? %>
-            <li><%= link_to 'Admin', root_url %></li>
-          <%- end %>
-          <!-- <li><%= link_to 'Groups', groups_path %></li> -->
-          <%- if user_signed_in? %>
-            <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
-          <%- else %>
-            <li><%= link_to 'Login', new_user_session_path %></li>
-          <%- end %>
-        </ul>
-      </section>
-    </nav>
 
     <%= yield %>
 

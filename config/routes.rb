@@ -7,7 +7,6 @@ Rails.application.routes.draw do
   get 'blame' => 'blame#show'
   put 'staff' => 'staff#update'
   put 'release' => 'releases#update'
-  devise_for :users
   get 'about' => 'about#show'
 
   # The priority is based upon order of creation: first created -> highest priority.
