@@ -29,5 +29,7 @@ module Showtimes
         resource '*', headers: :any, methods: [:get]
       end
     end
+
+    config.middleware.use Rack::Attack
   end
 end

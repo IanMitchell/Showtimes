@@ -99,6 +99,8 @@ GEM
     orm_adapter (0.5.0)
     pg (0.18.4)
     rack (1.6.4)
+    rack-attack (5.0.1)
+      rack
     rack-cors (0.4.0)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -188,6 +190,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   pg
+  rack-attack
   rack-cors
   rails (= 4.2.4)
   sass-rails (~> 5.0)

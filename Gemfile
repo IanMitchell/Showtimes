@@ -9,6 +9,9 @@ gem 'rails', '4.2.4'
 # Accounts
 gem 'devise'
 
+# Security
+gem 'rack-attack'
+
 # Slugs
 gem 'friendly_id'
 
