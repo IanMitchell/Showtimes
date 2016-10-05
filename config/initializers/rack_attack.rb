@@ -5,17 +5,24 @@ class Rack::Attack
     '37.16.81.241'
   ]
 
-  Rack::Attack.blocklist('IP Blocks') do |req|
+  blocklist('IP Blocks') do |req|
     req.ip.in? blocklist
   end
 
-  # Throttle requests to 5 requests per second per ip
-  Rack::Attack.throttle('req/ip', limit: 10, period: 1.second) do |req|
-    # If the return value is truthy, the cache key for the return value
-    # is incremented and compared with the limit. In this case:
-    #   "rack::attack:#{Time.now.to_i/1.second}:req/ip:#{req.ip}"
-    #
-    # If falsy, the cache key is neither incremented nor checked.
+  throttle('req/ip', :limit => 10, :period => 1.second) do |req|
     req.ip
+  end
+
+  throttle('logins/ip', :limit => 5, :period => 20.seconds) do |req|
+    if req.path == '/users/sign_in' && req.post?
+      req.ip
+    end
+  end
+
+  Fail2Ban.filter("pentesters-#{req.ip}",
+                  :maxretry => 5,
+                  :findtime => 10.minutes,
+                  :bantime => 3.hours) do
+    req.path == '/users/sign_in' && req.post?
   end
 end
