@@ -1,6 +1,12 @@
 class Rack::Attack
-  Rack::Attack.blocklist('block 179.216.235.85') do |req|
-    req.ip.eql? '179.216.235.85'
+  blocklist = [
+    '187.109.85.234',
+    '179.216.235.85',
+    '37.16.81.241'
+  ]
+
+  Rack::Attack.blocklist('IP Blocks') do |req|
+    req.ip.in? blocklist
   end
 
   # Throttle requests to 5 requests per second per ip
