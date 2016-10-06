@@ -17,7 +17,7 @@ class StaffController < ApplicationController
     return render json: { message: 'Unknown show.' }, status: 400 if @show.nil?
 
     @staff = @show.fansubs.where(group: @group).first&.current_release&.staff
-    @staff = @staff.where(user: @user) unless @user.members.where(group: @group).first.founder?
+    @staff = @staff.where(user: @user) unless @user.members.where(group: @group)&.first&.founder?
     return render json: { message: "No staff for #{@show.name}" }, status: 400 if @staff.nil?
 
     if params[:position]
