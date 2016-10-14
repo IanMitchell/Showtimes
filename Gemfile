@@ -36,6 +36,10 @@ gem 'jbuilder', '~> 2.0'
 gem 'pg'
 gem 'unicorn'
 
+group :production do
+  gem 'rails_12factor'
+end
+
 group :development, :test do
   gem 'dotenv-rails'
 
