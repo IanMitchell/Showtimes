@@ -7,7 +7,7 @@ class BlameController < ApplicationController
     @show = Show.find_by_name_or_alias(params[:show])
     return render json: { message: 'Unknown Show' }, status: 400 if @show.nil?
 
-    @fansub = @group.fansubs.where(show: @show).first
+    @fansub = @group.fansubs.where(show: @show).where.not(status: 3).first
     return render json: { message: 'No associated fansub' }, status: 400 if @fansub.nil?
 
     @release = @fansub.current_release
