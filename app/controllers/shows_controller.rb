@@ -2,7 +2,7 @@ class ShowsController < ApplicationController
   def index
     @group = Channel.find_by(name: params[:channel] || params[:irc],
                              platform: Channel.from_platform(params[:platform]))&.group
-    return render json: { message: 'Unknown IRC channel' }, status: 400 if @group.nil?
+    return render json: { message: 'Unknown channel' }, status: 400 if @group.nil?
 
     @shows = Show.joins(:fansubs).where(season: Season.current,
                                         fansubs: {
