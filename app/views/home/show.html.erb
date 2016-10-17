@@ -1,2 +1,6 @@
-<h1>Home#show</h1>
-<p>Find me in app/views/home/show.html.erb</p>
+<h1>Tracked Groups</h1>
+<ul>
+  <%- @groups.each do |group| %>
+    <li><%= link_to group.name, group %></li>
+  <%- end %>
+</ul>
