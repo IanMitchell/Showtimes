@@ -8,7 +8,8 @@ class ReleasesController < ApplicationController
 
   def update
     @group = Channel.find_by(name: params[:channel] || params[:irc],
-                             platform: Channel.from_platform(params[:platform]))&.group
+                             platform: Channel.from_platform(params[:platform]),
+                             staff: true)&.group
     return render json: { message: 'Unknown channel' }, status: 400 if @group.nil?
 
     @show = Show.find_by_name_or_alias(params[:name])
