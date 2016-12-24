@@ -27,7 +27,7 @@ class ReleasesController < ApplicationController
     end
 
     @current.update_attribute :released, true
-    @fansub.current_release.touch
+    @fansub.current_release&.touch
     render json: { message: "#{@show.name} ##{@current.source.number} released!" }, status: 200
   end
 end
