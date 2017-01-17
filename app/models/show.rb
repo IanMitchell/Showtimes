@@ -17,4 +17,15 @@ class Show < ActiveRecord::Base
                  .limit(1)
                  .first
   end
+
+  def self.fuzzy_search(str)
+    # TODO: Check aliases
+    # shows = Alias.where(name: str)
+    # return shows unless shows.nil?
+
+    shows = where('lower(name) = ?', str.downcase)
+    return shows unless shows.empty?
+
+    shows = where('lower(name) LIKE ?', "%#{sanitize_sql_like(str.downcase)}%")
+  end
 end

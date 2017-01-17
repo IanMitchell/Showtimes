@@ -6,7 +6,7 @@ class StaffControllerTest < ActionController::TestCase
       auth: 'lolno',
       irc: '#cartel',
       username: 'Desch',
-      name: 'aoty',
+      name: 'desch',
       status: 'true',
       format: :json
     }
@@ -22,7 +22,7 @@ class StaffControllerTest < ActionController::TestCase
       auth: ENV['AUTH'],
       irc: '#cartel',
       username: 'Desch',
-      name: 'aoty',
+      name: 'desch',
       status: 'true',
       format: :json
     }
@@ -38,7 +38,7 @@ class StaffControllerTest < ActionController::TestCase
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'Belfiore',
-      name: 'aoty',
+      name: 'desch',
       status: 'true',
       format: :json
     }
@@ -70,7 +70,7 @@ class StaffControllerTest < ActionController::TestCase
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'Jukey',
-      name: 'aoty',
+      name: 'desch',
       position: 'qc',
       status: 'true',
       format: :json
@@ -87,7 +87,7 @@ class StaffControllerTest < ActionController::TestCase
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'Desch',
-      name: 'aoty',
+      name: 'desch',
       position: 'memer',
       status: 'true',
       format: :json
@@ -104,7 +104,7 @@ class StaffControllerTest < ActionController::TestCase
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
-      name: 'aoty',
+      name: 'desch',
       status: 'true',
       format: :json
     }
@@ -120,7 +120,7 @@ class StaffControllerTest < ActionController::TestCase
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'skiddiks',
-      name: 'aoty',
+      name: 'desch',
       status: 'true',
       format: :json
     }
@@ -136,7 +136,7 @@ class StaffControllerTest < ActionController::TestCase
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
-      name: 'aoty',
+      name: 'desch',
       position: 'editor',
       status: 'true',
       format: :json
@@ -153,7 +153,7 @@ class StaffControllerTest < ActionController::TestCase
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'Desch',
-      name: 'aoty',
+      name: 'desch',
       position: 'translator',
       status: 'true',
       format: :json
@@ -178,7 +178,7 @@ class StaffControllerTest < ActionController::TestCase
       channel: '11111111111111122',
       username: '90339695967350784',
       platform: 'discord',
-      name: 'aoty',
+      name: 'desch',
       position: 'translator',
       status: 'true',
       format: :json
@@ -192,7 +192,7 @@ class StaffControllerTest < ActionController::TestCase
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
-      name: 'aoty',
+      name: 'desch',
       position: 'translator',
       status: 'true',
       format: :json
@@ -215,7 +215,7 @@ class StaffControllerTest < ActionController::TestCase
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
-      name: 'aoty',
+      name: 'desch',
       position: 'translator',
       status: 'true',
       format: :json
@@ -227,7 +227,7 @@ class StaffControllerTest < ActionController::TestCase
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
-      name: 'aoty',
+      name: 'desch',
       status: 'false',
       format: :json
     }
@@ -249,7 +249,7 @@ class StaffControllerTest < ActionController::TestCase
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
-      name: 'aoty',
+      name: 'desch',
       status: 'false',
       format: :json
     }
@@ -271,7 +271,7 @@ class StaffControllerTest < ActionController::TestCase
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
-      name: 'aoty',
+      name: 'desch',
       position: 'translator',
       status: 'true',
       format: :json
@@ -287,5 +287,17 @@ class StaffControllerTest < ActionController::TestCase
                         position: Position.find_by(name: 'Translator'))
 
     assert staff.finished, 'Incorrect staff entry modified'
+  end
+
+  # TODO
+  test 'should update show based on alias' do
+  end
+
+  # TODO
+  test 'should handle multiple show matches' do
+  end
+
+  # TODO
+  test 'should ignore multiple matches for irrelevant shows' do
   end
 end

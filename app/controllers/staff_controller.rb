@@ -13,8 +13,17 @@ class StaffController < ApplicationController
                             platform: Account.from_platform(params[:platform]))&.user
     return render json: { message: 'Unknown user.' }, status: 400 if @user.nil?
 
-    @show = Show.find_by_name_or_alias(params[:name])
-    return render json: { message: 'Unknown show.' }, status: 400 if @show.nil?
+    # @show = Show.find_by_name_or_alias(params[:name])
+    @show = Show.fuzzy_search(params[:name])
+    case @show.length
+    when 0
+      return render json: { message: 'Unknown show.' }, status: 400
+    when 1
+      @show = @show.first
+    else
+      names = @shows.map { |show| show.name }.to_sentence
+      return render json: { message: "Multiple Matches: #{names}" }, status: 400
+    end
 
     @staff = @show.fansubs.where(group: @group).first&.current_release&.staff
     @staff = @staff.where(user: @user) unless @user.members.where(group: @group)&.first&.founder?
