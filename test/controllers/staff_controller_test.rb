@@ -1,6 +1,19 @@
 require 'test_helper'
 
 class StaffControllerTest < ActionController::TestCase
+  test 'should ignore multiple matches for irrelevant shows' do
+    put :update, {
+      auth: ENV['AUTH'],
+      irc: '#cartel-staff',
+      username: 'ARX-7',
+      name: 'desch',
+      status: 'true',
+      format: :json
+    }
+
+    assert_response 200
+  end
+
   test 'should restrict command to authorized requests' do
     put :update, {
       auth: 'lolno',
@@ -62,7 +75,7 @@ class StaffControllerTest < ActionController::TestCase
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('no staff'), 'Incorrect error message'
+    assert body['message'].downcase.include?('unknown show'), 'Incorrect error message'
   end
 
   test 'should not allow non-staff to update show' do
@@ -289,15 +302,32 @@ class StaffControllerTest < ActionController::TestCase
     assert staff.finished, 'Incorrect staff entry modified'
   end
 
-  # TODO
   test 'should update show based on alias' do
+    put :update, {
+      auth: ENV['AUTH'],
+      irc: '#cartel-staff',
+      username: 'ARX-7',
+      name: 'AOTY',
+      status: 'true',
+      format: :json
+    }
+
+    assert_response 200
   end
 
-  # TODO
   test 'should handle multiple show matches' do
-  end
+    put :update, {
+      auth: ENV['AUTH'],
+      irc: '#cartel-staff',
+      username: 'ARX-7',
+      name: 'shigatsu',
+      status: 'true',
+      format: :json
+    }
 
-  # TODO
-  test 'should ignore multiple matches for irrelevant shows' do
+    assert_response 400
+
+    body = JSON.parse(response.body)
+    assert body['message'].downcase.include?('match'), 'Incorrect error message'
   end
 end

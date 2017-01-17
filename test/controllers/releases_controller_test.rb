@@ -6,7 +6,7 @@ class ReleasesControllerTest < ActionController::TestCase
       username: 'Desch',
       auth: 'wrongpassword',
       irc: '#gjm',
-      name: 'aoty',
+      name: 'desch',
       format: :json
     }
     assert_response 401
@@ -20,7 +20,7 @@ class ReleasesControllerTest < ActionController::TestCase
       username: 'Desch',
       auth: ENV['AUTH'],
       irc: '#gjm',
-      name: 'aoty',
+      name: 'desch',
       format: :json
     }
     assert_response 400
@@ -34,7 +34,7 @@ class ReleasesControllerTest < ActionController::TestCase
       username: 'Desch',
       auth: ENV['AUTH'],
       irc: '#cartel',
-      name: 'aoty',
+      name: 'desch',
       format: :json
     }
     assert_response 400
@@ -54,7 +54,7 @@ class ReleasesControllerTest < ActionController::TestCase
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('show'), 'Incorrect error message'
+    assert body['message'].downcase.include?('unknown show'), 'Incorrect error message'
   end
 
   test 'should fail with incorrect fansub' do
@@ -76,7 +76,7 @@ class ReleasesControllerTest < ActionController::TestCase
       username: 'Desch',
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
-      name: 'shigatsu',
+      name: 'kimi no uso',
       format: :json
     }
     assert_response 400
@@ -90,7 +90,7 @@ class ReleasesControllerTest < ActionController::TestCase
       username: 'Desch',
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
-      name: 'aoty',
+      name: 'desch',
       format: :json
     }
     assert_response 400
@@ -101,7 +101,28 @@ class ReleasesControllerTest < ActionController::TestCase
     assert !body['message'].downcase.include?('arx-7'), 'Incorrect jobs listed'
   end
 
-  test 'should succeed for correct show' do
+  test 'should succeed for correct show and ignore irrelevant show' do
+    # Artificially set it as ready for release
+    show = Show.find_by(name: "Desch's Slice of Life")
+    release = show.fansubs.first.current_release
+    release.staff.each do |staff|
+      staff.update_attribute :finished, true
+    end
+
+    put :update, {
+      username: 'Desch',
+      auth: ENV['AUTH'],
+      irc: '#cartel-staff',
+      name: 'desch',
+      format: :json
+    }
+    assert_response 200
+
+    body = JSON.parse(response.body)
+    assert body['message'].downcase.include?('#2 released'), 'Incorrect success message'
+  end
+
+  test 'should release show based on alias' do
     # Artificially set it as ready for release
     show = Show.find_by(name: "Desch's Slice of Life")
     release = show.fansubs.first.current_release
@@ -117,8 +138,19 @@ class ReleasesControllerTest < ActionController::TestCase
       format: :json
     }
     assert_response 200
+  end
+
+  test 'should handle multiple show matches' do
+    put :update, {
+      username: 'Desch',
+      auth: ENV['AUTH'],
+      irc: '#cartel-staff',
+      name: 'shigatsu',
+      format: :json
+    }
+    assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('#2 released'), 'Incorrect success message'
+    assert body['message'].downcase.include?('matches'), 'Incorrect error message'
   end
 end

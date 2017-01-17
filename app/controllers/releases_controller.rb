@@ -12,11 +12,17 @@ class ReleasesController < ApplicationController
                              staff: true)&.group
     return render json: { message: 'Unknown channel' }, status: 400 if @group.nil?
 
-    @show = Show.find_by_name_or_alias(params[:name])
-    return render json: { message: 'Unknown show.' }, status: 400 if @show.nil?
-
-    @fansub = @show.fansubs.where(group: @group).first
-    return render json: { message: 'No associated fansub' }, status: 400 if @fansub.nil?
+    shows = @group.fuzzy_search_subbed_shows(params[:name])
+    case shows.length
+    when 0
+      return render json: { message: 'Unknown Show / No associated fansub.' }, status: 400
+    when 1
+      @show = shows.first
+      @fansub = @show.fansubs.where(group: @group).first
+    else
+      names = shows.map { |show| show.name }.to_sentence
+      return render json: { message: "Multiple Matches: #{names}" }, status: 400
+    end
 
     @current = @fansub.current_release
     return render json: { message: 'No pending releases' }, status: 400 if @current.nil?

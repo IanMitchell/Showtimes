@@ -13,7 +13,15 @@ class ShowsController < ApplicationController
 
   def show
     # TODO: Limit by channel?
-    @show = Show.find_by_name_or_alias(params[:id])
-    return render(json: { message: 'Unknown Show' }, status: 404) if @show.nil?
+    shows = Show.fuzzy_search(params[:id])
+    case shows.length
+    when 0
+      return render json: { message: 'Unknown show.' }, status: 404
+    when 1
+      @show = shows.first
+    else
+      names = shows.map { |show| show.name }.to_sentence
+      return render json: { message: "Multiple Matches: #{names}" }, status: 400
+    end
   end
 end

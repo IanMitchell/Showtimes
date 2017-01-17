@@ -19,13 +19,12 @@ class Show < ActiveRecord::Base
   end
 
   def self.fuzzy_search(str)
-    # TODO: Check aliases
-    # shows = Alias.where(name: str)
-    # return shows unless shows.nil?
+    show = Alias.where('lower(name) = ?', str.downcase).first&.show
+    return [show] unless show.nil?
 
     shows = where('lower(name) = ?', str.downcase)
     return shows unless shows.empty?
 
-    shows = where('lower(name) LIKE ?', "%#{sanitize_sql_like(str.downcase)}%")
+    where('lower(name) LIKE ?', "%#{sanitize_sql_like(str.downcase)}%")
   end
 end

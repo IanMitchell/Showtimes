@@ -4,8 +4,16 @@ class BlameController < ApplicationController
                              platform: Channel.from_platform(params[:platform]))&.group
     return render json: { message: 'Unknown channel' }, status: 400 if @group.nil?
 
-    @show = Show.find_by_name_or_alias(params[:show])
-    return render json: { message: 'Unknown Show' }, status: 400 if @show.nil?
+    shows = @group.fuzzy_search_subbed_shows(params[:show])
+    case shows.length
+    when 0
+      return render json: { message: 'Unknown show.' }, status: 400
+    when 1
+      @show = shows.first
+    else
+      names = shows.map { |show| show.name }.to_sentence
+      return render json: { message: "Multiple Matches: #{names}" }, status: 400
+    end
 
     @fansub = @group.fansubs.where(show: @show).where.not(status: 3).first
     return render json: { message: 'No associated fansub' }, status: 400 if @fansub.nil?

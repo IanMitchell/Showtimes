@@ -29,7 +29,7 @@ class BlameControllerTest < ActionController::TestCase
   end
 
   test 'should fail with incorrect fansub' do
-    get :show, { irc: '#cartel', show: 'fmp', format: :json }
+    get :show, { irc: '#cartel', show: 'shomin', format: :json }
     assert_response 400
 
     body = JSON.parse(response.body)
@@ -37,10 +37,28 @@ class BlameControllerTest < ActionController::TestCase
   end
 
   test 'should fail with completed fansub' do
-    get :show, { irc: '#cartel', show: 'shigatsu', format: :json }
+    get :show, { irc: '#cartel', show: 'kimi', format: :json }
     assert_response 200
 
     body = JSON.parse(response.body)
     assert body['message'].downcase.include?('complete'), 'Incorrect error message'
+  end
+
+  test 'should ignore multiple matches for irrelevant shows' do
+    get :show, { irc: '#cartel', show: 'desch', format: :json }
+    assert_response 200
+  end
+
+  test 'should respond to alias' do
+    get :show, { irc: '#cartel', show: 'aoty', format: :json }
+    assert_response 200
+  end
+
+  test 'should handle multiple show matches' do
+    get :show, { irc: '#cartel', show: 'shigatsu', format: :json }
+    assert_response 400
+
+    body = JSON.parse(response.body)
+    assert body['message'].downcase.include?('match'), 'Incorrect error message'
   end
 end
