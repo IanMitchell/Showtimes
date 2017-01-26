@@ -99,10 +99,10 @@ namespace :data_import do
                                   password: 'password',
                                   name: name,
                                   twitter: 'Unknown')
-                                  
+
               @account = Account.create(user: @user,
                                         platform: 0,
-                                        name: row[position.to_s])
+                                        name: name)
 
               @member = Member.create(group: @group, user: @user)
             end
