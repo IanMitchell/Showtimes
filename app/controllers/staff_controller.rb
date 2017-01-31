@@ -25,8 +25,10 @@ class StaffController < ApplicationController
     end
 
     @staff = @show.fansubs.where(group: @group).first&.current_release&.staff
-    @staff = @staff.where(user: @user) unless @user.members.where(group: @group)&.first&.founder?
-    return render json: { message: "No staff for #{@show.name}" }, status: 400 if @staff.nil?
+    return render json: { message: "No staff for #{@show.name}" }, status: 400 if @staff.empty?
+
+    # Filter by assigned roles unless admin or founder
+    @staff = @staff.where(user: @user) unless @user.group_admin? @group
 
     if params[:position]
       @position = Position.find_by_name_or_acronym(params[:position])

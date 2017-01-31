@@ -7,4 +7,13 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  def group_admin?(group)
+    self.members.where(
+      group: group,
+      role: [
+        Member.roles[:admin],
+        Member.roles[:founder]
+     ]).present?
+  end
 end
