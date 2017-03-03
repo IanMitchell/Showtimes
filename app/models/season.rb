@@ -1,5 +1,6 @@
 class Season < ActiveRecord::Base
   has_many :shows
+  has_many :episodes
 
   enum name: {
     winter: 0,
