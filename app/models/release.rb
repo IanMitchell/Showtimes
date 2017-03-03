@@ -2,7 +2,7 @@ class Release < ActiveRecord::Base
   belongs_to :source, polymorphic: true
   belongs_to :fansub
   belongs_to :station
-  has_many :staff
+  has_many :staff, dependent: :destroy
 
   scope :pending, -> { where(released: false) }
   scope :released, -> { where(released: true) }
