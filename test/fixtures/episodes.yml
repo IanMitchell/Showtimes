@@ -1,34 +1,41 @@
 desch_episode_one:
   show: desch
   number: 1
+  season: winter
   air_date: <%= DateTime.now - 7.days %>
 
 desch_episode_two:
   show: desch
   number: 2
+  season: winter
   air_date: <%= DateTime.now %>
 
 desch_episode_three:
   show: desch
   number: 3
+  season: winter
   air_date: <%= DateTime.now + 7.days %>
 
 fmp_episode_one:
   show: fmp
   number: 1
+  season: winter
   air_date: <%= DateTime.now - 7.days %>
 
 fmp_episode_two:
   show: fmp
   number: 2
+  season: winter
   air_date: <%= DateTime.now %>
 
 fmp_episode_three:
   show: fmp
   number: 3
+  season: winter
   air_date: <%= DateTime.now + 7.days %>
 
 shigatsu_episode_one:
   show: shigatsu
   number: 1
+  season: last_year
   air_date: <%= DateTime.now - 1.year %>

@@ -1,5 +1,4 @@
 class Season < ActiveRecord::Base
-  has_many :shows
   has_many :episodes
 
   enum name: {
@@ -11,7 +10,7 @@ class Season < ActiveRecord::Base
 
   def self.current
     self.find_by(name: Season.month_to_season(DateTime.now.month),
-                   year: DateTime.now.year)
+                 year: DateTime.now.year)
   end
 
   def full_name

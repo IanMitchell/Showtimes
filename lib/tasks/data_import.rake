@@ -16,14 +16,12 @@ namespace :data_import do
 
       CSV.foreach(f, headers: true) do |row|
         @show = Show.find_by(name: row['NAME'])
+        @season = Season.find_by(name: Season.names[row['SEASON'].split(' ')[0].downcase],
+                                 year: row['SEASON'].split(' ')[1])
 
         if @show.nil?
           puts "No show for #{row['NAME']}. Creating record..."
-          @season = Season.find_by(name: Season.names[row['SEASON'].split(' ')[0].downcase],
-                                   year: row['SEASON'].split(' ')[1])
-
-          @show = Show.create(name: row['NAME'], season: @season)
-          puts "Created record for #{@season.full_name}"
+          @show = Show.create(name: row['NAME'])
         end
 
         @fansub = Fansub.find_by(group: @group, show: @show)
@@ -62,7 +60,8 @@ namespace :data_import do
 
           @episode = Episode.create(show: @show,
                                     number: row['EPISODE'],
-                                    air_date: air_date)
+                                    air_date: air_date,
+                                    season: @season)
         end
 
         @station = Station.find_by(name: row['CHANNEL']) # TODO: Rename row to STATION

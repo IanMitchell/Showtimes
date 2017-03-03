@@ -1,5 +1,4 @@
 class Show < ActiveRecord::Base
-  belongs_to :season
   has_many :fansubs
   has_many :aliases
   has_many :episodes
@@ -26,5 +25,18 @@ class Show < ActiveRecord::Base
     return shows unless shows.empty?
 
     where('lower(name) LIKE ?', "%#{sanitize_sql_like(str.downcase)}%")
+  end
+
+  def self.currently_airing(group)
+    joins(:fansubs)
+      .joins(:episodes)
+      .where(fansubs: {
+        group: group,
+        status: Fansub.statuses[:active]
+      },
+      episodes: {
+        season: Season.current
+      })
+      .distinct
   end
 end
