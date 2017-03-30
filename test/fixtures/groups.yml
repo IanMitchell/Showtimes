@@ -1,3 +1,7 @@
 cartel:
   name: Cartel
   acronym: CAR
+
+syndicate:
+  name: Not Cartel
+  acronym: TEL

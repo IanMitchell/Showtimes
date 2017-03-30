@@ -18,7 +18,9 @@ class ReleasesController < ApplicationController
       return render json: { message: 'Unknown Show / No associated fansub.' }, status: 400
     when 1
       @show = shows.first
-      @fansub = @show.fansubs.where(group: @group).first
+      @fansub = @show.fansubs.includes(:groups)
+                             .where(groups: { id: @group.id })
+                             &.first
     else
       names = shows.map { |show| show.name }.to_sentence
       return render json: { message: "Multiple Matches: #{names}" }, status: 400

@@ -1,5 +1,6 @@
 class Fansub < ActiveRecord::Base
-  belongs_to :group
+  has_many :groups, through: :group_fansubs
+  has_many :group_fansubs
   belongs_to :show
   has_many :releases
 

@@ -7,7 +7,9 @@ class BlameController < ApplicationController
     shows = @group.fuzzy_search_subbed_shows(params[:show])
     case shows.length
     when 0
-      return render json: { message: 'Unknown show.' }, status: 400
+      unless Show.fuzzy_search(params[:show]).present?
+        return render json: { message: 'Unknown show.' }, status: 400
+      end
     when 1
       @show = shows.first
     else

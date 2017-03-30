@@ -4,7 +4,7 @@ class ShowsController < ApplicationController
                              platform: Channel.from_platform(params[:platform]))&.group
     return render json: { message: 'Unknown channel' }, status: 400 if @group.nil?
 
-    @shows = Show.currently_airing(@group)
+    @shows = @group.airing_shows
   end
 
   def show

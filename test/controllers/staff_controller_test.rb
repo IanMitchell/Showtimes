@@ -330,4 +330,29 @@ class StaffControllerTest < ActionController::TestCase
     body = JSON.parse(response.body)
     assert body['message'].downcase.include?('match'), 'Incorrect error message'
   end
+
+  test 'should support joint shows' do
+    put :update, {
+      auth: ENV['AUTH'],
+      irc: '#cartel-staff',
+      username: 'ARX-7',
+      name: 'Subarashii',
+      status: 'true',
+      format: :json
+    }
+
+    assert_response 200
+
+    put :update, {
+      auth: ENV['AUTH'],
+      irc: '#syndicate-staff',
+      username: 'Desch',
+      name: 'Subarashii',
+      position: 'tl',
+      status: 'true',
+      format: :json
+    }
+
+    assert_response 200
+  end
 end

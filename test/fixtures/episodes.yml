@@ -39,3 +39,9 @@ shigatsu_episode_one:
   number: 1
   season: last_year
   air_date: <%= DateTime.now - 1.year %>
+
+konosuba_episode_one:
+  show: konosuba
+  number: 1
+  season: last_year
+  air_date: <%= DateTime.now - 1.year %>

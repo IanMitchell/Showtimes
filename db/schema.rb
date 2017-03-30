@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170303184949) do
+ActiveRecord::Schema.define(version: 20170330170848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,7 +61,6 @@ ActiveRecord::Schema.define(version: 20170303184949) do
   add_index "episodes", ["volume_id"], name: "index_episodes_on_volume_id", using: :btree
 
   create_table "fansubs", force: :cascade do |t|
-    t.integer  "group_id"
     t.integer  "show_id"
     t.string   "tag"
     t.string   "nyaa_link"
@@ -70,7 +69,6 @@ ActiveRecord::Schema.define(version: 20170303184949) do
     t.datetime "updated_at",             null: false
   end
 
-  add_index "fansubs", ["group_id"], name: "index_fansubs_on_group_id", using: :btree
   add_index "fansubs", ["show_id"], name: "index_fansubs_on_show_id", using: :btree
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -85,6 +83,16 @@ ActiveRecord::Schema.define(version: 20170303184949) do
   add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+
+  create_table "group_fansubs", force: :cascade do |t|
+    t.integer  "group_id"
+    t.integer  "fansub_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "group_fansubs", ["fansub_id"], name: "index_group_fansubs_on_fansub_id", using: :btree
+  add_index "group_fansubs", ["group_id"], name: "index_group_fansubs_on_group_id", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.string   "name"
@@ -197,4 +205,6 @@ ActiveRecord::Schema.define(version: 20170303184949) do
 
   add_foreign_key "accounts", "users"
   add_foreign_key "episodes", "seasons"
+  add_foreign_key "group_fansubs", "fansubs"
+  add_foreign_key "group_fansubs", "groups"
 end

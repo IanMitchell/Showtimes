@@ -15,3 +15,15 @@ cartel_discord:
   group: cartel
   platform: 1
   staff: true
+
+syndicate:
+  name: "#syndicate"
+  group: syndicate
+  platform: 0
+  staff: false
+
+syndicate_staff:
+  name: "#syndicate-staff"
+  group: syndicate
+  platform: 0
+  staff: true

@@ -25,3 +25,8 @@ shigatsu_release:
   category: 0
   station: deschtv
   released: true
+
+konosuba_release:
+  fansub: konosuba_fansub
+  source: konosuba_episode_one (Episode)
+  released: false

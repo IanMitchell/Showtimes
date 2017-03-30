@@ -61,4 +61,14 @@ class BlameControllerTest < ActionController::TestCase
     body = JSON.parse(response.body)
     assert body['message'].downcase.include?('match'), 'Incorrect error message'
   end
+
+  test 'should support joint shows' do
+    ['#cartel', '#syndicate'].each do |channel|
+      get :show, { irc: channel, show: 'Subarashii', format: :json }
+      assert_response 200
+
+      body = JSON.parse(response.body)
+      assert body['name'], 'Name not in response'
+    end
+  end
 end

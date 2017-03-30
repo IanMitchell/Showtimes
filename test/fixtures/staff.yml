@@ -75,3 +75,15 @@ desch_shigatsu:
   position: translator
   release: shigatsu_release
   finished: true
+
+desch_konosuba:
+  user: desch
+  position: translator
+  release: konosuba_release
+  finished: false
+
+arx_konosuba:
+  user: arx
+  position: editor
+  release: konosuba_release
+  finished: false

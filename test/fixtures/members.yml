@@ -25,3 +25,13 @@ member_four:
   role: 0
   title: Dude, nice
   active: false
+
+member_five:
+  group: syndicate
+  user: desch
+  role: 2
+
+member_six:
+  group: syndicate
+  user: arx
+  role: 2

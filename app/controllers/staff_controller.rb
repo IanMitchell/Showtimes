@@ -24,7 +24,11 @@ class StaffController < ApplicationController
       return render json: { message: "Multiple Matches: #{names}" }, status: 400
     end
 
-    @staff = @show.fansubs.where(group: @group).first&.current_release&.staff
+    @staff = @show.fansubs.includes(:groups)
+                          .where(groups: { id: @group.id })
+                          &.first
+                          &.current_release
+                          &.staff
     return render json: { message: "No staff for #{@show.name}" }, status: 400 if @staff.empty?
 
     # Filter by assigned roles unless admin or founder

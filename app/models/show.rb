@@ -4,6 +4,9 @@ class Show < ActiveRecord::Base
   has_many :episodes
   has_many :volumes
 
+  scope :airing, -> {
+    joins(:episodes).where(episodes: { season: Season.current})
+  }
 
   def self.find_by_name_or_alias(name)
     show = self.where('lower(name) = ?', name.downcase).first
@@ -27,16 +30,7 @@ class Show < ActiveRecord::Base
     where('lower(name) LIKE ?', "%#{sanitize_sql_like(str.downcase)}%")
   end
 
-  def self.currently_airing(group)
-    joins(:fansubs)
-      .joins(:episodes)
-      .where(fansubs: {
-        group: group,
-        status: Fansub.statuses[:active]
-      },
-      episodes: {
-        season: Season.current
-      })
-      .distinct
+  def currently_airing?
+    self.episodes.where(season: Season.current).any?
   end
 end

@@ -2,7 +2,8 @@ class Group < ActiveRecord::Base
   include FriendlyId
 
   has_many :members
-  has_many :fansubs
+  has_many :fansubs, through: :group_fansubs
+  has_many :group_fansubs
   has_many :shows, through: :fansubs
   has_many :channels
 
@@ -18,5 +19,9 @@ class Group < ActiveRecord::Base
 
   def fuzzy_search_subbed_shows(str)
     self.shows.fuzzy_search(str)
+  end
+
+  def airing_shows
+    self.shows.airing
   end
 end

@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  group: cartel
+  fansub: aoty_fansub
+
+two:
+  group: cartel
+  fansub: shigatsu_fansub
+
+three:
+  group: cartel
+  fansub: tsuitachi_fansub
+
+four:
+  group: cartel
+  fansub: konosuba_fansub
+
+five:
+  group: syndicate
+  fansub: konosuba_fansub

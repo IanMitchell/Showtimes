@@ -1,21 +1,21 @@
 aoty_fansub:
-  group: cartel
   show: desch
   tag: Desch
   nyaa_link: Desch
   status: 0
 
 shigatsu_fansub:
-  group: cartel
   show: shigatsu
   status: 1
 
 tsuitachi_fansub:
-  group: cartel
   show: tsuitachi
   status: 1
 
 shomin_fansub:
-  group: cartel
   show: shomin
   status: 3
+
+konosuba_fansub:
+  show: konosuba
+  status: 0
