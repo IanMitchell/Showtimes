@@ -24,14 +24,14 @@ namespace :data_import do
           @show = Show.create(name: row['NAME'])
         end
 
-        @fansub = Fansub.find_by(group: @group, show: @show)
+        @fansub = Fansub.includes(:groups).where(show: @show, groups: { id: @group.id }).first
 
         if @fansub.nil?
           puts "No fansub for #{row['NAME']}. Creating record..."
-          @fansub = Fansub.create(group: @group,
-                                  show: @show,
+          @fansub = Fansub.create(show: @show,
                                   tag: row['TAG'],
                                   nyaa_link: row['NYAA'])
+          GroupFansub.create(fansub: @fansub, group: @group)
         end
 
         @episode = @show.episodes.where(number: row['EPISODE']).first
