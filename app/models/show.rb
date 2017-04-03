@@ -5,7 +5,7 @@ class Show < ActiveRecord::Base
   has_many :volumes
 
   scope :airing, -> {
-    joins(:episodes).where(episodes: { season: Season.current})
+    joins(:episodes).where(episodes: { season: Season.current}).distinct
   }
 
   def self.find_by_name_or_alias(name)
