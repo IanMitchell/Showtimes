@@ -176,7 +176,7 @@ class ReleasesControllerTest < ActionController::TestCase
     show.fansubs.first.releases.first.update_attribute :released, false
 
     put :update, {
-      username: 'ARX',
+      username: 'ARX-7',
       auth: ENV['AUTH'],
       irc: '#syndicate-staff',
       name: 'Subarashii',
@@ -184,5 +184,27 @@ class ReleasesControllerTest < ActionController::TestCase
     }
 
     assert_response 200
+  end
+
+
+  test 'should only allow Staff to release' do
+    # Artificially set it as ready for release
+    show = Show.find_by(name: "Desch's Slice of Life")
+    release = show.fansubs.first.current_release
+    release.staff.each do |staff|
+      staff.update_attribute :finished, true
+    end
+
+    put :update, {
+      username: 'Imposter',
+      auth: ENV['AUTH'],
+      irc: '#cartel-staff',
+      name: 'aoty',
+      format: :json
+    }
+    assert_response 400
+
+    body = JSON.parse(response.body)
+    assert body['message'].downcase.include?('member'), 'Incorrect error message'
   end
 end

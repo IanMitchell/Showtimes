@@ -12,6 +12,13 @@ class ReleasesController < ApplicationController
                              staff: true)&.group
     return render json: { message: 'Unknown channel' }, status: 400 if @group.nil?
 
+    @user = User.includes(:members).includes(:accounts)
+                .where(members: { group_id: @group.id },
+                       accounts: { name: params[:username] })
+                &.first
+
+    return render json: { message: 'Unknown member' }, status: 400 if @user.nil?
+
     shows = @group.fuzzy_search_subbed_shows(params[:name])
     case shows.length
     when 0
