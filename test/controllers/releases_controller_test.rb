@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ReleasesControllerTest < ActionController::TestCase
   test 'should require authentication' do
-    put :update, {
+    put :update, params: {
       username: 'Desch',
       auth: 'wrongpassword',
       irc: '#gjm',
@@ -16,7 +16,7 @@ class ReleasesControllerTest < ActionController::TestCase
   end
 
   test 'should fail with incorrect channel' do
-    put :update, {
+    put :update, params: {
       username: 'Desch',
       auth: ENV['AUTH'],
       irc: '#gjm',
@@ -30,7 +30,7 @@ class ReleasesControllerTest < ActionController::TestCase
   end
 
   test 'should fail with non-staff channel' do
-    put :update, {
+    put :update, params: {
       username: 'Desch',
       auth: ENV['AUTH'],
       irc: '#cartel',
@@ -44,7 +44,7 @@ class ReleasesControllerTest < ActionController::TestCase
   end
 
   test 'should fail with incorrect show' do
-    put :update, {
+    put :update, params: {
       username: 'Desch',
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
@@ -58,7 +58,7 @@ class ReleasesControllerTest < ActionController::TestCase
   end
 
   test 'should fail with incorrect fansub' do
-    put :update, {
+    put :update, params: {
       username: 'Desch',
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
@@ -72,7 +72,7 @@ class ReleasesControllerTest < ActionController::TestCase
   end
 
   test 'should fail with finished show' do
-    put :update, {
+    put :update, params: {
       username: 'Desch',
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
@@ -86,7 +86,7 @@ class ReleasesControllerTest < ActionController::TestCase
   end
 
   test 'should require all positions to be complete' do
-    put :update, {
+    put :update, params: {
       username: 'Desch',
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
@@ -109,7 +109,7 @@ class ReleasesControllerTest < ActionController::TestCase
       staff.update_attribute :finished, true
     end
 
-    put :update, {
+    put :update, params: {
       username: 'Desch',
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
@@ -130,7 +130,7 @@ class ReleasesControllerTest < ActionController::TestCase
       staff.update_attribute :finished, true
     end
 
-    put :update, {
+    put :update, params: {
       username: 'Desch',
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
@@ -141,7 +141,7 @@ class ReleasesControllerTest < ActionController::TestCase
   end
 
   test 'should handle multiple show matches' do
-    put :update, {
+    put :update, params: {
       username: 'Desch',
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
@@ -162,7 +162,7 @@ class ReleasesControllerTest < ActionController::TestCase
       staff.update_attribute :finished, true
     end
 
-    put :update, {
+    put :update, params: {
       username: 'Desch',
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
@@ -175,7 +175,7 @@ class ReleasesControllerTest < ActionController::TestCase
     # Reset
     show.fansubs.first.releases.first.update_attribute :released, false
 
-    put :update, {
+    put :update, params: {
       username: 'ARX-7',
       auth: ENV['AUTH'],
       irc: '#syndicate-staff',
@@ -195,7 +195,7 @@ class ReleasesControllerTest < ActionController::TestCase
       staff.update_attribute :finished, true
     end
 
-    put :update, {
+    put :update, params: {
       username: 'Imposter',
       auth: ENV['AUTH'],
       irc: '#cartel-staff',

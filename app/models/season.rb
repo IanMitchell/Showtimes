@@ -1,4 +1,4 @@
-class Season < ActiveRecord::Base
+class Season < ApplicationRecord
   has_many :episodes
 
   enum name: {

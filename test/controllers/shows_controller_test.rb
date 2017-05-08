@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ShowsControllerTest < ActionController::TestCase
   test "should get all shows" do
-    get :index, { irc: '#cartel', format: :json }
+    get :index, params: { irc: '#cartel', format: :json }
     assert_response :success
 
     body = JSON.parse(response.body)
@@ -12,7 +12,7 @@ class ShowsControllerTest < ActionController::TestCase
   end
 
   test 'should get show by alias' do
-    get :show, { id: 'aoty', format: :json }
+    get :show, params: { id: 'aoty', format: :json }
     assert_response :success
 
     body = JSON.parse(response.body)
@@ -21,7 +21,7 @@ class ShowsControllerTest < ActionController::TestCase
   end
 
   test 'should get show by name' do
-    get :show, { id: "Desch's Slice of Life", format: :json }
+    get :show, params: { id: "Desch's Slice of Life", format: :json }
     assert_response :success
 
     body = JSON.parse(response.body)
@@ -30,7 +30,7 @@ class ShowsControllerTest < ActionController::TestCase
   end
 
   test 'should handle incorrect show' do
-    get :show, { id: 'GJM', format: :json }
+    get :show, params: { id: 'GJM', format: :json }
     assert_response :not_found
 
     body = JSON.parse(response.body)

@@ -2,7 +2,7 @@ class StaffController < ApplicationController
   before_action :require_authorization, only: [:update]
 
   def update
-    fin = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:status])
+    fin = ActiveRecord::Type::Boolean.new.deserialize(params[:status])
 
     @group = Channel.find_by(name: params[:channel] || params[:irc],
                              platform: Channel.from_platform(params[:platform]),

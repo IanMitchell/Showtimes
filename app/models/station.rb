@@ -1,4 +1,4 @@
-class Station < ActiveRecord::Base
+class Station < ApplicationRecord
   has_many :releases
 
   validates :name, presence: true,

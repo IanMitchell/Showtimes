@@ -2,7 +2,7 @@ require 'test_helper'
 
 class StaffControllerTest < ActionController::TestCase
   test 'should ignore multiple matches for irrelevant shows' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
@@ -15,7 +15,7 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should restrict command to authorized requests' do
-    put :update, {
+    put :update, params: {
       auth: 'lolno',
       irc: '#cartel',
       username: 'Desch',
@@ -31,7 +31,7 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should not allow non-staff channels' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel',
       username: 'Desch',
@@ -47,7 +47,7 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should not allow non-staff users' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'Belfiore',
@@ -63,7 +63,7 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should not allow non-fansubbed shows' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'Desch',
@@ -79,7 +79,7 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should not allow non-staff to update show' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'Jukey',
@@ -96,7 +96,7 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should not allow invalid positions' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'Desch',
@@ -113,7 +113,7 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should not require position when user has one position' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
@@ -129,7 +129,7 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should require position when user has multiple positions' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'skiddiks',
@@ -145,7 +145,7 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should not allow incorrect staff position' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
@@ -162,7 +162,7 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should allow founders to update any position for any show' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'Desch',
@@ -186,7 +186,7 @@ class StaffControllerTest < ActionController::TestCase
 
 
   test 'should allow discord users' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       channel: '11111111111111122',
       username: '90339695967350784',
@@ -201,7 +201,7 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should correctly update show' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
@@ -224,7 +224,7 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should correctly revert staff as unfinished' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
@@ -236,7 +236,7 @@ class StaffControllerTest < ActionController::TestCase
 
     assert_response 200
 
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
@@ -258,7 +258,7 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should handle marking staff as unfinished when unfinished' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
@@ -280,7 +280,7 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should update current release' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
@@ -303,7 +303,7 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should update show based on alias' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
@@ -316,7 +316,7 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should handle multiple show matches' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
@@ -332,7 +332,7 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test 'should support joint shows' do
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#cartel-staff',
       username: 'ARX-7',
@@ -343,7 +343,7 @@ class StaffControllerTest < ActionController::TestCase
 
     assert_response 200
 
-    put :update, {
+    put :update, params: {
       auth: ENV['AUTH'],
       irc: '#syndicate-staff',
       username: 'Desch',

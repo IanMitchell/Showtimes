@@ -1,4 +1,4 @@
-class Release < ActiveRecord::Base
+class Release < ApplicationRecord
   belongs_to :source, polymorphic: true
   belongs_to :fansub
   belongs_to :station

@@ -1,4 +1,4 @@
-class Show < ActiveRecord::Base
+class Show < ApplicationRecord
   has_many :fansubs
   has_many :aliases
   has_many :episodes

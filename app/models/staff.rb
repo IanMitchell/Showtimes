@@ -1,4 +1,4 @@
-class Staff < ActiveRecord::Base
+class Staff < ApplicationRecord
   belongs_to :user
   belongs_to :position
   belongs_to :release, touch: true

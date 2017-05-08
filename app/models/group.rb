@@ -1,9 +1,9 @@
-class Group < ActiveRecord::Base
+class Group < ApplicationRecord
   include FriendlyId
 
   has_many :members
-  has_many :fansubs, through: :group_fansubs
   has_many :group_fansubs
+  has_many :fansubs, through: :group_fansubs
   has_many :shows, through: :fansubs
   has_many :channels
 
