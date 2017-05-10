@@ -14,4 +14,9 @@ class Fansub < ApplicationRecord
   def current_release
     self.releases.pending.sort_by { |release| release.source.number }.first
   end
+
+  # Active Admin
+  def display_name
+    "#{self.groups.map(&:acronym).join('/')} #{self.show.name}"
+  end
 end

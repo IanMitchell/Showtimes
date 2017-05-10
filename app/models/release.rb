@@ -12,4 +12,9 @@ class Release < ApplicationRecord
     bluray: 1,
     batch: 2
   }
+
+  # Active Admin
+  def display_name
+    "#{self.fansub.display_name} ##{self.source.number}"
+  end
 end
