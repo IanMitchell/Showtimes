@@ -1,4 +1,6 @@
 ActiveAdmin.register Group do
+  menu parent: 'Group Management', priority: 1
+
   controller do
     def find_resource
       scoped_collection.friendly.find(params[:id])

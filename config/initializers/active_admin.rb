@@ -133,6 +133,7 @@ ActiveAdmin.setup do |config|
   #
   # You can customize the comment menu:
   # config.comments_menu = { parent: 'Admin', priority: 1 }
+  config.comments_menu = { priority: 6 }
 
   # == Batch Actions
   #
@@ -221,6 +222,14 @@ ActiveAdmin.setup do |config|
   #       admin.add_logout_button_to_menu menu
   #     end
   #   end
+  config.namespace :admin do |admin|
+    admin.build_menu do |menu|
+      menu.add label: 'Subbing', priority: 3,
+      menu.add label: 'Group Management', priority: 4,
+      menu.add label: 'Data', priority: 5
+    end
+  end
+
   #
   # If you wanted to add a static menu item to the default menu provided:
   #
