@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20170509234751) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "accounts", id: :serial, force: :cascade do |t|
+  create_table "accounts", force: :cascade do |t|
     t.integer "user_id"
     t.string "name"
     t.integer "platform", default: 0
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20170509234751) do
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
   end
 
-  create_table "aliases", id: :serial, force: :cascade do |t|
+  create_table "aliases", force: :cascade do |t|
     t.integer "show_id"
     t.string "name"
     t.datetime "created_at", null: false
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20170509234751) do
     t.index ["show_id"], name: "index_aliases_on_show_id"
   end
 
-  create_table "channels", id: :serial, force: :cascade do |t|
+  create_table "channels", force: :cascade do |t|
     t.string "name"
     t.integer "group_id"
     t.boolean "staff", default: false
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20170509234751) do
     t.index ["group_id"], name: "index_channels_on_group_id"
   end
 
-  create_table "episodes", id: :serial, force: :cascade do |t|
+  create_table "episodes", force: :cascade do |t|
     t.integer "show_id"
     t.integer "volume_id"
     t.integer "number"
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 20170509234751) do
     t.index ["volume_id"], name: "index_episodes_on_volume_id"
   end
 
-  create_table "fansubs", id: :serial, force: :cascade do |t|
+  create_table "fansubs", force: :cascade do |t|
     t.integer "show_id"
     t.string "tag"
     t.integer "status", default: 0
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 20170509234751) do
     t.index ["show_id"], name: "index_fansubs_on_show_id"
   end
 
-  create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
+  create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
     t.string "sluggable_type", limit: 50
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20170509234751) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
-  create_table "group_fansubs", id: :serial, force: :cascade do |t|
+  create_table "group_fansubs", force: :cascade do |t|
     t.integer "group_id"
     t.integer "fansub_id"
     t.datetime "created_at", null: false
@@ -99,7 +99,7 @@ ActiveRecord::Schema.define(version: 20170509234751) do
     t.index ["group_id"], name: "index_group_fansubs_on_group_id"
   end
 
-  create_table "groups", id: :serial, force: :cascade do |t|
+  create_table "groups", force: :cascade do |t|
     t.string "name"
     t.string "acronym"
     t.datetime "created_at", null: false
@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20170509234751) do
     t.index ["slug"], name: "index_groups_on_slug", unique: true
   end
 
-  create_table "members", id: :serial, force: :cascade do |t|
+  create_table "members", force: :cascade do |t|
     t.integer "group_id"
     t.integer "user_id"
     t.integer "role", default: 0
@@ -120,14 +120,14 @@ ActiveRecord::Schema.define(version: 20170509234751) do
     t.index ["user_id"], name: "index_members_on_user_id"
   end
 
-  create_table "positions", id: :serial, force: :cascade do |t|
+  create_table "positions", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "acronym"
   end
 
-  create_table "releases", id: :serial, force: :cascade do |t|
+  create_table "releases", force: :cascade do |t|
     t.integer "fansub_id"
     t.integer "source_id"
     t.string "source_type"
@@ -141,21 +141,21 @@ ActiveRecord::Schema.define(version: 20170509234751) do
     t.index ["station_id"], name: "index_releases_on_station_id"
   end
 
-  create_table "seasons", id: :serial, force: :cascade do |t|
+  create_table "seasons", force: :cascade do |t|
     t.integer "name", default: 0
     t.integer "year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "shows", id: :serial, force: :cascade do |t|
+  create_table "shows", force: :cascade do |t|
     t.string "name"
     t.string "link"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "staff", id: :serial, force: :cascade do |t|
+  create_table "staff", force: :cascade do |t|
     t.integer "user_id"
     t.integer "position_id"
     t.integer "release_id"
@@ -167,13 +167,13 @@ ActiveRecord::Schema.define(version: 20170509234751) do
     t.index ["user_id"], name: "index_staff_on_user_id"
   end
 
-  create_table "stations", id: :serial, force: :cascade do |t|
+  create_table "stations", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", id: :serial, force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -193,7 +193,7 @@ ActiveRecord::Schema.define(version: 20170509234751) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "volumes", id: :serial, force: :cascade do |t|
+  create_table "volumes", force: :cascade do |t|
     t.integer "show_id"
     t.integer "number"
     t.datetime "release_date"

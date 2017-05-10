@@ -29,8 +29,7 @@ namespace :data_import do
         if @fansub.nil?
           puts "No fansub for #{row['NAME']}. Creating record..."
           @fansub = Fansub.create(show: @show,
-                                  tag: row['TAG'],
-                                  nyaa_link: row['NYAA'])
+                                  tag: row['TAG'])
           GroupFansub.create(fansub: @fansub, group: @group)
         end
 
