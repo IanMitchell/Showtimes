@@ -18,6 +18,9 @@ gem 'friendly_id'
 # CORS
 gem 'rack-cors'
 
+# Admin Interface
+gem 'activeadmin'
+
 # Front-end
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
