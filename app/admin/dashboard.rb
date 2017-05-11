@@ -10,21 +10,8 @@ ActiveAdmin.register_page "Dashboard" do
           ul do
             li "Trim User Table, create new Fansubber Table (Name Pending)"
             li "Disable User Table Viewing / Editing"
-            li "Allowing Data Editing (currently won't save)"
             li "Adding Model Validations"
             ul do
-              li "Account"
-              li "Alias"
-              li "Channel"
-              li "Episode"
-              li "Fansub"
-              li "Group"
-              li "Member"
-              li "Position"
-              li "Release"
-              li "Show"
-              li "Staff"
-              li "Station"
               li "User"
             end
             li "Fansub permission scoping (DDY can't edit GJM)"
@@ -40,7 +27,13 @@ ActiveAdmin.register_page "Dashboard" do
           para "TODO: Welcome Message. What else would be useful here?"
         end
       end
+
+      column do
+        panel "Important Discord Note" do
+          para "When adding Accounts or Channels, you'll use a user ID or server ID as the 'name' field value. To get these values, go into your Discord user settings and enable the developer options. You can then right click on users or servers and copy ID values easily."
+        end
+      end
     end
   end
-  
+
 end

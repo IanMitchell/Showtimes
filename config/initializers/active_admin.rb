@@ -224,8 +224,8 @@ ActiveAdmin.setup do |config|
   #   end
   config.namespace :admin do |admin|
     admin.build_menu do |menu|
-      menu.add label: 'Subbing', priority: 3,
-      menu.add label: 'Group Management', priority: 4,
+      menu.add label: 'Subbing', priority: 3
+      menu.add label: 'Group Management', priority: 4
       menu.add label: 'Data', priority: 5
     end
   end

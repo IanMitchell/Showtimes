@@ -1,5 +1,10 @@
 class Season < ApplicationRecord
-  has_many :episodes
+  has_many :episodes, inverse_of: :season
+
+  validates :name, presence: true
+
+  validates :year, presence: true,
+                   numericality: true
 
   enum name: {
     winter: 0,

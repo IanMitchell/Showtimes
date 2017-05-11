@@ -1,6 +1,13 @@
 class Account < ApplicationRecord
   belongs_to :user
 
+  validates :user, presence: true
+
+  validates :name, presence: true,
+                   uniqueness: true
+
+  validates :platform, presence: true
+
   enum platform: {
     irc: 0,
     discord: 1,
