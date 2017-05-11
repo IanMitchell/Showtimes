@@ -1,8 +1,12 @@
 class Fansub < ApplicationRecord
-  has_many :group_fansubs
+  has_many :group_fansubs, inverse_of: :fansub
   has_many :groups, through: :group_fansubs
   belongs_to :show
-  has_many :releases
+  has_many :releases, inverse_of: :fansub
+
+  validates :show, presence: true
+
+  validates :status, presence: true
 
   enum status: {
     active: 0,

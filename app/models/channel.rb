@@ -1,6 +1,13 @@
 class Channel < ApplicationRecord
   belongs_to :group
 
+  validates :name, presence: true,
+                   uniqueness: true
+
+  validates :group, presence: true
+
+  validates :platform, presence: true
+
   enum platform: {
     irc: 0,
     discord: 1,

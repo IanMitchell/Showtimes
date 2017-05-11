@@ -1,8 +1,12 @@
 class Show < ApplicationRecord
-  has_many :fansubs
-  has_many :aliases
-  has_many :episodes
-  has_many :volumes
+  has_many :fansubs, inverse_of: :show
+  has_many :aliases, inverse_of: :show
+  has_many :episodes, inverse_of: :show
+  has_many :volumes, inverse_of: :show
+
+  validates :name, presence: true,
+                   uniqueness: true
+
 
   scope :airing, -> {
     joins(:episodes).where(episodes: { season: Season.current}).distinct
