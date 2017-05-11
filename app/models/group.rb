@@ -4,7 +4,7 @@ class Group < ApplicationRecord
   has_many :members, inverse_of: :group
   has_many :group_fansubs, inverse_of: :group
   has_many :fansubs, through: :group_fansubs
-  has_many :shows, through: :fansubs, inverse_of: :group
+  has_many :shows, through: :fansubs
   has_many :channels, inverse_of: :channels
 
   friendly_id :name, use: :slugged
