@@ -9,11 +9,12 @@ class Staff < ApplicationRecord
   scope :finished, -> { where(finished: true) }
 
   validates :user, presence: true,
-                   uniqueness: { scope: :position, message: "user positions should be unique" }
+                   uniqueness: {
+                     scope: [:position, :release],
+                     message: "user positions should be unique"
+                   }
 
   validates :position, presence: true
 
   validates :release, presence: true
-
-  validates :finished, presence: true
 end
