@@ -1,7 +1,7 @@
 <% unless fansub.current_release.nil? %>
   <div class="large-6 medium-12 small-12 columns panel">
-    <h3><%= fansub.show.name %>  #<%= fansub.current_release.source.number %></h3>
-    <h6>Aired <%= fansub.current_release.source.air_date %></h6>
+    <h3><%= fansub.show.name %>  #<%= fansub.current_release.episode.number %></h3>
+    <h6>Aired <%= fansub.current_release.episode.air_date %></h6>
     <ul>
       <%- fansub.current_release.staff.each do |staff| %>
         <%- if staff.finished? %>

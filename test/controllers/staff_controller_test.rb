@@ -293,8 +293,8 @@ class StaffControllerTest < ActionController::TestCase
     assert_response 200
 
     show = Show.find_by(name: "Desch's Slice of Life")
-    release = Release.find_by(source: Episode.find_by(show: show,
-                                                      number: 2))
+    release = Release.find_by(episode: Episode.find_by(show: show,
+                                                       number: 2))
     staff = Staff.where(user: User.find_by(name: 'ARX-7'),
                         release: release,
                         position: Position.find_by(name: 'Translator'))

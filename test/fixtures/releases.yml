@@ -1,32 +1,32 @@
 release_one:
   fansub: aoty_fansub
-  source: desch_episode_one (Episode)
+  episode: desch_episode_one
   category: 0
   station: deschtv
   released: true
 
 release_two:
   fansub: aoty_fansub
-  source: desch_episode_two (Episode)
+  episode: desch_episode_two
   category: 0
   station: deschtv
   released: false
 
 release_three:
   fansub: aoty_fansub
-  source: desch_episode_three (Episode)
+  episode: desch_episode_three
   category: 0
   station: deschtv
   released: false
 
 shigatsu_release:
   fansub: shigatsu_fansub
-  source: shigatsu_episode_one (Episode)
+  episode: shigatsu_episode_one
   category: 0
   station: deschtv
   released: true
 
 konosuba_release:
   fansub: konosuba_fansub
-  source: konosuba_episode_one (Episode)
+  episode: konosuba_episode_one
   released: false

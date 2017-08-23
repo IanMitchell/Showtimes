@@ -1,8 +1,7 @@
 class Episode < ApplicationRecord
   belongs_to :show
-  belongs_to :volume
   belongs_to :season
-  has_many :releases, as: :source, dependent: :destroy, inverse_of: :source
+  has_many :releases, dependent: :destroy, inverse_of: :episode
 
   validates :show, presence: true
 

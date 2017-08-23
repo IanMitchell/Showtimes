@@ -1,9 +1,9 @@
 json.(@group, :name, :acronym)
 
 json.name @fansub.show.name
-json.season @release.source.season.full_name
-json.episode @release.source.number
-json.air_date @release.source.air_date.to_datetime
+json.season @release.episode.season.full_name
+json.episode @release.episode.number
+json.air_date @release.episode.air_date.to_datetime
 json.updated_at @release.updated_at.to_datetime
 
 json.status @release.staff do |staff|

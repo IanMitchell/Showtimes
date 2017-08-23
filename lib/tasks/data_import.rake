@@ -70,13 +70,13 @@ namespace :data_import do
           @station = Station.create(name: row['CHANNEL'])
         end
 
-        @release = @fansub.releases.where(source: @episode).first
+        @release = @fansub.releases.where(episode: @episode).first
 
         if @release.nil?
           puts "No release for episode #{@episode.number}. Creating release..."
           @release = Release.create(fansub: @fansub,
                                     station: @station,
-                                    source: @episode,
+                                    episode: @episode,
                                     released: !row['RELEASE'].nil?)
         end
 

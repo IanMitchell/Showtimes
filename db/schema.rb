@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170511050629) do
+ActiveRecord::Schema.define(version: 20170823171712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,7 +58,6 @@ ActiveRecord::Schema.define(version: 20170511050629) do
 
   create_table "episodes", id: :serial, force: :cascade do |t|
     t.integer "show_id"
-    t.integer "volume_id"
     t.integer "number"
     t.datetime "air_date"
     t.datetime "created_at", null: false
@@ -66,7 +65,6 @@ ActiveRecord::Schema.define(version: 20170511050629) do
     t.integer "season_id"
     t.index ["season_id"], name: "index_episodes_on_season_id"
     t.index ["show_id"], name: "index_episodes_on_show_id"
-    t.index ["volume_id"], name: "index_episodes_on_volume_id"
   end
 
   create_table "fansubs", id: :serial, force: :cascade do |t|
@@ -129,15 +127,14 @@ ActiveRecord::Schema.define(version: 20170511050629) do
 
   create_table "releases", id: :serial, force: :cascade do |t|
     t.integer "fansub_id"
-    t.integer "source_id"
-    t.string "source_type"
     t.integer "category", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "station_id"
     t.boolean "released", default: false
+    t.bigint "episode_id"
+    t.index ["episode_id"], name: "index_releases_on_episode_id"
     t.index ["fansub_id"], name: "index_releases_on_fansub_id"
-    t.index ["source_type", "source_id"], name: "index_releases_on_source_type_and_source_id"
     t.index ["station_id"], name: "index_releases_on_station_id"
   end
 
@@ -190,15 +187,6 @@ ActiveRecord::Schema.define(version: 20170511050629) do
     t.string "timezone"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  end
-
-  create_table "volumes", id: :serial, force: :cascade do |t|
-    t.integer "show_id"
-    t.integer "number"
-    t.datetime "release_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["show_id"], name: "index_volumes_on_show_id"
   end
 
   add_foreign_key "accounts", "users"

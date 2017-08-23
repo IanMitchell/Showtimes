@@ -2,9 +2,9 @@
 <ul>
   <%- @fansub.releases.each do |release| %>
     <%- if release.released? %>
-      <li><%= link_to "Episode #{release.source.number} Released", release_path(release) %></li>
+      <li><%= link_to "Episode #{release.episode.number} Released", release_path(release) %></li>
     <%- else %>
-      <li><%= link_to "Episode #{release.source.number} Pending", release_path(release) %></li>
+      <li><%= link_to "Episode #{release.episode.number} Pending", release_path(release) %></li>
     <%- end %>
   <%- end %>
 </ul>

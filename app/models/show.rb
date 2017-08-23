@@ -2,7 +2,6 @@ class Show < ApplicationRecord
   has_many :fansubs, inverse_of: :show
   has_many :aliases, inverse_of: :show
   has_many :episodes, inverse_of: :show
-  has_many :volumes, inverse_of: :show
 
   validates :name, presence: true,
                    uniqueness: true

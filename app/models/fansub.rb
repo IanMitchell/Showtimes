@@ -16,7 +16,7 @@ class Fansub < ApplicationRecord
   }
 
   def current_release
-    self.releases.pending.sort_by { |release| release.source.number }.first
+    self.releases.pending.sort_by { |release| release.episode.number }.first
   end
 
   # Active Admin
