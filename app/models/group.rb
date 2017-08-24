@@ -22,4 +22,12 @@ class Group < ApplicationRecord
   def airing_shows
     self.shows.airing
   end
+
+  def active_fansubs
+    Fansub.joins(:group_fansubs)
+          .where(group_fansubs: { group: self })
+          .active
+          .includes(show: :episodes)
+          .order("episodes.season_id DESC")
+  end
 end

@@ -1,5 +1,5 @@
 <h1><%= @group.name %></h1>
-<%- @group.fansubs.active.in_groups_of(2, false) do |fansubs| %>
+<%- @group.active_fansubs.in_groups_of(2, false) do |fansubs| %>
   <div class="row">
     <%= render partial: 'fansubs/fansub', collection: fansubs %>
   </div>

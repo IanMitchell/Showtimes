@@ -15,8 +15,6 @@ class Release < ApplicationRecord
 
   validates :station, presence: true
 
-  validates :released, presence: true
-
   enum category: {
     tv: 0,
     bluray: 1,
