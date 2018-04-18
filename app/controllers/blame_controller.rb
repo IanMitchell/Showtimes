@@ -1,13 +1,15 @@
 class BlameController < ApplicationController
   def show
+    show_request = URI.decode(params[:show])
+
     @group = Channel.find_by(name: params[:channel] || params[:irc],
                              platform: Channel.from_platform(params[:platform]))&.group
     return render json: { message: 'Unknown channel' }, status: 400 if @group.nil?
 
-    shows = @group.fuzzy_search_subbed_shows(params[:show])
+    shows = @group.fuzzy_search_subbed_shows(show_request)
     case shows.length
     when 0
-      unless Show.fuzzy_search(params[:show]).present?
+      unless Show.fuzzy_search(show_request).present?
         return render json: { message: 'Unknown show.' }, status: 400
       end
     when 1

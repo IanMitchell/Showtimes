@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 
-ruby '2.4.1'
+ruby '2.5.1'
 
-gem 'rails', '5.1.1'
+gem 'rails', '5.1.6'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
 # Accounts
-gem 'devise', git: 'https://github.com/plataformatec/devise.git', branch: 'master'
+gem 'devise'
 
 # Security
 gem 'rack-attack'

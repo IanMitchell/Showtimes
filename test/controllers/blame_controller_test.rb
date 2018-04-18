@@ -71,4 +71,12 @@ class BlameControllerTest < ActionController::TestCase
       assert body['name'], 'Name not in response'
     end
   end
+
+  test 'should find show based on partial encoded name' do
+    get :show, params: { irc: '#syndicate', show: 'Sekai%20Ni', format: :json }
+    assert_response :success
+
+    body = JSON.parse(response.body)
+    assert body['name'], 'Name not in response'
+  end
 end

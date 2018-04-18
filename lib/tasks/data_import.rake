@@ -35,7 +35,7 @@ namespace :data_import do
 
         @episode = @show.episodes.where(number: row['EPISODE']).first
         if @episode.nil?
-          puts "No episode for #{row['NAME']}. Creating record..."
+          puts "No episode for #{row['NAME']} ##{row['EPISODE']}. Creating record..."
 
           if row['AIR']
             month = row['AIR'].split('/')[0].to_i
