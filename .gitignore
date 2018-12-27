@@ -24,3 +24,6 @@
 
 # Heroku files
 heroku_backup.dump
+
+# OS
+.DS_Store
