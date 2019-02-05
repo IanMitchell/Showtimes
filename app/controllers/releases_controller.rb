@@ -1,4 +1,6 @@
 class ReleasesController < ApplicationController
+  include DiscordHelper
+
   before_action :require_authorization, only: [:update]
 
   def show
@@ -43,6 +45,11 @@ class ReleasesController < ApplicationController
 
     @current.update_attribute :released, true
     @fansub.current_release&.touch
+
+    if @group.webhook?
+      discord_release(@group.webhook, @show.name, @current.episode.number)
+    end
+
     render json: { message: "#{@show.name} ##{@current.episode.number} released!" }, status: 200
   end
 end

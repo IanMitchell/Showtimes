@@ -89,7 +89,7 @@ namespace :data_import do
           row[position.to_s].split(', ').each do |name|
             next if row[position.to_s].eql? 'N/A'
 
-            @user = User.find_by(name: name)
+            @user = User.where("lower(name) = ?", name.downcase).first
 
             if @user.nil?
               puts "No account for #{name}. Creating a default account..."

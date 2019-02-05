@@ -27,3 +27,4 @@ heroku_backup.dump
 
 # OS
 .DS_Store
+lib/assets/csv/Virtual-san wa Miteiru.csv

@@ -33,3 +33,17 @@
   )
 end
 ```
+
+# Change Season of Episodes
+
+```ruby
+# Retrieve Show
+@show = Show.fuzzy_search('Show Name').first
+
+@show.episodes.each do |episode|
+  if episode.number >= 13
+    episode.season = Season.current
+    episode.save
+  end
+end
+```
