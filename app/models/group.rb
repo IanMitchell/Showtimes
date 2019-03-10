@@ -1,7 +1,7 @@
 class Group < ApplicationRecord
   include FriendlyId
 
-  has_many :members, inverse_of: :group
+  has_and_belongs_to_many :members
   has_many :group_fansubs, inverse_of: :group
   has_many :fansubs, through: :group_fansubs
   has_many :shows, through: :fansubs

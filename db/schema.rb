@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_10_195759) do
+ActiveRecord::Schema.define(version: 2019_03_10_500000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,8 +32,7 @@ ActiveRecord::Schema.define(version: 2019_03_10_195759) do
   create_table "administrators", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
-    t.string "first_name"
-    t.string "last_name"
+    t.string "name"
     t.string "remember_token"
     t.datetime "remember_token_expires_at"
     t.datetime "created_at", null: false
@@ -107,13 +106,19 @@ ActiveRecord::Schema.define(version: 2019_03_10_195759) do
     t.index ["slug"], name: "index_groups_on_slug", unique: true
   end
 
+  create_table "groups_members", id: false, force: :cascade do |t|
+    t.bigint "group_id"
+    t.bigint "member_id"
+    t.index ["group_id"], name: "index_groups_members_on_group_id"
+    t.index ["member_id"], name: "index_groups_members_on_member_id"
+  end
+
   create_table "members", id: :serial, force: :cascade do |t|
-    t.integer "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
     t.string "discord"
-    t.index ["group_id"], name: "index_members_on_group_id"
+    t.index ["discord"], name: "index_members_on_discord"
   end
 
   create_table "positions", id: :serial, force: :cascade do |t|
@@ -130,12 +135,10 @@ ActiveRecord::Schema.define(version: 2019_03_10_195759) do
     t.integer "category", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "station_id"
     t.boolean "released", default: false
     t.bigint "episode_id"
     t.index ["episode_id"], name: "index_releases_on_episode_id"
     t.index ["fansub_id"], name: "index_releases_on_fansub_id"
-    t.index ["station_id"], name: "index_releases_on_station_id"
   end
 
   create_table "seasons", id: :serial, force: :cascade do |t|
@@ -159,16 +162,10 @@ ActiveRecord::Schema.define(version: 2019_03_10_195759) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "finished", default: false
-    t.bigint "memberr_id"
-    t.index ["memberr_id"], name: "index_staff_on_memberr_id"
+    t.bigint "member_id"
+    t.index ["member_id"], name: "index_staff_on_member_id"
     t.index ["position_id"], name: "index_staff_on_position_id"
     t.index ["release_id"], name: "index_staff_on_release_id"
-  end
-
-  create_table "stations", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "episodes", "seasons"

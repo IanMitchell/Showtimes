@@ -1,5 +1,6 @@
 class Staff < ApplicationRecord
   belongs_to :user
+  belongs_to :member
   belongs_to :position
   belongs_to :release, touch: true
 

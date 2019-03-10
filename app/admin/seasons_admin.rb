@@ -1,6 +1,6 @@
 Trestle.resource(:seasons) do
   menu do
-    item :seasons, icon: "fa fa-star", group: :anime
+    item :seasons, icon: "fa fa-star", group: :core
   end
 
   table do

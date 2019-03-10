@@ -9,7 +9,7 @@ Trestle.resource(:staff) do
 
   table do
     column :id
-    column :user
+    column :member
     column :position
     column :release
     column :finished

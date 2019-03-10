@@ -10,8 +10,7 @@ Trestle.resource(:administrators, model: Trestle.config.auth.user_class, scope: 
       avatar_for(administrator)
     end
     column :email, link: true
-    column :first_name
-    column :last_name
+    column :name
     actions do |a|
       a.delete unless a.instance == current_user
     end
@@ -21,8 +20,7 @@ Trestle.resource(:administrators, model: Trestle.config.auth.user_class, scope: 
     text_field :email
 
     row do
-      col(sm: 6) { text_field :first_name }
-      col(sm: 6) { text_field :last_name }
+      col(sm: 6) { text_field :name }
     end
 
     row do

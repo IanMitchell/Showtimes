@@ -5,6 +5,8 @@ Trestle.resource(:members) do
 
   table do
     column :id
+    column :name
+    column :discord
   end
 
   # Customize the table columns shown on the index view.
