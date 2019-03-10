@@ -1,4 +1,5 @@
 class StaffController < ApplicationController
+  include Concerns::ErrorHandler
   include DiscordHelper
 
   before_action :require_authorization, only: [:update]
@@ -6,31 +7,14 @@ class StaffController < ApplicationController
   def update
     fin = ActiveRecord::Type::Boolean.new.deserialize(params[:status])
 
-    @group = Channel.find_by(name: params[:channel] || params[:irc],
-                             platform: Channel.from_platform(params[:platform]),
-                             staff: true)&.group
-    return render json: { message: 'Unknown channel' }, status: 400 if @group.nil?
+    @group = Group.find_by_discord(params[:channel])
 
-    @user = Account.find_by(name: params[:username],
-                            platform: Account.from_platform(params[:platform]))&.user
+    @user = User.find_by(discord: params[:username])
     return render json: { message: 'Unknown user.' }, status: 400 if @user.nil?
 
-    shows = @group.fuzzy_search_subbed_shows(params[:name])
-    case shows.length
-    when 0
-      return render json: { message: 'Unknown show.' }, status: 400
-    when 1
-      @show = shows.first
-    else
-      names = shows.map { |show| show.name }.to_sentence
-      return render json: { message: "Multiple Matches: #{names}" }, status: 400
-    end
+    @fansub = @group.find_fansub_for_show_fuzzy(URI.decode(params[:show]))
 
-    @staff = @show.fansubs.includes(:groups)
-                          .where(groups: { id: @group.id })
-                          &.first
-                          &.current_release
-                          &.staff
+    @staff = @fansub.current_release&.staff
     return render json: { message: "No staff for #{@show.name}" }, status: 400 if @staff.empty?
 
     # Filter by assigned roles unless admin or founder

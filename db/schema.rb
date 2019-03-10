@@ -10,19 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_05_014647) do
+ActiveRecord::Schema.define(version: 2019_03_10_195759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "accounts", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
-    t.string "name"
-    t.integer "platform", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_accounts_on_user_id"
-  end
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -38,21 +29,32 @@ ActiveRecord::Schema.define(version: 2019_02_05_014647) do
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
   end
 
+  create_table "administrators", force: :cascade do |t|
+    t.string "email"
+    t.string "password_digest"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "remember_token"
+    t.datetime "remember_token_expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "aliases", id: :serial, force: :cascade do |t|
     t.integer "show_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_aliases_on_name"
     t.index ["show_id"], name: "index_aliases_on_show_id"
   end
 
   create_table "channels", id: :serial, force: :cascade do |t|
-    t.string "name"
+    t.string "discord"
     t.integer "group_id"
-    t.boolean "staff", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "platform", default: 0
+    t.index ["discord"], name: "index_channels_on_discord"
     t.index ["group_id"], name: "index_channels_on_group_id"
   end
 
@@ -69,8 +71,6 @@ ActiveRecord::Schema.define(version: 2019_02_05_014647) do
 
   create_table "fansubs", id: :serial, force: :cascade do |t|
     t.integer "show_id"
-    t.string "tag"
-    t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["show_id"], name: "index_fansubs_on_show_id"
@@ -109,14 +109,11 @@ ActiveRecord::Schema.define(version: 2019_02_05_014647) do
 
   create_table "members", id: :serial, force: :cascade do |t|
     t.integer "group_id"
-    t.integer "user_id"
-    t.integer "role", default: 0
-    t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "active", default: true
+    t.string "name"
+    t.string "discord"
     t.index ["group_id"], name: "index_members_on_group_id"
-    t.index ["user_id"], name: "index_members_on_user_id"
   end
 
   create_table "positions", id: :serial, force: :cascade do |t|
@@ -124,6 +121,8 @@ ActiveRecord::Schema.define(version: 2019_02_05_014647) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "acronym"
+    t.index ["acronym"], name: "index_positions_on_acronym"
+    t.index ["name"], name: "index_positions_on_name"
   end
 
   create_table "releases", id: :serial, force: :cascade do |t|
@@ -151,18 +150,19 @@ ActiveRecord::Schema.define(version: 2019_02_05_014647) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "tvdb_name"
+    t.index ["name"], name: "index_shows_on_name"
   end
 
   create_table "staff", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
     t.integer "position_id"
     t.integer "release_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "finished", default: false
+    t.bigint "memberr_id"
+    t.index ["memberr_id"], name: "index_staff_on_memberr_id"
     t.index ["position_id"], name: "index_staff_on_position_id"
     t.index ["release_id"], name: "index_staff_on_release_id"
-    t.index ["user_id"], name: "index_staff_on_user_id"
   end
 
   create_table "stations", id: :serial, force: :cascade do |t|
@@ -171,27 +171,6 @@ ActiveRecord::Schema.define(version: 2019_02_05_014647) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", id: :serial, force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string "current_sign_in_ip"
-    t.string "last_sign_in_ip"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "name"
-    t.string "twitter"
-    t.string "timezone"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  end
-
-  add_foreign_key "accounts", "users"
   add_foreign_key "episodes", "seasons"
   add_foreign_key "group_fansubs", "fansubs"
   add_foreign_key "group_fansubs", "groups"

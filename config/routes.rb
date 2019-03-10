@@ -1,15 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
   root 'home#show'
   resources :shows, only: [:index, :show]
-  resources :groups, only: [:index, :show]
-  resources :fansubs, only: [:show]
   resources :releases, only: [:show]
+  resources :groups, only: [:show]
   get 'blame' => 'blame#show'
   put 'staff' => 'staff#update'
   put 'release' => 'releases#update'
-  get 'about' => 'about#show'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

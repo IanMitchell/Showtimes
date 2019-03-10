@@ -22,7 +22,9 @@ gem 'friendly_id'
 gem 'rack-cors'
 
 # Admin Interface
-gem 'activeadmin', '~> 1.4.3'
+gem 'trestle'
+gem 'trestle-search'
+gem 'trestle-auth'
 
 # Alerts
 gem 'discord-notifier'
@@ -30,7 +32,6 @@ gem 'discord-notifier'
 # Front-end
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
-gem 'turbolinks'
 
 # APIs
 gem 'jbuilder', '~> 2.0'

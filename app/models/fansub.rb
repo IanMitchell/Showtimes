@@ -8,15 +8,10 @@ class Fansub < ApplicationRecord
 
   validates :status, presence: true
 
-  enum status: {
-    active: 0,
-    finished: 1,
-    blurays: 2,
-    dropped: 3
-  }
-
   def current_release
-    self.releases.pending.sort_by { |release| release.episode.number }.first
+    release = self.releases.pending.sort_by { |release| release.episode.number }.first
+    raise Showtimes::FansubFinishedError if release.nil?
+    return release
   end
 
   # Active Admin
