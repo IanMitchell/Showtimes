@@ -1,5 +1,17 @@
+# == Schema Information
+#
+# Table name: staff
+#
+#  id          :integer          not null, primary key
+#  position_id :integer
+#  release_id  :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  finished    :boolean          default(FALSE)
+#  member_id   :bigint(8)
+#
+
 class Staff < ApplicationRecord
-  belongs_to :user
   belongs_to :member
   belongs_to :position
   belongs_to :release, touch: true
@@ -8,12 +20,6 @@ class Staff < ApplicationRecord
 
   scope :pending, -> { where(finished: false) }
   scope :finished, -> { where(finished: true) }
-
-  validates :user, presence: true,
-                   uniqueness: {
-                     scope: [:position, :release],
-                     message: "user positions should be unique"
-                   }
 
   validates :position, presence: true
 

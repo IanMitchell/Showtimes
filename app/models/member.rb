@@ -1,16 +1,16 @@
+# == Schema Information
+#
+# Table name: members
+#
+#  id         :integer          not null, primary key
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  name       :string
+#  discord    :string
+#
+
 class Member < ApplicationRecord
-  has_and_belongs_to_many :groups
-  belongs_to :group
-  belongs_to :user
-
-  validates :group, presence: true
-
-  validates :user, presence: true,
-                   uniqueness: { scope: :group, message: "already in group" }
-
-  validates :role, presence: true
-
-  validates :title, presence: true
+  has_many :groups, through: :group_member
 
   enum role: {
     member: 0,

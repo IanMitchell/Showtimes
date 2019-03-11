@@ -1,7 +1,23 @@
+# == Schema Information
+#
+# Table name: groups
+#
+#  id         :integer          not null, primary key
+#  name       :string
+#  acronym    :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  slug       :string
+#  webhook    :string
+#
+
+require "#{Rails.root}/lib/errors/fansub_not_found_error"
+require "#{Rails.root}/lib/errors/group_not_found_error"
+
 class Group < ApplicationRecord
   include FriendlyId
 
-  has_and_belongs_to_many :members
+  has_many :members, through: :group_members
   has_many :group_fansubs, inverse_of: :group
   has_many :fansubs, through: :group_fansubs
   has_many :shows, through: :fansubs
@@ -28,21 +44,21 @@ class Group < ApplicationRecord
           .where(group_fansubs: { group: self })
           .active
           .includes(show: :episodes)
-          .order("episodes.season_id DESC")
+          .order("episodes.air_date DESC")
   end
 
   def find_fansub_for_show_fuzzy(name)
     show = Show.fuzzy_find(name)
 
     fansub = self.fansubs.where(show: show).first
-    raise Showtimes::FansubNotFoundError if fansub.nil?
+    raise Errors::FansubNotFoundError if fansub.nil?
 
     return fansub
   end
 
   def self.find_by_discord(discord)
     group = Channel.find_by(discord: params[:channel])&.group
-    raise Showtimes::GroupNotFoundError if group.nil?
+    raise Errors::GroupNotFoundError if group.nil?
     return group
   end
 end

@@ -1,5 +1,5 @@
 class ReleasesController < ApplicationController
-  include Concerns::ErrorHandler
+  include ErrorHandler
   include DiscordHelper
 
   before_action :require_authorization, only: [:update]
@@ -7,18 +7,14 @@ class ReleasesController < ApplicationController
   def update
     @group = Group.find_by_discord(params[:channel])
 
-    @user = User.includes(:members)
-                .where(members: { group_id: @group.id },
-                       discord: params[:username])
-                &.first
-
+    @user = @group.members.find_by(discord: params[:username])
     return render json: { message: 'Unknown member' }, status: 400 if @user.nil?
 
     @fansub = @group.find_fansub_for_show_fuzzy(URI.decode(params[:show]))
     @current = @fansub.current_release
 
     if @current.staff.pending.present?
-      positions = @current.staff.pending.map(&:user).map(&:name).join(', ')
+      positions = @current.staff.pending.map(&:member).map(&:name).join(', ')
       return render json: { message: "Positions still pending: #{positions}" }, status: 400
     end
 

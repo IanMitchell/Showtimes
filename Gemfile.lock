@@ -42,6 +42,9 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    annotate (2.7.4)
+      activerecord (>= 3.2, < 6.0)
+      rake (>= 10.4, < 13.0)
     arel (9.0.0)
     autoprefixer-rails (9.4.7)
       execjs
@@ -53,12 +56,6 @@ GEM
     byebug (10.0.2)
     concurrent-ruby (1.1.4)
     crass (1.0.4)
-    devise (4.5.0)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 4.1.0, < 6.0)
-      responders
-      warden (~> 1.2.3)
     discord-notifier (1.0.2)
     dotenv (2.6.0)
     dotenv-rails (2.6.0)
@@ -111,7 +108,6 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.10.1)
       mini_portile2 (~> 2.4.0)
-    orm_adapter (0.5.0)
     pg (1.1.4)
     puma (3.12.0)
     rack (2.0.6)
@@ -155,9 +151,6 @@ GEM
     rb-inotify (0.10.0)
       ffi (~> 1.0)
     rdoc (4.3.0)
-    responders (2.4.1)
-      actionpack (>= 4.2.0, < 6.0)
-      railties (>= 4.2.0, < 6.0)
     ruby_dep (1.5.0)
     sass (3.7.3)
       sass-listen (~> 4.0.0)
@@ -203,8 +196,6 @@ GEM
     unicorn (5.4.1)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    warden (1.2.8)
-      rack (>= 2.0.6)
     web-console (3.7.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -218,9 +209,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  annotate
   bootsnap
   byebug
-  devise
   discord-notifier
   dotenv-rails
   friendly_id

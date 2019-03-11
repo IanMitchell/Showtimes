@@ -1,5 +1,5 @@
 class StaffController < ApplicationController
-  include Concerns::ErrorHandler
+  include ErrorHandler
   include DiscordHelper
 
   before_action :require_authorization, only: [:update]
@@ -9,7 +9,7 @@ class StaffController < ApplicationController
 
     @group = Group.find_by_discord(params[:channel])
 
-    @user = User.find_by(discord: params[:username])
+    @user = @group.members.find_by(discord: params[:username])
     return render json: { message: 'Unknown user.' }, status: 400 if @user.nil?
 
     @fansub = @group.find_fansub_for_show_fuzzy(URI.decode(params[:show]))

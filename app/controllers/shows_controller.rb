@@ -1,5 +1,5 @@
 class ShowsController < ApplicationController
-  include Concerns::ErrorHandler
+  include ErrorHandler
 
   def index
     @group = Group.find_by_discord(params[:channel])

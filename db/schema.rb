@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_10_500000) do
+ActiveRecord::Schema.define(version: 2019_03_11_181622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,8 +63,8 @@ ActiveRecord::Schema.define(version: 2019_03_10_500000) do
     t.datetime "air_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "season_id"
-    t.index ["season_id"], name: "index_episodes_on_season_id"
+    t.integer "season"
+    t.integer "year"
     t.index ["show_id"], name: "index_episodes_on_show_id"
   end
 
@@ -96,6 +96,14 @@ ActiveRecord::Schema.define(version: 2019_03_10_500000) do
     t.index ["group_id"], name: "index_group_fansubs_on_group_id"
   end
 
+  create_table "group_members", force: :cascade do |t|
+    t.bigint "group_id"
+    t.bigint "member_id"
+    t.boolean "admin", default: false
+    t.index ["group_id"], name: "index_group_members_on_group_id"
+    t.index ["member_id"], name: "index_group_members_on_member_id"
+  end
+
   create_table "groups", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "acronym"
@@ -104,13 +112,6 @@ ActiveRecord::Schema.define(version: 2019_03_10_500000) do
     t.string "slug"
     t.string "webhook"
     t.index ["slug"], name: "index_groups_on_slug", unique: true
-  end
-
-  create_table "groups_members", id: false, force: :cascade do |t|
-    t.bigint "group_id"
-    t.bigint "member_id"
-    t.index ["group_id"], name: "index_groups_members_on_group_id"
-    t.index ["member_id"], name: "index_groups_members_on_member_id"
   end
 
   create_table "members", id: :serial, force: :cascade do |t|
@@ -141,13 +142,6 @@ ActiveRecord::Schema.define(version: 2019_03_10_500000) do
     t.index ["fansub_id"], name: "index_releases_on_fansub_id"
   end
 
-  create_table "seasons", id: :serial, force: :cascade do |t|
-    t.integer "name", default: 0
-    t.integer "year"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "shows", id: :serial, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -168,7 +162,6 @@ ActiveRecord::Schema.define(version: 2019_03_10_500000) do
     t.index ["release_id"], name: "index_staff_on_release_id"
   end
 
-  add_foreign_key "episodes", "seasons"
   add_foreign_key "group_fansubs", "fansubs"
   add_foreign_key "group_fansubs", "groups"
 end

@@ -5,7 +5,7 @@ class ConsolidateMembers < ActiveRecord::Migration[5.2]
     add_column :members, :name, :string
     add_column :members, :discord, :string
 
-    create_table :groups_members, id: false do |t|
+    create_table :group_members do |t|
       t.belongs_to :group, index: true
       t.belongs_to :member, index: true
       t.boolean :admin, default: false

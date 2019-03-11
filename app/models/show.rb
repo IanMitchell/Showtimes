@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: shows
+#
+#  id         :integer          not null, primary key
+#  name       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  tvdb_name  :string
+#
+
+require "#{Rails.root}/lib/errors/show_not_found_error"
+require "#{Rails.root}/lib/errors/multiple_matching_shows_error"
+
 class Show < ApplicationRecord
   has_many :fansubs, inverse_of: :show
   has_many :aliases, inverse_of: :show
@@ -8,7 +22,7 @@ class Show < ApplicationRecord
 
 
   scope :airing, -> {
-    joins(:episodes).where(episodes: { season: Season.current}).distinct
+    joins(:episodes).where(episodes: { 'air_date > ?': DateTime.now }).distinct
   }
 
   def next_episode
@@ -19,7 +33,7 @@ class Show < ApplicationRecord
   end
 
   def currently_airing?
-    self.episodes.where(season: Season.current).any?
+    self.episodes.where('air_date >= :current_date', current_date: DateTime.now).any?
   end
 
   def self.find_by_name_or_alias(name)
@@ -42,12 +56,12 @@ class Show < ApplicationRecord
 
     case shows.length
     when 0
-      raise Showtimes::ShowNotFoundError
+      raise Errors::ShowNotFoundError
     when 1
       return shows.first
     else
       names = shows.map { |show| show.name }.to_sentence
-      raise Showtimes::MultipleMatchingShows "Multiple Matches: #{names}"
+      raise Errors::MultipleMatchingShowsError "Multiple Matches: #{names}"
     end
   end
 end
