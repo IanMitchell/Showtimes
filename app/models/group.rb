@@ -16,6 +16,7 @@
 #
 
 require "#{Rails.root}/lib/errors/show_not_found_error"
+require "#{Rails.root}/lib/errors/member_not_found_error"
 require "#{Rails.root}/lib/errors/fansub_not_found_error"
 require "#{Rails.root}/lib/errors/group_not_found_error"
 
@@ -36,6 +37,12 @@ class Group < ApplicationRecord
 
   validates :acronym, presence: true,
                       uniqueness: true
+
+  def find_member(discord)
+    member = self.members.find_by(discord: discord)
+    raise Errors::MemberNotFoundError if member.nil?
+    return member
+  end
 
   def fuzzy_search_subbed_shows(str)
     self.shows.fuzzy_search(str)

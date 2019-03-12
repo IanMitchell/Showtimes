@@ -41,7 +41,7 @@ class StaffControllerTest < ActionController::TestCase
       format: :json
     }
 
-    assert_response 400
+    assert_response 404
 
     body = JSON.parse(response.body)
     assert body['message'].downcase.include?('user'),

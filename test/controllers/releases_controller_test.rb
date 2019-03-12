@@ -181,10 +181,10 @@ class ReleasesControllerTest < ActionController::TestCase
       name: 'aoty',
       format: :json
     }
-    assert_response 400
+    assert_response 404
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('member'),
+    assert body['message'].downcase.include?('user'),
            "Incorrect error message: #{body['message']}"
   end
 end

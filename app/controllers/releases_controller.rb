@@ -6,9 +6,7 @@ class ReleasesController < ApplicationController
 
   def update
     @group = Group.find_by_discord(params[:channel])
-
-    @user = @group.members.find_by(discord: params[:username])
-    return render json: { message: 'Unknown member' }, status: 400 if @user.nil?
+    @user = @group.find_member(params[:username])
 
     @fansub = @group.find_fansub_for_show_fuzzy(URI.decode(params[:name]))
     @current = @fansub.current_release
