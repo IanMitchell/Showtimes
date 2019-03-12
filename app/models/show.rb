@@ -26,7 +26,9 @@ class Show < ApplicationRecord
 
 
   scope :airing, -> {
-    joins(:episodes).where(episodes: { 'air_date > ?': DateTime.now }).distinct
+    joins(:episodes)
+    .merge(Episode.where('air_date >= :current_date', current_date: DateTime.now))
+    .distinct
   }
 
   def next_episode

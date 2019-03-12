@@ -32,7 +32,7 @@ class BlameControllerTest < ActionController::TestCase
 
   test 'should fail with completed fansub' do
     get :show, params: { channel: '1', show: 'kimi', format: :json }
-    assert_response 200
+    assert_response 400
 
     body = JSON.parse(response.body)
     assert body['message'].downcase.include?('complete'),
