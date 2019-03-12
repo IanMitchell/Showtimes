@@ -4,9 +4,13 @@
 #
 #  id         :integer          not null, primary key
 #  name       :string
+#  tvdb_name  :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  tvdb_name  :string
+#
+# Indexes
+#
+#  index_shows_on_name  (name)
 #
 
 require "#{Rails.root}/lib/errors/show_not_found_error"

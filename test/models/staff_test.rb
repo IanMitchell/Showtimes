@@ -3,12 +3,18 @@
 # Table name: staff
 #
 #  id          :integer          not null, primary key
-#  position_id :integer
-#  release_id  :integer
+#  finished    :boolean          default(FALSE)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  finished    :boolean          default(FALSE)
 #  member_id   :bigint(8)
+#  position_id :integer
+#  release_id  :integer
+#
+# Indexes
+#
+#  index_staff_on_member_id    (member_id)
+#  index_staff_on_position_id  (position_id)
+#  index_staff_on_release_id   (release_id)
 #
 
 require 'test_helper'

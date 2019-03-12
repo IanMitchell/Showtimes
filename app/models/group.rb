@@ -3,12 +3,16 @@
 # Table name: groups
 #
 #  id         :integer          not null, primary key
-#  name       :string
 #  acronym    :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  name       :string
 #  slug       :string
 #  webhook    :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_groups_on_slug  (slug) UNIQUE
 #
 
 require "#{Rails.root}/lib/errors/fansub_not_found_error"
@@ -57,7 +61,7 @@ class Group < ApplicationRecord
   end
 
   def self.find_by_discord(discord)
-    group = Channel.find_by(discord: params[:channel])&.group
+    group = Channel.find_by(discord: discord)&.group
     raise Errors::GroupNotFoundError if group.nil?
     return group
   end

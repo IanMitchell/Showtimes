@@ -4,9 +4,14 @@
 #
 #  id         :integer          not null, primary key
 #  discord    :string
-#  group_id   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  group_id   :integer
+#
+# Indexes
+#
+#  index_channels_on_discord   (discord)
+#  index_channels_on_group_id  (group_id)
 #
 
 class Channel < ApplicationRecord

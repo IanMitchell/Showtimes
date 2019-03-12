@@ -3,13 +3,15 @@
 # Table name: episodes
 #
 #  id         :integer          not null, primary key
-#  show_id    :integer
-#  number     :integer
 #  air_date   :datetime
+#  number     :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  season     :integer
-#  year       :integer
+#  show_id    :integer
+#
+# Indexes
+#
+#  index_episodes_on_show_id  (show_id)
 #
 
 class Episode < ApplicationRecord
@@ -24,6 +26,7 @@ class Episode < ApplicationRecord
 
   validates :air_date, presence: true
 
+  # TODO: Fix
   enum season: {
     winter: 0,
     spring: 1,
@@ -31,11 +34,13 @@ class Episode < ApplicationRecord
     fall: 3
   }
 
+  # TODO: Fix
   def self.current_season
     self.find_by(season: Episode.month_to_season(DateTime.now.month),
                  year: DateTime.now.year)
   end
 
+  # TODO: Fix
   private
 
   def self.month_to_season(month)

@@ -1,6 +1,6 @@
 Trestle.resource(:groups) do
   menu do
-    item :groups, icon: "fa fa-star", group: :fansubs, priority: :first
+    item :groups, icon: "fa fa-star", group: :core
   end
 
   collection do

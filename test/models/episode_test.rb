@@ -3,13 +3,15 @@
 # Table name: episodes
 #
 #  id         :integer          not null, primary key
-#  show_id    :integer
-#  number     :integer
 #  air_date   :datetime
+#  number     :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  season     :integer
-#  year       :integer
+#  show_id    :integer
+#
+# Indexes
+#
+#  index_episodes_on_show_id  (show_id)
 #
 
 require 'test_helper'

@@ -4,37 +4,20 @@
 #
 #  id         :integer          not null, primary key
 #  discord    :string
-#  group_id   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  group_id   :integer
+#
+# Indexes
+#
+#  index_channels_on_discord   (discord)
+#  index_channels_on_group_id  (group_id)
 #
 
-cartel_staff:
-  name: "#cartel-staff"
-  group: cartel
-  platform: 0
-  staff: true
-
 cartel:
-  name: "#cartel"
+  discord: '11111111111111122'
   group: cartel
-  platform: 0
-  staff: false
-
-cartel_discord:
-  name: '11111111111111122'
-  group: cartel
-  platform: 1
-  staff: true
 
 syndicate:
-  name: "#syndicate"
+  discord: '2222'
   group: syndicate
-  platform: 0
-  staff: false
-
-syndicate_staff:
-  name: "#syndicate-staff"
-  group: syndicate
-  platform: 0
-  staff: true

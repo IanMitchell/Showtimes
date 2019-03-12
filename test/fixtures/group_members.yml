@@ -13,7 +13,26 @@
 #  index_group_members_on_member_id  (member_id)
 #
 
-class GroupMember < ApplicationRecord
-  belongs_to :group
-  belongs_to :member
-end
+member_one:
+  group: cartel
+  member: desch
+
+member_two:
+  group: cartel
+  member: arx
+
+member_three:
+  group: cartel
+  member: skiddiks
+
+member_four:
+  group: cartel
+  member: jukey
+
+member_five:
+  group: syndicate
+  member: desch
+
+member_six:
+  group: syndicate
+  member: arx

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_11_181622) do
+ActiveRecord::Schema.define(version: 2019_03_12_002309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,8 +63,6 @@ ActiveRecord::Schema.define(version: 2019_03_11_181622) do
     t.datetime "air_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "season"
-    t.integer "year"
     t.index ["show_id"], name: "index_episodes_on_show_id"
   end
 
@@ -133,7 +131,6 @@ ActiveRecord::Schema.define(version: 2019_03_11_181622) do
 
   create_table "releases", id: :serial, force: :cascade do |t|
     t.integer "fansub_id"
-    t.integer "category", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "released", default: false

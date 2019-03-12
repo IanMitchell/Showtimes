@@ -3,27 +3,26 @@
 # Table name: fansubs
 #
 #  id         :integer          not null, primary key
-#  show_id    :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  show_id    :integer
+#
+# Indexes
+#
+#  index_fansubs_on_show_id  (show_id)
 #
 
 aoty_fansub:
   show: desch
-  status: 0
 
 shigatsu_fansub:
   show: shigatsu
-  status: 1
 
 tsuitachi_fansub:
   show: tsuitachi
-  status: 1
 
 shomin_fansub:
   show: shomin
-  status: 3
 
 konosuba_fansub:
   show: konosuba
-  status: 0
