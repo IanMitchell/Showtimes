@@ -25,7 +25,7 @@ module ErrorHandler
   end
 
   def fansub_finished(exception)
-    render_error 200, exception.message
+    render_error 400, exception.message
   end
 
   def unknown_fansub

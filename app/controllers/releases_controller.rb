@@ -19,12 +19,11 @@ class ReleasesController < ApplicationController
     end
 
     @current.update_attribute :released, true
-    @fansub.current_release&.touch
 
     if @group.webhook?
       discord_release(@group.webhook, @show.name, @current.episode.number)
     end
 
-    render json: { message: "#{@show.name} ##{@current.episode.number} released!" }, status: 200
+    render json: { message: "#{@fansub.show.name} ##{@current.episode.number} released!" }, status: 200
   end
 end

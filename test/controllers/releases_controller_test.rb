@@ -20,37 +20,22 @@ class ReleasesControllerTest < ActionController::TestCase
     put :update, params: {
       username: '123',
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: '1234',
       name: 'desch',
       format: :json
     }
-    assert_response 400
+    assert_response 404
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('channel'),
+    assert body['message'].downcase.include?('unknown discord'),
            "Incorrect error message: #{body['message']}"
-  end
-
-  test 'should fail with incorrect show' do
-    put :update, params: {
-      username: '123',
-      auth: ENV['AUTH'],
-      channel: '1',
-      name: 'aoty2',
-      format: :json
-    }
-    assert_response 400
-
-    body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('unknown show'),
-          "Incorrect error message: #{body['message']}"
   end
 
   test 'should fail with incorrect fansub' do
     put :update, params: {
       username: '123',
       auth: ENV['AUTH'],
-      channel: '2',
+      channel: '1',
       name: 'fmp',
       format: :json
     }
@@ -65,14 +50,14 @@ class ReleasesControllerTest < ActionController::TestCase
     put :update, params: {
       username: '123',
       auth: ENV['AUTH'],
-      channel: '2',
+      channel: '1',
       name: 'kimi no uso',
       format: :json
     }
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('no pending'),
+    assert body['message'].downcase.include?('complete'),
            "Incorrect error message: #{body['message']}"
   end
 
@@ -80,7 +65,7 @@ class ReleasesControllerTest < ActionController::TestCase
     put :update, params: {
       username: '123',
       auth: ENV['AUTH'],
-      channel: '2',
+      channel: '1',
       name: 'desch',
       format: :json
     }
@@ -104,7 +89,7 @@ class ReleasesControllerTest < ActionController::TestCase
     put :update, params: {
       username: '123',
       auth: ENV['AUTH'],
-      channel: '2',
+      channel: '1',
       name: 'desch',
       format: :json
     }
@@ -125,7 +110,7 @@ class ReleasesControllerTest < ActionController::TestCase
     put :update, params: {
       username: '123',
       auth: ENV['AUTH'],
-      channel: '2',
+      channel: '1',
       name: 'aoty',
       format: :json
     }
@@ -136,7 +121,7 @@ class ReleasesControllerTest < ActionController::TestCase
     put :update, params: {
       username: '123',
       auth: ENV['AUTH'],
-      channel: '2',
+      channel: '1',
       name: 'shigatsu',
       format: :json
     }
@@ -151,6 +136,7 @@ class ReleasesControllerTest < ActionController::TestCase
     # Artificially set it as ready for release
     show = Show.find_by(name: 'Kono Subarashii Sekai ni Shukufuku wo!')
     release = show.fansubs.first.current_release
+
     release.staff.each do |staff|
       staff.update_attribute :finished, true
     end
@@ -158,20 +144,20 @@ class ReleasesControllerTest < ActionController::TestCase
     put :update, params: {
       username: '123',
       auth: ENV['AUTH'],
-      channel: '2',
+      channel: '1',
       name: 'Subarashii',
       format: :json
     }
 
     assert_response 200
 
-    # Reset
+    # Reset (`release` is stale, need to query again)
     show.fansubs.first.releases.first.update_attribute :released, false
 
     put :update, params: {
       username: '456',
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: '2',
       name: 'Subarashii',
       format: :json
     }
