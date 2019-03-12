@@ -28,7 +28,6 @@ Trestle.resource(:shows) do
         column :show
         column :number, sort: { default: true, default_order: :asc }
         column :air_date
-        column :season
 
         actions
       end

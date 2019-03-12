@@ -65,7 +65,7 @@ class Show < ApplicationRecord
       return shows.first
     else
       names = shows.map { |show| show.name }.to_sentence
-      raise Errors::MultipleMatchingShowsError "Multiple Matches: #{names}"
+      raise Errors::MultipleMatchingShowsError, "Multiple Matches: #{names}"
     end
   end
 end

@@ -24,8 +24,8 @@ module ErrorHandler
     render_error 404, "Unknown Discord server. If you'd like to use Showtimes, please contact Desch#3091"
   end
 
-  def fansub_finished
-    render_error 200, 'The fansub is complete!'
+  def fansub_finished(exception)
+    render_error 200, exception.message
   end
 
   def unknown_fansub

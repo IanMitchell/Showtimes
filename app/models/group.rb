@@ -15,6 +15,7 @@
 #  index_groups_on_slug  (slug) UNIQUE
 #
 
+require "#{Rails.root}/lib/errors/show_not_found_error"
 require "#{Rails.root}/lib/errors/fansub_not_found_error"
 require "#{Rails.root}/lib/errors/group_not_found_error"
 
@@ -52,12 +53,13 @@ class Group < ApplicationRecord
   end
 
   def find_fansub_for_show_fuzzy(name)
-    show = Show.fuzzy_find(name)
+    begin
+      show = self.shows.fuzzy_find(name)
+    rescue Errors::ShowNotFoundError
+      raise Errors::FansubNotFoundError
+    end
 
-    fansub = self.fansubs.where(show: show).first
-    raise Errors::FansubNotFoundError if fansub.nil?
-
-    return fansub
+    self.fansubs.where(show: show).first
   end
 
   def self.find_by_discord(discord)

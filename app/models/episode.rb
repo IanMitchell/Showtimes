@@ -26,33 +26,22 @@ class Episode < ApplicationRecord
 
   validates :air_date, presence: true
 
-  # TODO: Fix
-  enum season: {
-    winter: 0,
-    spring: 1,
-    summer: 2,
-    fall: 3
-  }
-
-  # TODO: Fix
-  def self.current_season
-    self.find_by(season: Episode.month_to_season(DateTime.now.month),
-                 year: DateTime.now.year)
+  def season
+    "#{Episode.month_to_season(self.air_date.month)} #{self.air_date.year}"
   end
 
-  # TODO: Fix
   private
 
   def self.month_to_season(month)
     case month
     when 1..3
-      self.names[:winter]
+      "Winter"
     when 4..6
-      self.names[:spring]
+      "Spring"
     when 7..9
-      self.names[:summer]
+      "Summer"
     when 10..12
-      self.names[:fall]
+      "Fall"
     end
   end
 end
