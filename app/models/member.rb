@@ -14,11 +14,10 @@
 #
 
 class Member < ApplicationRecord
-  has_many :groups, through: :group_member
+  has_many :group_members, inverse_of: :member
+  has_many :groups, through: :group_members
 
-  enum role: {
-    member: 0,
-    admin: 1,
-    founder: 2
-  }
+  def admin?(group)
+    self.group_members.where(group: group, admin: true).exists?
+  end
 end

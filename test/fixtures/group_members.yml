@@ -16,6 +16,7 @@
 member_one:
   group: cartel
   member: desch
+  admin: true
 
 member_two:
   group: cartel

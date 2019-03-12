@@ -12,13 +12,13 @@ class StaffController < ApplicationController
     @user = @group.members.find_by(discord: params[:username])
     return render json: { message: 'Unknown user.' }, status: 400 if @user.nil?
 
-    @fansub = @group.find_fansub_for_show_fuzzy(URI.decode(params[:show]))
+    @fansub = @group.find_fansub_for_show_fuzzy(URI.decode(params[:name]))
 
     @staff = @fansub.current_release&.staff
     return render json: { message: "No staff for #{@show.name}" }, status: 400 if @staff.empty?
 
     # Filter by assigned roles unless admin or founder
-    @staff = @staff.where(user: @user) unless @user.group_admin? @group
+    @staff = @staff.where(member: @user) unless @user.admin? @group
 
     if params[:position]
       @position = Position.find_by_name_or_acronym(params[:position])
@@ -29,7 +29,7 @@ class StaffController < ApplicationController
 
       if @staff.count > 1
         # Admin - first, find by own name. If none, or if one and done, then
-        staff = @staff.where(user: @user, finished: !fin)
+        staff = @staff.where(member: @user, finished: !fin)
         if staff.present?
           @staff = staff.first
         else
@@ -63,9 +63,9 @@ class StaffController < ApplicationController
         )
       end
 
-      render json: { message: "Updated #{@show.name} ##{@staff.release.episode.number}" }, status: 200
+      render json: { message: "Updated #{@fansub.show.name} ##{@staff.release.episode.number}" }, status: 200
     else
-      render json: { message: "Error updating #{@show.name}" }, status: 500
+      render json: { message: "Error updating #{@fansub.show.name}" }, status: 500
     end
   end
 end
