@@ -27,7 +27,8 @@ class StaffControllerTest < ActionController::TestCase
     assert_response 401
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('unauthorized'), 'Incorrect error message'
+    assert body['message'].downcase.include?('unauthorized'),
+           "Incorrect error message: #{body['message']}"
   end
 
   test 'should not allow non-staff channels' do
@@ -43,7 +44,8 @@ class StaffControllerTest < ActionController::TestCase
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('channel'), 'Incorrect error message'
+    assert body['message'].downcase.include?('channel'),
+           "Incorrect error message: #{body['message']}"
   end
 
   test 'should not allow non-staff users' do
@@ -59,7 +61,8 @@ class StaffControllerTest < ActionController::TestCase
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('user'), 'Incorrect error message'
+    assert body['message'].downcase.include?('user'),
+           "Incorrect error message: #{body['message']}"
   end
 
   test 'should not allow non-fansubbed shows' do
@@ -75,7 +78,8 @@ class StaffControllerTest < ActionController::TestCase
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('unknown show'), 'Incorrect error message'
+    assert body['message'].downcase.include?('unknown show'),
+           "Incorrect error message: #{body['message']}"
   end
 
   test 'should not allow non-staff to update show' do
@@ -92,7 +96,8 @@ class StaffControllerTest < ActionController::TestCase
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('not your position'), 'Incorrect error message'
+    assert body['message'].downcase.include?('not your position'),
+           "Incorrect error message: #{body['message']}"
   end
 
   test 'should not allow invalid positions' do
@@ -109,7 +114,8 @@ class StaffControllerTest < ActionController::TestCase
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('invalid position'), 'Incorrect error message'
+    assert body['message'].downcase.include?('invalid position'),
+           "Incorrect error message: #{body['message']}"
   end
 
   test 'should not require position when user has one position' do
@@ -141,7 +147,8 @@ class StaffControllerTest < ActionController::TestCase
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('specify position'), 'Incorrect error message'
+    assert body['message'].downcase.include?('specify position'),
+           "Incorrect error message: #{body['message']}"
   end
 
   test 'should not allow incorrect staff position' do
@@ -328,7 +335,8 @@ class StaffControllerTest < ActionController::TestCase
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('match'), 'Incorrect error message'
+    assert body['message'].downcase.include?('match'),
+           "Incorrect error message: #{body['message']}"
   end
 
   test 'should support joint shows' do

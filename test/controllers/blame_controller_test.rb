@@ -17,7 +17,8 @@ class BlameControllerTest < ActionController::TestCase
     assert_response 404
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('unknown discord'), 'Incorrect error message'
+    assert body['message'].downcase.include?('unknown discord'),
+           "Incorrect error message: #{body['message']}"
   end
 
   test 'should fail with incorrect fansub' do
@@ -25,7 +26,8 @@ class BlameControllerTest < ActionController::TestCase
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('fansub'), 'Incorrect error message'
+    assert body['message'].downcase.include?('fansub'),
+          "Incorrect error message: #{body['message']}"
   end
 
   test 'should fail with completed fansub' do
@@ -33,7 +35,8 @@ class BlameControllerTest < ActionController::TestCase
     assert_response 200
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('complete'), 'Incorrect error message'
+    assert body['message'].downcase.include?('complete'),
+           "Incorrect error message: #{body['message']}"
   end
 
   test 'should ignore multiple matches for irrelevant shows' do
@@ -51,7 +54,8 @@ class BlameControllerTest < ActionController::TestCase
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('match'), 'Incorrect error message'
+    assert body['message'].downcase.include?('match'),
+           "Incorrect error message: #{body['message']}"
   end
 
   test 'should support joint shows' do

@@ -3,100 +3,92 @@ require 'test_helper'
 class ReleasesControllerTest < ActionController::TestCase
   test 'should require authentication' do
     put :update, params: {
-      username: 'Desch',
+      username: '123',
       auth: 'wrongpassword',
-      irc: '#gjm',
+      channel: '1',
       name: 'desch',
       format: :json
     }
     assert_response 401
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('unauthorized'), 'Incorrect error message'
+    assert body['message'].downcase.include?('unauthorized'),
+           "Incorrect error message: #{body['message']}"
   end
 
   test 'should fail with incorrect channel' do
     put :update, params: {
-      username: 'Desch',
+      username: '123',
       auth: ENV['AUTH'],
-      irc: '#gjm',
+      channel: '1',
       name: 'desch',
       format: :json
     }
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('channel'), 'Incorrect error message'
-  end
-
-  test 'should fail with non-staff channel' do
-    put :update, params: {
-      username: 'Desch',
-      auth: ENV['AUTH'],
-      irc: '#cartel',
-      name: 'desch',
-      format: :json
-    }
-    assert_response 400
-
-    body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('channel'), 'Incorrect error message'
+    assert body['message'].downcase.include?('channel'),
+           "Incorrect error message: #{body['message']}"
   end
 
   test 'should fail with incorrect show' do
     put :update, params: {
-      username: 'Desch',
+      username: '123',
       auth: ENV['AUTH'],
-      irc: '#cartel-staff',
+      channel: '1',
       name: 'aoty2',
       format: :json
     }
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('unknown show'), 'Incorrect error message'
+    assert body['message'].downcase.include?('unknown show'),
+          "Incorrect error message: #{body['message']}"
   end
 
   test 'should fail with incorrect fansub' do
     put :update, params: {
-      username: 'Desch',
+      username: '123',
       auth: ENV['AUTH'],
-      irc: '#cartel-staff',
+      channel: '2',
       name: 'fmp',
       format: :json
     }
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('associated fansub'), 'Incorrect error message'
+    assert body['message'].downcase.include?('associated fansub'),
+           "Incorrect error message: #{body['message']}"
   end
 
   test 'should fail with finished show' do
     put :update, params: {
-      username: 'Desch',
+      username: '123',
       auth: ENV['AUTH'],
-      irc: '#cartel-staff',
+      channel: '2',
       name: 'kimi no uso',
       format: :json
     }
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('no pending'), 'Incorrect error message'
+    assert body['message'].downcase.include?('no pending'),
+           "Incorrect error message: #{body['message']}"
   end
 
   test 'should require all positions to be complete' do
     put :update, params: {
-      username: 'Desch',
+      username: '123',
       auth: ENV['AUTH'],
-      irc: '#cartel-staff',
+      channel: '2',
       name: 'desch',
       format: :json
     }
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('still pending'), 'Incorrect error message'
+    assert body['message'].downcase.include?('still pending'),
+           "Incorrect error message: #{body['message']}"
     assert body['message'].downcase.include?('desch, skiddiks, skiddiks'), 'Not all jobs listed'
     assert !body['message'].downcase.include?('arx-7'), 'Incorrect jobs listed'
   end
@@ -110,9 +102,9 @@ class ReleasesControllerTest < ActionController::TestCase
     end
 
     put :update, params: {
-      username: 'Desch',
+      username: '123',
       auth: ENV['AUTH'],
-      irc: '#cartel-staff',
+      channel: '2',
       name: 'desch',
       format: :json
     }
@@ -131,9 +123,9 @@ class ReleasesControllerTest < ActionController::TestCase
     end
 
     put :update, params: {
-      username: 'Desch',
+      username: '123',
       auth: ENV['AUTH'],
-      irc: '#cartel-staff',
+      channel: '2',
       name: 'aoty',
       format: :json
     }
@@ -142,16 +134,17 @@ class ReleasesControllerTest < ActionController::TestCase
 
   test 'should handle multiple show matches' do
     put :update, params: {
-      username: 'Desch',
+      username: '123',
       auth: ENV['AUTH'],
-      irc: '#cartel-staff',
+      channel: '2',
       name: 'shigatsu',
       format: :json
     }
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('matches'), 'Incorrect error message'
+    assert body['message'].downcase.include?('matches'),
+           "Incorrect error message: #{body['message']}"
   end
 
   test 'should support joint shows' do
@@ -163,9 +156,9 @@ class ReleasesControllerTest < ActionController::TestCase
     end
 
     put :update, params: {
-      username: 'Desch',
+      username: '123',
       auth: ENV['AUTH'],
-      irc: '#cartel-staff',
+      channel: '2',
       name: 'Subarashii',
       format: :json
     }
@@ -176,9 +169,9 @@ class ReleasesControllerTest < ActionController::TestCase
     show.fansubs.first.releases.first.update_attribute :released, false
 
     put :update, params: {
-      username: 'ARX-7',
+      username: '456',
       auth: ENV['AUTH'],
-      irc: '#syndicate-staff',
+      channel: '1',
       name: 'Subarashii',
       format: :json
     }
@@ -196,15 +189,16 @@ class ReleasesControllerTest < ActionController::TestCase
     end
 
     put :update, params: {
-      username: 'Imposter',
+      username: '132434896',
       auth: ENV['AUTH'],
-      irc: '#cartel-staff',
+      channel: '1',
       name: 'aoty',
       format: :json
     }
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('member'), 'Incorrect error message'
+    assert body['message'].downcase.include?('member'),
+           "Incorrect error message: #{body['message']}"
   end
 end

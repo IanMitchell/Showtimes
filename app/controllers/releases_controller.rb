@@ -10,7 +10,7 @@ class ReleasesController < ApplicationController
     @user = @group.members.find_by(discord: params[:username])
     return render json: { message: 'Unknown member' }, status: 400 if @user.nil?
 
-    @fansub = @group.find_fansub_for_show_fuzzy(URI.decode(params[:show]))
+    @fansub = @group.find_fansub_for_show_fuzzy(URI.decode(params[:name]))
     @current = @fansub.current_release
 
     if @current.staff.pending.present?

@@ -22,6 +22,7 @@ require "#{Rails.root}/lib/errors/group_not_found_error"
 class Group < ApplicationRecord
   include FriendlyId
 
+  has_many :group_members, inverse_of: :group
   has_many :members, through: :group_members
   has_many :group_fansubs, inverse_of: :group
   has_many :fansubs, through: :group_fansubs
