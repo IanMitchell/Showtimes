@@ -17,6 +17,13 @@ class Member < ApplicationRecord
   has_many :group_members, inverse_of: :member
   has_many :groups, through: :group_members
 
+  validates :discord, presence: true,
+                      uniqueness: true
+
+  validates :name, presence: true,
+                   uniqueness: true
+
+
   def admin?(group)
     self.group_members.where(group: group, admin: true).exists?
   end
