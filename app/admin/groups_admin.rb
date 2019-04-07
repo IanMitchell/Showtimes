@@ -22,24 +22,45 @@ Trestle.resource(:groups) do
       text_field :webhook
     end
 
-    tab :channels, badge: group.channels.count do
-      table group.channels, admin: :channels do
-        column :id
-        column :group
-        column :discord
+    unless group.new_record?
+      tab :members, badge: group.members.count do
+        table group.group_members, admin: :group_members do
+          column :id
+          column :member
 
-        actions
+          actions
+        end
+
+        concat admin_link_to(
+          "Add Member",
+          admin: :group_members,
+          action: :new,
+          params: {
+            group_id: instance.id,
+          },
+          class: "btn btn-success"
+        )
       end
 
-      concat admin_link_to(
-        "New Channel",
-        admin: :channels,
-        action: :new,
-        params: {
-          group_id: instance.id,
-        },
-        class: "btn btn-success"
-      )
+      tab :channels, badge: group.channels.count do
+        table group.channels, admin: :channels do
+          column :id
+          column :group
+          column :discord
+
+          actions
+        end
+
+        concat admin_link_to(
+          "New Channel",
+          admin: :channels,
+          action: :new,
+          params: {
+            group_id: instance.id,
+          },
+          class: "btn btn-success"
+        )
+      end
     end
   end
 end

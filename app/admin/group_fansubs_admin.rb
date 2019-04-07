@@ -7,7 +7,7 @@ Trestle.resource(:group_fansubs) do
     end
   end
 
-  form dialog: true do |episode|
+  form dialog: true do |group_fansub|
     hidden_field :fansub_id
 
     select :group_id, Group.all
