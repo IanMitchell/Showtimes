@@ -1,7 +1,23 @@
+# == Schema Information
+#
+# Table name: releases
+#
+#  id         :integer          not null, primary key
+#  released   :boolean          default(FALSE)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  episode_id :bigint(8)
+#  fansub_id  :integer
+#
+# Indexes
+#
+#  index_releases_on_episode_id  (episode_id)
+#  index_releases_on_fansub_id   (fansub_id)
+#
+
 class Release < ApplicationRecord
   belongs_to :episode
   belongs_to :fansub
-  belongs_to :station
   has_many :staff, dependent: :destroy, inverse_of: :release
 
   scope :pending, -> { where(released: false) }
@@ -10,16 +26,6 @@ class Release < ApplicationRecord
   validates :episode, presence: true
 
   validates :fansub, presence: true
-
-  validates :category, presence: true
-
-  validates :station, presence: true
-
-  enum category: {
-    tv: 0,
-    bluray: 1,
-    batch: 2
-  }
 
   # Active Admin
   def display_name

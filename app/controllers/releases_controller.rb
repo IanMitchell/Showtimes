@@ -1,55 +1,27 @@
 class ReleasesController < ApplicationController
+  include ErrorHandler
   include DiscordHelper
 
   before_action :require_authorization, only: [:update]
 
-  def show
-    # @release = Release.find(params[:id])
-    redirect_to group_path(Group.first)
-  end
-
   def update
-    @group = Channel.find_by(name: params[:channel] || params[:irc],
-                             platform: Channel.from_platform(params[:platform]),
-                             staff: true)&.group
-    return render json: { message: 'Unknown channel' }, status: 400 if @group.nil?
+    @group = Group.find_by_discord(params[:channel])
+    @user = @group.find_member(params[:username])
 
-    @user = User.includes(:members).includes(:accounts)
-                .where(members: { group_id: @group.id },
-                       accounts: { name: params[:username] })
-                &.first
-
-    return render json: { message: 'Unknown member' }, status: 400 if @user.nil?
-
-    shows = @group.fuzzy_search_subbed_shows(params[:name])
-    case shows.length
-    when 0
-      return render json: { message: 'Unknown Show / No associated fansub.' }, status: 400
-    when 1
-      @show = shows.first
-      @fansub = @show.fansubs.includes(:groups)
-                             .where(groups: { id: @group.id })
-                             &.first
-    else
-      names = shows.map { |show| show.name }.to_sentence
-      return render json: { message: "Multiple Matches: #{names}" }, status: 400
-    end
-
+    @fansub = @group.find_fansub_for_show_fuzzy(URI.decode(params[:name]))
     @current = @fansub.current_release
-    return render json: { message: 'No pending releases' }, status: 400 if @current.nil?
 
     if @current.staff.pending.present?
-      positions = @current.staff.pending.map(&:user).map(&:name).join(', ')
+      positions = @current.staff.pending.map(&:member).map(&:name).join(', ')
       return render json: { message: "Positions still pending: #{positions}" }, status: 400
     end
 
     @current.update_attribute :released, true
-    @fansub.current_release&.touch
 
     if @group.webhook?
       discord_release(@group.webhook, @show.name, @current.episode.number)
     end
 
-    render json: { message: "#{@show.name} ##{@current.episode.number} released!" }, status: 200
+    render json: { message: "#{@fansub.show.name} ##{@current.episode.number} released!" }, status: 200
   end
 end

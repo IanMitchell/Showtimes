@@ -1,37 +1,30 @@
-member_one:
-  group: cartel
-  user: desch
-  role: 2
-  title: Wizard
-  active: true
+# == Schema Information
+#
+# Table name: members
+#
+#  id         :integer          not null, primary key
+#  discord    :string
+#  name       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_members_on_discord  (discord)
+#
 
-member_two:
-  group: cartel
-  user: arx
-  role: 0
-  title: Bot
-  active: true
+desch:
+  name: desch
+  discord: '123'
 
-member_three:
-  group: cartel
-  user: skiddiks
-  role: 1
-  title: Torn
-  active: true
+arx:
+  name: arx
+  discord: '456'
 
-member_four:
-  group: cartel
-  user: jukey
-  role: 0
-  title: Dude, nice
-  active: false
+skiddiks:
+  name: skiddiks
+  discord: '789'
 
-member_five:
-  group: syndicate
-  user: desch
-  role: 2
-
-member_six:
-  group: syndicate
-  user: arx
-  role: 2
+jukey:
+  name: jukey
+  discord: '1213'

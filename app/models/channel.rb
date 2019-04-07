@@ -1,26 +1,24 @@
+# == Schema Information
+#
+# Table name: channels
+#
+#  id         :integer          not null, primary key
+#  discord    :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  group_id   :integer
+#
+# Indexes
+#
+#  index_channels_on_discord   (discord)
+#  index_channels_on_group_id  (group_id)
+#
+
 class Channel < ApplicationRecord
   belongs_to :group
 
-  validates :name, presence: true,
-                   uniqueness: true
+  validates :discord, presence: true,
+                      uniqueness: true
 
   validates :group, presence: true
-
-  validates :platform, presence: true
-
-  enum platform: {
-    irc: 0,
-    discord: 1,
-  }
-
-  def self.from_platform(name)
-    case name
-    when 'irc'
-      return 0
-    when 'discord'
-      return 1
-    else
-      return 0
-    end
-  end
 end

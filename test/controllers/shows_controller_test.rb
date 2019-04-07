@@ -2,21 +2,21 @@ require 'test_helper'
 
 class ShowsControllerTest < ActionController::TestCase
   test "should get all shows" do
-    get :index, params: { irc: '#cartel', format: :json }
+    get :index, params: { channel: '1', format: :json }
     assert_response :success
 
     body = JSON.parse(response.body)
     assert body['shows']
     assert body['shows'][0]['air_date']
-    assert body['shows'][0]['alias']
+    assert body['shows'][0]['term']
   end
 
-  test 'should get show by alias' do
+  test 'should get show by term' do
     get :show, params: { id: 'aoty', format: :json }
     assert_response :success
 
     body = JSON.parse(response.body)
-    assert body['alias']
+    assert body['term']
     assert body['air_date']
   end
 
@@ -25,7 +25,7 @@ class ShowsControllerTest < ActionController::TestCase
     assert_response :success
 
     body = JSON.parse(response.body)
-    assert body['alias']
+    assert body['term']
     assert body['air_date']
   end
 

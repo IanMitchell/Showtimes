@@ -1,0 +1,39 @@
+# == Schema Information
+#
+# Table name: group_members
+#
+#  id        :bigint(8)        not null, primary key
+#  admin     :boolean          default(FALSE)
+#  group_id  :bigint(8)
+#  member_id :bigint(8)
+#
+# Indexes
+#
+#  index_group_members_on_group_id   (group_id)
+#  index_group_members_on_member_id  (member_id)
+#
+
+member_one:
+  group: cartel
+  member: desch
+  admin: true
+
+member_two:
+  group: cartel
+  member: arx
+
+member_three:
+  group: cartel
+  member: skiddiks
+
+member_four:
+  group: cartel
+  member: jukey
+
+member_five:
+  group: syndicate
+  member: desch
+
+member_six:
+  group: syndicate
+  member: arx

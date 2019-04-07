@@ -1,8 +1,8 @@
 json.name @show.name
 json.tvdb_name @show.tvdb_name unless @show.tvdb_name.nil?
 
-unless @show.aliases.empty?
-  json.alias @show.aliases.first.name
+unless @show.terms.empty?
+  json.term @show.terms.first.name
 end
 
 if @show.next_episode

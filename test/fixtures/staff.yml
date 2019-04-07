@@ -1,89 +1,108 @@
+# == Schema Information
+#
+# Table name: staff
+#
+#  id          :integer          not null, primary key
+#  finished    :boolean          default(FALSE)
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  member_id   :bigint(8)
+#  position_id :integer
+#  release_id  :integer
+#
+# Indexes
+#
+#  index_staff_on_member_id    (member_id)
+#  index_staff_on_position_id  (position_id)
+#  index_staff_on_release_id   (release_id)
+#
+
 desch_ep_1:
-  user: desch
+  member: desch
   position: editor
   release: release_one
   finished: true
 
 arx_ep_1:
-  user: arx
+  member: arx
   position: translator
   release: release_one
   finished: true
 
 skiddiks_ep_1_tm:
-  user: skiddiks
+  member: skiddiks
   position: timer
   release: release_one
   finished: true
 
 skiddiks_ep_1_ts:
-  user: skiddiks
+  member: skiddiks
   position: typesetter
   release: release_one
   finished: true
 
 desch_ep_2:
-  user: desch
+  member: desch
   position: editor
   release: release_two
   finished: false
 
 arx_ep_2:
-  user: arx
+  member: arx
   position: translator
   release: release_two
   finished: true
 
 skiddiks_ep_2_tm:
-  user: skiddiks
+  member: skiddiks
   position: timer
   release: release_two
   finished: false
 
 skiddiks_ep_2_ts:
-  user: skiddiks
+  member: skiddiks
   position: typesetter
   release: release_two
   finished: false
 
 desch_ep_3:
-  user: desch
+  member: desch
   position: editor
   release: release_three
   finished: false
 
 arx_ep_3:
-  user: arx
+  member: arx
   position: translator
   release: release_three
   finished: false
 
 skiddiks_ep_3_tm:
-  user: skiddiks
+  member: skiddiks
   position: timer
   release: release_three
   finished: false
 
 skiddiks_ep_3_ts:
-  user: skiddiks
+  member: skiddiks
   position: typesetter
   release: release_three
   finished: false
 
 desch_shigatsu:
-  user: desch
+  member: desch
   position: translator
   release: shigatsu_release
   finished: true
 
 desch_konosuba:
-  user: desch
+  member: desch
   position: translator
   release: konosuba_release
   finished: false
 
 arx_konosuba:
-  user: arx
+  member: arx
   position: editor
   release: konosuba_release
   finished: false

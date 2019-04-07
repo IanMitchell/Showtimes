@@ -1,7 +1,0 @@
-winter:
-  year: <%= DateTime.now.year %>
-  name: <%= Season.month_to_season(DateTime.now.month) %>
-
-last_year:
-  year: <%= DateTime.now.year - 1 %>
-  name: <%= Season.month_to_season(DateTime.now.month) %>

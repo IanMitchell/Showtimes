@@ -1,4 +1,5 @@
 class StaffController < ApplicationController
+  include ErrorHandler
   include DiscordHelper
 
   before_action :require_authorization, only: [:update]
@@ -6,50 +7,29 @@ class StaffController < ApplicationController
   def update
     fin = ActiveRecord::Type::Boolean.new.deserialize(params[:status])
 
-    @group = Channel.find_by(name: params[:channel] || params[:irc],
-                             platform: Channel.from_platform(params[:platform]),
-                             staff: true)&.group
-    return render json: { message: 'Unknown channel' }, status: 400 if @group.nil?
+    @group = Group.find_by_discord(params[:channel])
+    @user = @group.find_member(params[:username])
+    @fansub = @group.find_fansub_for_show_fuzzy(URI.decode(params[:name]))
 
-    @user = Account.find_by(name: params[:username],
-                            platform: Account.from_platform(params[:platform]))&.user
-    return render json: { message: 'Unknown user.' }, status: 400 if @user.nil?
-
-    shows = @group.fuzzy_search_subbed_shows(params[:name])
-    case shows.length
-    when 0
-      return render json: { message: 'Unknown show.' }, status: 400
-    when 1
-      @show = shows.first
-    else
-      names = shows.map { |show| show.name }.to_sentence
-      return render json: { message: "Multiple Matches: #{names}" }, status: 400
-    end
-
-    @staff = @show.fansubs.includes(:groups)
-                          .where(groups: { id: @group.id })
-                          &.first
-                          &.current_release
-                          &.staff
+    @staff = @fansub.current_release&.staff
     return render json: { message: "No staff for #{@show.name}" }, status: 400 if @staff.empty?
 
     # Filter by assigned roles unless admin or founder
-    @staff = @staff.where(user: @user) unless @user.group_admin? @group
+    @staff = @staff.where(member: @user) unless @user.admin? @group
 
+    # TODO: This is really nasty and needs to be refactored
     if params[:position]
       @position = Position.find_by_name_or_acronym(params[:position])
-      return render json: { message: 'Invalid position.' }, status: 400 if @position.nil?
 
       @staff = @staff.where(position: @position)
       return render json: { message: "That's not your position!" }, status: 400 if @staff.empty?
 
       if @staff.count > 1
         # Admin - first, find by own name. If none, or if one and done, then
-        staff = @staff.where(user: @user, finished: !fin)
+        staff = @staff.where(member: @user, finished: !fin)
         if staff.present?
           @staff = staff.first
         else
-          # TODO: Allow the founder to specify a user they're overriding.
           @staff = @staff.where(finished: !fin).first
         end
       else
@@ -79,9 +59,9 @@ class StaffController < ApplicationController
         )
       end
 
-      render json: { message: "Updated #{@show.name} ##{@staff.release.episode.number}" }, status: 200
+      render json: { message: "Updated #{@fansub.show.name} ##{@staff.release.episode.number}" }, status: 200
     else
-      render json: { message: "Error updating #{@show.name}" }, status: 500
+      render json: { message: "Error updating #{@fansub.show.name}" }, status: 500
     end
   end
 end

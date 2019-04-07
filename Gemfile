@@ -9,9 +9,6 @@ gem 'puma'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# Accounts
-gem 'devise'
-
 # Security
 gem 'rack-attack'
 
@@ -22,7 +19,10 @@ gem 'friendly_id'
 gem 'rack-cors'
 
 # Admin Interface
-gem 'activeadmin', '~> 1.4.3'
+gem 'trestle'
+gem 'trestle-search'
+gem 'trestle-auth'
+gem 'cocoon'
 
 # Alerts
 gem 'discord-notifier'
@@ -30,7 +30,6 @@ gem 'discord-notifier'
 # Front-end
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
-gem 'turbolinks'
 
 # APIs
 gem 'jbuilder', '~> 2.0'
@@ -52,6 +51,9 @@ group :development, :test do
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+
+  # Database
+  gem 'annotate'
 end
 
 group :development do

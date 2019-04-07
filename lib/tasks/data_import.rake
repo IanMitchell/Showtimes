@@ -28,8 +28,7 @@ namespace :data_import do
 
         if @fansub.nil?
           puts "No fansub for #{row['NAME']}. Creating record..."
-          @fansub = Fansub.create(show: @show,
-                                  tag: row['TAG'])
+          @fansub = Fansub.create(show: @show)
           GroupFansub.create(fansub: @fansub, group: @group)
         end
 
@@ -97,10 +96,6 @@ namespace :data_import do
                                   password: 'password',
                                   name: name,
                                   twitter: 'Unknown')
-
-              @account = Account.create(user: @user,
-                                        platform: 0,
-                                        name: name)
 
               @member = Member.create(group: @group, user: @user)
             end

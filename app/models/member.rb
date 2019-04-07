@@ -1,19 +1,23 @@
+# == Schema Information
+#
+# Table name: members
+#
+#  id         :integer          not null, primary key
+#  discord    :string
+#  name       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_members_on_discord  (discord)
+#
+
 class Member < ApplicationRecord
-  belongs_to :group
-  belongs_to :user
+  has_many :group_members, inverse_of: :member
+  has_many :groups, through: :group_members
 
-  validates :group, presence: true
-
-  validates :user, presence: true,
-                   uniqueness: { scope: :group, message: "already in group" }
-
-  validates :role, presence: true
-
-  validates :title, presence: true
-
-  enum role: {
-    member: 0,
-    admin: 1,
-    founder: 2
-  }
+  def admin?(group)
+    self.group_members.where(group: group, admin: true).exists?
+  end
 end
