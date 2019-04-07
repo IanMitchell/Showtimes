@@ -22,4 +22,8 @@
 class GroupFansub < ApplicationRecord
   belongs_to :group
   belongs_to :fansub
+
+  def to_s
+    self.group.name
+  end
 end

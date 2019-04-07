@@ -19,6 +19,25 @@ Trestle.resource(:fansubs) do
           column :released
         end
       end
+
+      tab :groups, badge: fansub.groups.count do
+        table fansub.group_fansubs, admin: :group_fansubs do
+          column :id
+          column :group
+
+          actions
+        end
+
+        concat admin_link_to(
+          "Add Group",
+          admin: :group_fansubs,
+          action: :new,
+          params: {
+            fansub_id: instance.id,
+          },
+          class: "btn btn-success"
+        )
+      end
     else
       tab :fansub do
         select :show_id, Show.all
