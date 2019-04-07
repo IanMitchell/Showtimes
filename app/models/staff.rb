@@ -30,4 +30,6 @@ class Staff < ApplicationRecord
   validates :position, presence: true
 
   validates :release, presence: true
+
+  validates :member, presence: true
 end

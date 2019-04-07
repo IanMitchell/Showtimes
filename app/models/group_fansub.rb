@@ -23,6 +23,10 @@ class GroupFansub < ApplicationRecord
   belongs_to :group
   belongs_to :fansub
 
+  validates :group, presence: true
+
+  validates :fansub, presence: true
+
   def to_s
     self.group.name
   end

@@ -16,4 +16,8 @@
 class GroupMember < ApplicationRecord
   belongs_to :group
   belongs_to :member
+
+  validates :group, presence: true
+
+  validates :member, presence: true
 end
