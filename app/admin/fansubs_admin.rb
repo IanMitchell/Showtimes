@@ -11,7 +11,20 @@ Trestle.resource(:fansubs) do
   end
 
   form do |fansub|
-    if fansub.id?
+    if fansub.new_record?
+      tab :fansub do
+        select :show_id, Show.all
+
+        Position.all.each do |position|
+          collection_select :default_staff,
+                            Member.all,
+                            Proc.new {|m| [position.id, m.id]},
+                            :name,
+                            { label: "#{position.name}(s)" },
+                            { multiple: true }
+        end
+      end
+    else
       tab :releases, badge: fansub.releases.count do
         table fansub.releases, admin: :releases do
           column :id
@@ -37,10 +50,6 @@ Trestle.resource(:fansubs) do
           },
           class: "btn btn-success"
         )
-      end
-    else
-      tab :fansub do
-        select :show_id, Show.all
       end
     end
   end
