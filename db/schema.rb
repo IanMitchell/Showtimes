@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_12_002309) do
+ActiveRecord::Schema.define(version: 2019_04_07_182813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,13 +39,11 @@ ActiveRecord::Schema.define(version: 2019_03_12_002309) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "aliases", id: :serial, force: :cascade do |t|
-    t.integer "show_id"
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_aliases_on_name"
-    t.index ["show_id"], name: "index_aliases_on_show_id"
+  create_table "administrators_groups", force: :cascade do |t|
+    t.bigint "group_id"
+    t.bigint "administrator_id"
+    t.index ["administrator_id"], name: "index_administrators_groups_on_administrator_id"
+    t.index ["group_id"], name: "index_administrators_groups_on_group_id"
   end
 
   create_table "channels", id: :serial, force: :cascade do |t|
@@ -157,6 +155,15 @@ ActiveRecord::Schema.define(version: 2019_03_12_002309) do
     t.index ["member_id"], name: "index_staff_on_member_id"
     t.index ["position_id"], name: "index_staff_on_position_id"
     t.index ["release_id"], name: "index_staff_on_release_id"
+  end
+
+  create_table "terms", id: :serial, force: :cascade do |t|
+    t.integer "show_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_terms_on_name"
+    t.index ["show_id"], name: "index_terms_on_show_id"
   end
 
   add_foreign_key "group_fansubs", "fansubs"

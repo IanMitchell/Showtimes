@@ -6,9 +6,25 @@ Trestle.resource(:fansubs) do
   table do
     column :id
     column :show
-    column :status
+
+    actions
   end
 
+  form do |fansub|
+    if fansub.id?
+      tab :releases, badge: fansub.releases.count do
+        table fansub.releases, admin: :releases do
+          column :id
+          column :episode
+          column :released
+        end
+      end
+    else
+      tab :fansub do
+        select :show_id, Show.all
+      end
+    end
+  end
   # Customize the table columns shown on the index view.
   #
   # table do

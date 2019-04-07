@@ -99,7 +99,7 @@ class ReleasesControllerTest < ActionController::TestCase
     assert body['message'].downcase.include?('#2 released'), 'Incorrect success message'
   end
 
-  test 'should release show based on alias' do
+  test 'should release show based on term' do
     # Artificially set it as ready for release
     show = Show.find_by(name: "Desch's Slice of Life")
     release = show.fansubs.first.current_release

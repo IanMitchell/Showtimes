@@ -9,6 +9,11 @@ Trestle.resource(:members) do
     column :discord
   end
 
+  form do |member|
+    text_field :name
+    text_field :discord
+  end
+
   # Customize the table columns shown on the index view.
   #
   # table do

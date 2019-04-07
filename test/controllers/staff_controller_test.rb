@@ -276,7 +276,7 @@ class StaffControllerTest < ActionController::TestCase
     assert staff.finished, 'Incorrect staff entry modified'
   end
 
-  test 'should update show based on alias' do
+  test 'should update show based on term' do
     put :update, params: {
       auth: ENV['AUTH'],
       channel: '1',

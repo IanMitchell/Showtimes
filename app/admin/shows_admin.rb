@@ -14,32 +14,63 @@ Trestle.resource(:shows) do
       instance.episodes.count
     end
     column :tvdb_name
+
+    actions
   end
 
   form do |show|
     tab :show do
       text_field :name
       text_field :tvdb_name
-    end
 
-    tab :episodes, badge: show.episodes.count do
-      table show.episodes, admin: :episodes do
-        column :id
-        column :show
-        column :number, sort: { default: true, default_order: :asc }
-        column :air_date
-
-        actions
+      unless show.id?
+        text_field :episode_count
+        datetime_field :air_date
       end
     end
 
-    tab :aliases, badge: show.aliases.count do
-      table show.aliases, admin: :aliases do
-        column :id
-        column :show
-        column :name
+    if show.id?
+      tab :episodes, badge: show.episodes.count do
+        table show.episodes, admin: :episodes do
+          column :id
+          column :show
+          column :number, sort: { default: true, default_order: :asc }
+          column :air_date
 
-        actions
+          actions
+        end
+
+        concat admin_link_to(
+          "New Episode",
+          admin: :episodes,
+          action: :new,
+          params: {
+            show_id: instance.id,
+            number: instance.episodes.count + 1,
+            air_date: instance.episodes.last.air_date + 1.week
+          },
+          class: "btn btn-success"
+        )
+      end
+
+      tab :terms, badge: show.terms.count do
+        table show.terms, admin: :terms do
+          column :id
+          column :show
+          column :name
+
+          actions
+        end
+
+        concat admin_link_to(
+          "New Term",
+          admin: :terms,
+          action: :new,
+          params: {
+            show_id: instance.id,
+          },
+          class: "btn btn-success"
+        )
       end
     end
   end

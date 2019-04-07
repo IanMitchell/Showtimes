@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: aliases
+# Table name: terms
 #
 #  id         :integer          not null, primary key
 #  name       :string
@@ -10,14 +10,14 @@
 #
 # Indexes
 #
-#  index_aliases_on_name     (name)
-#  index_aliases_on_show_id  (show_id)
+#  index_terms_on_name     (name)
+#  index_terms_on_show_id  (show_id)
 #
 
-aoty:
-  show: desch
-  name: AOTY
+require 'test_helper'
 
-fmp:
-  show: fmp
-  name: FMP
+class TermTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
+end

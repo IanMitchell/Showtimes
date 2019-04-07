@@ -9,6 +9,11 @@ Trestle.resource(:positions) do
     column :acronym
   end
 
+  form do |position|
+    text_field :name
+    text_field :acronym
+  end
+
   # Customize the table columns shown on the index view.
   #
   # table do

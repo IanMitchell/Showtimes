@@ -23,12 +23,15 @@ require "#{Rails.root}/lib/errors/group_not_found_error"
 class Group < ApplicationRecord
   include FriendlyId
 
-  has_many :group_members, inverse_of: :group
+  before_destroy :cleanup_fansubs, prepend: true
+
+  has_and_belongs_to_many :administrators
+  has_many :group_members, inverse_of: :group, dependent: :destroy
   has_many :members, through: :group_members
-  has_many :group_fansubs, inverse_of: :group
+  has_many :group_fansubs, inverse_of: :group, dependent: :destroy
   has_many :fansubs, through: :group_fansubs
   has_many :shows, through: :fansubs
-  has_many :channels, inverse_of: :group
+  has_many :channels, inverse_of: :group, dependent: :destroy
 
   friendly_id :name, use: :slugged
 
@@ -75,4 +78,11 @@ class Group < ApplicationRecord
     raise Errors::GroupNotFoundError if group.nil?
     return group
   end
+
+  private
+    def cleanup_fansubs
+      self.fansubs.each do |fansub|
+        fansub.delete unless fansub.joint?
+      end
+    end
 end

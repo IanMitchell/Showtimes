@@ -17,13 +17,17 @@ require "#{Rails.root}/lib/errors/show_not_found_error"
 require "#{Rails.root}/lib/errors/multiple_matching_shows_error"
 
 class Show < ApplicationRecord
-  has_many :fansubs, inverse_of: :show
-  has_many :aliases, inverse_of: :show
-  has_many :episodes, inverse_of: :show
+  attr_accessor :episode_count
+  attr_accessor :air_date
+
+  after_create :create_episodes
+
+  has_many :fansubs, inverse_of: :show, dependent: :destroy
+  has_many :terms, inverse_of: :show, dependent: :destroy
+  has_many :episodes, inverse_of: :show, dependent: :destroy
 
   validates :name, presence: true,
                    uniqueness: true
-
 
   scope :airing, -> {
     joins(:episodes)
@@ -42,13 +46,13 @@ class Show < ApplicationRecord
     self.episodes.where('air_date >= :current_date', current_date: DateTime.now).any?
   end
 
-  def self.find_by_name_or_alias(name)
+  def self.find_by_name_or_term(name)
     show = self.where('lower(name) = ?', name.downcase).first
-    show ||= Alias.where('lower(name) = ?', name.downcase).first&.show
+    show ||= Term.where('lower(name) = ?', name.downcase).first&.show
   end
 
   def self.fuzzy_search(str)
-    show = Alias.where('lower(name) = ?', str.downcase).first&.show
+    show = Term.where('lower(name) = ?', str.downcase).first&.show
     return [show] unless show.nil?
 
     shows = where('lower(name) = ?', str.downcase)
@@ -70,4 +74,16 @@ class Show < ApplicationRecord
       raise Errors::MultipleMatchingShowsError, "Multiple Matches: #{names}"
     end
   end
+
+
+  private
+    def create_episodes
+      self.episode_count.to_i.times do |num|
+        Episode.create(
+          show: self,
+          number: num + 1,
+          air_date: self.air_date.to_datetime + num.weeks
+        )
+      end
+    end
 end

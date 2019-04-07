@@ -22,6 +22,7 @@ gem 'rack-cors'
 gem 'trestle'
 gem 'trestle-search'
 gem 'trestle-auth'
+gem 'cocoon'
 
 # Alerts
 gem 'discord-notifier'

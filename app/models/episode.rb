@@ -15,6 +15,8 @@
 #
 
 class Episode < ApplicationRecord
+  after_create :extend_fansubs
+
   belongs_to :show
   has_many :releases, dependent: :destroy, inverse_of: :episode
 
@@ -30,18 +32,33 @@ class Episode < ApplicationRecord
     "#{Episode.month_to_season(self.air_date.month)} #{self.air_date.year}"
   end
 
-  private
-
-  def self.month_to_season(month)
-    case month
-    when 1..3
-      "Winter"
-    when 4..6
-      "Spring"
-    when 7..9
-      "Summer"
-    when 10..12
-      "Fall"
-    end
+  def to_s
+    "#{self.show.name} Episode #{self.number}"
   end
+
+  private
+    def self.month_to_season(month)
+      case month
+      when 1..3
+        "Winter"
+      when 4..6
+        "Spring"
+      when 7..9
+        "Summer"
+      when 10..12
+        "Fall"
+      end
+    end
+
+    def extend_fansubs
+      self.show.fansubs.each do |fansub|
+        last_release = fansub.releases.last
+
+        release = Release.create(fansub: fansub, episode: self)
+
+        last_release.staff.each do |staff|
+          Staff.create(member: staff.member, position: staff.position, release: release)
+        end
+      end
+    end
 end

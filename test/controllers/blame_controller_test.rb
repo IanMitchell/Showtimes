@@ -44,7 +44,7 @@ class BlameControllerTest < ActionController::TestCase
     assert_response 200
   end
 
-  test 'should respond to alias' do
+  test 'should respond to term' do
     get :show, params: { channel: '1', show: 'aoty', format: :json }
     assert_response 200
   end

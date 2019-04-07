@@ -1,44 +1,35 @@
 Trestle.resource(:releases) do
-  menu do
-    item :releases, icon: "fa fa-star", group: :fansubs
-  end
-
   table do
     column :id
     column :fansub
-    column :category
-    column :station
     column :episode
     column :released
   end
 
-  # Customize the table columns shown on the index view.
-  #
-  # table do
-  #   column :name
-  #   column :created_at, align: :center
-  #   actions
-  # end
+  form do |release|
+    tab :release do
+      check_box :released
+    end
 
-  # Customize the form fields shown on the new/edit views.
-  #
-  # form do |release|
-  #   text_field :name
-  #
-  #   row do
-  #     col(xs: 6) { datetime_field :updated_at }
-  #     col(xs: 6) { datetime_field :created_at }
-  #   end
-  # end
+    tab :staff, badge: release.staff.count do
+      table release.staff, admin: :staff do
+        column :id
+        column :position
+        column :member
+        column :finished
 
-  # By default, all parameters passed to the update and create actions will be
-  # permitted. If you do not have full trust in your users, you should explicitly
-  # define the list of permitted parameters.
-  #
-  # For further information, see the Rails documentation on Strong Parameters:
-  #   http://guides.rubyonrails.org/action_controller_overview.html#strong-parameters
-  #
-  # params do |params|
-  #   params.require(:release).permit(:name, ...)
-  # end
+        actions
+      end
+
+      concat admin_link_to(
+        "New Staff",
+        admin: :staff,
+        action: :new,
+        params: {
+          release_id: instance.id,
+        },
+        class: "btn btn-success"
+      )
+    end
+  end
 end

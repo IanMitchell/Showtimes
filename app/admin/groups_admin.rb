@@ -30,6 +30,16 @@ Trestle.resource(:groups) do
 
         actions
       end
+
+      concat admin_link_to(
+        "New Channel",
+        admin: :channels,
+        action: :new,
+        params: {
+          group_id: instance.id,
+        },
+        class: "btn btn-success"
+      )
     end
   end
 

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: aliases
+# Table name: terms
 #
 #  id         :integer          not null, primary key
 #  name       :string
@@ -10,11 +10,11 @@
 #
 # Indexes
 #
-#  index_aliases_on_name     (name)
-#  index_aliases_on_show_id  (show_id)
+#  index_terms_on_name     (name)
+#  index_terms_on_show_id  (show_id)
 #
 
-class Alias < ApplicationRecord
+class Term < ApplicationRecord
   belongs_to :show
 
   validates :name, presence: true,
