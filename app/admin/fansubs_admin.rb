@@ -5,6 +5,7 @@ Trestle.resource(:fansubs) do
 
   table do
     column :id
+    column :name
     column :show
 
     actions

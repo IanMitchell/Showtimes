@@ -32,7 +32,7 @@ class Fansub < ApplicationRecord
     return release
   end
 
-  def to_s
+  def name
     "#{self.groups.map(&:acronym).join('/')} #{self.show.name}"
   end
 
