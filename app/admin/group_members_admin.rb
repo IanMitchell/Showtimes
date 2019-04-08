@@ -11,5 +11,6 @@ Trestle.resource(:group_members) do
     hidden_field :group_id
 
     select :member_id, Member.all
+    check_box :admin
   end
 end

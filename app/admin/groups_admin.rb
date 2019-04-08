@@ -27,6 +27,7 @@ Trestle.resource(:groups) do
         table group.group_members, admin: :group_members do
           column :id
           column :member
+          column :admin
 
           actions
         end
