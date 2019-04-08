@@ -5,20 +5,19 @@ json.shows @group.active_fansubs do |fansub|
 
   json.name fansub.show.name
   json.tvdb_name fansub.show.tvdb_name unless fansub.show.tvdb_name.nil?
-  json.season fansub.current_release.episode.season.full_name
+  json.season fansub.current_release.episode.season
 
   json.episode do
     json.current fansub.current_release.episode.number
     json.airdate fansub.current_release.episode.air_date
     json.total fansub.show.episodes.count
     json.updated_at fansub.current_release.updated_at
-    json.station fansub.current_release.station.name
   end
 
   json.status fansub.current_release.staff do |staff|
     json.position staff.position.name
     json.acronym staff.position.acronym
-    json.staff staff.user.name
+    json.staff staff.member.name
     json.finished staff.finished
   end
 end

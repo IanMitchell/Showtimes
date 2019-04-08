@@ -47,7 +47,7 @@ class StaffController < ApplicationController
       if @group.webhook?
         discord_update(
           @group.webhook,
-          "#{@show.name} ##{@staff.release.episode.number}",
+          "#{@fansub.show.name} ##{@staff.release.episode.number}",
           (@staff.release.staff.map do |staff|
             if staff.finished?
               "~~#{staff.position.acronym}~~"
