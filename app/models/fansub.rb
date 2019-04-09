@@ -24,6 +24,8 @@ class Fansub < ApplicationRecord
   has_many :releases, inverse_of: :fansub, dependent: :destroy
   belongs_to :show
 
+  scope :active, -> { joins(:releases).where('releases.released = false') }
+
   validates :show, presence: true
 
   def current_release

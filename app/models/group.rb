@@ -58,6 +58,7 @@ class Group < ApplicationRecord
   def active_fansubs
     Fansub.joins(:group_fansubs)
           .where(group_fansubs: { group: self })
+          .active
           .includes(show: :episodes)
           .order("episodes.air_date DESC")
   end
