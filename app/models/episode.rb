@@ -15,7 +15,9 @@
 #
 
 class Episode < ApplicationRecord
+  before_create :set_timezone
   after_create :extend_fansubs
+  before_update :set_timezone
 
   belongs_to :show
   has_many :releases, dependent: :destroy, inverse_of: :episode
@@ -47,6 +49,12 @@ class Episode < ApplicationRecord
         "Summer"
       when 10..12
         "Fall"
+      end
+    end
+
+    def set_timezone
+      unless self.air_date.zone.eql? 'JST'
+        self.air_date = self.air_date.change(zone: 'Japan')
       end
     end
 

@@ -42,6 +42,43 @@ class Fansub < ApplicationRecord
     self.groups.count > 1
   end
 
+  def notify_update(release, finished)
+    self.groups.each do |group|
+      if group.webhook?
+        embed = Discord::Embed.new do
+          title "#{self.show.name} ##{release.episode.number}"
+          color finished ? 0x008000 : 0x800000
+          add_field name: 'Status',
+                    value: (release.staff.map do |staff|
+                              if staff.finished?
+                                "~~#{staff.position.acronym}~~"
+                              else
+                                "**#{staff.position.acronym}**"
+                              end
+                            end.join ' ')
+          footer text: DateTime.now.to_formatted_s(:long_ordinal)
+        end
+
+        Discord::Notifier.message embed, url: group.webhook
+      end
+    end
+  end
+
+  def notify_release(release)
+    self.groups.each do |group|
+      if group.webhook?
+        embed = Discord::Embed.new do
+          title self.show.name
+          color 0x008000
+          add_field name: 'Released!',
+                    value: "#{self.show.name} ##{release.episode.number} was released!"
+          footer text: DateTime.now.to_formatted_s(:long_ordinal)
+        end
+
+        Discord::Notifier.message embed, url: group.webhook
+      end
+    end
+  end
 
   private
     def create_releases

@@ -1,6 +1,5 @@
 class StaffController < ApplicationController
   include ErrorHandler
-  include DiscordHelper
 
   before_action :require_authorization, only: [:update]
 
@@ -44,20 +43,7 @@ class StaffController < ApplicationController
     end
 
     if @staff.update_attribute :finished, fin
-      if @group.webhook?
-        discord_update(
-          @group.webhook,
-          "#{@fansub.show.name} ##{@staff.release.episode.number}",
-          (@staff.release.staff.map do |staff|
-            if staff.finished?
-              "~~#{staff.position.acronym}~~"
-            else
-              "**#{staff.position.acronym}**"
-            end
-          end.join ' '),
-          (fin ? 0x008000 : 0x800000)
-        )
-      end
+      @fansub.notify_update(@fansub.current_release, fin)
 
       render json: { message: "Updated #{@fansub.show.name} ##{@staff.release.episode.number}" }, status: 200
     else
