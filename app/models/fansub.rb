@@ -43,10 +43,12 @@ class Fansub < ApplicationRecord
   end
 
   def notify_update(release, finished)
+    show = self.show
+
     self.groups.each do |group|
       if group.webhook?
         embed = Discord::Embed.new do
-          title "#{self.show.name} ##{release.episode.number}"
+          title "#{show.name} ##{release.episode.number}"
           color finished ? 0x008000 : 0x800000
           add_field name: 'Status',
                     value: (release.staff.map do |staff|
@@ -65,13 +67,15 @@ class Fansub < ApplicationRecord
   end
 
   def notify_release(release)
+    show = self.show
+
     self.groups.each do |group|
       if group.webhook?
         embed = Discord::Embed.new do
-          title self.show.name
+          title show.name
           color 0x008000
           add_field name: 'Released!',
-                    value: "#{self.show.name} ##{release.episode.number} was released!"
+                    value: "#{show.name} ##{release.episode.number} was released!"
           footer text: DateTime.now.to_formatted_s(:long_ordinal)
         end
 
