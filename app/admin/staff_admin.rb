@@ -14,4 +14,8 @@ Trestle.resource(:staff) do
     select :member_id, Member.all
     check_box :finished
   end
+
+  return_to on: :destroy do |instance|
+    edit_fansubs_admin_path instance.release.fansub
+  end
 end
