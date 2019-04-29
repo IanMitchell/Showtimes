@@ -46,16 +46,24 @@ class Fansub < ApplicationRecord
     show = self.show
 
     self.groups.each do |group|
+      positions = {}
+
+      release.staff.map do |staff|
+        key = staff.position.acronym
+        positions[key] = staff.finished? unless positions.include? key
+        positions[key] = staff.finished? if positions[key] && !staff.finished
+      end
+
       if group.webhook?
         embed = Discord::Embed.new do
           title "#{show.name} ##{release.episode.number}"
           color finished ? 0x008000 : 0x800000
           add_field name: 'Status',
-                    value: (release.staff.map do |staff|
-                              if staff.finished?
-                                "~~#{staff.position.acronym}~~"
+                    value: (positions.map do |key, value|
+                              if value == true
+                                "~~#{key}~~"
                               else
-                                "**#{staff.position.acronym}**"
+                                "**#{key}**"
                               end
                             end.join ' ')
           footer text: DateTime.now.to_formatted_s(:long_ordinal)
