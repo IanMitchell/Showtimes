@@ -70,6 +70,9 @@ class Show < ApplicationRecord
     when 1
       return shows.first
     else
+      airing = shows.airing
+      return airing.first if airing.length == 1
+
       names = shows.map { |show| show.name }.to_sentence
       raise Errors::MultipleMatchingShowsError, "Multiple Matches: #{names}"
     end
