@@ -7,8 +7,6 @@ jobs:
     services:
       postgres:
         image: postgres:11.6-alpine
-        env:
-          POSTGRES_PASSWORD: password
         ports:
           - 5432:5432
         # needed because the postgres container does not provide a healthcheck
@@ -17,25 +15,33 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Setup Environment
+
+      - name: Setup PostgreSQL
         run: |
           sudo apt-get -y install libpq-dev
-      - name: Setup Gem Cache
+
+          - name: Setup Gem Cache
         uses: actions/cache@v1
         with:
           path: vendor/bundle
           key: ${{ runner.os }}-gem-use-ruby-${{ hashFiles('**/Gemfile.lock') }}
+
       - name: Setup Ruby
         uses: actions/setup-ruby@v1
         with:
           ruby-version: 2.7.1
+
       - name: Bundle Install
         run: |
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
-      - name: Build and run tests
+
+      - name: Rails Tests
         env:
+          PGHOST: localhost
+          PGUSER: postgres
+          RAILS_ENV: test
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
-          bundle exec rails db:setup
-          bundle exec rails test
+          bin/rails db:setup
+          bin/rails test
