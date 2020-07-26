@@ -53,3 +53,18 @@ konosuba_episode_one:
   show: konosuba
   number: 1
   air_date: <%= DateTime.now - 1.year %>
+
+kaguya_s1_ep1:
+  show: Kaguya
+  number: 1
+  air_date: <%= DateTime.now - 2.year %>
+
+kaguya_s2_ep1:
+  show: Kaguya2
+  number: 1
+  air_date: <%= DateTime.now - 1.year %>
+
+kagooya:
+  show: Kagooya
+  number: 1
+  air_date: <%= DateTime.now + 1.day %>

@@ -4,7 +4,7 @@ class StaffControllerTest < ActionController::TestCase
   test 'should ignore multiple matches for irrelevant shows' do
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       username: '456',
       name: 'desch',
       status: 'true',
@@ -17,7 +17,7 @@ class StaffControllerTest < ActionController::TestCase
   test 'should restrict command to authorized requests' do
     put :update, params: {
       auth: 'lolno',
-      channel: '1',
+      channel: 'cartel_discord',
       username: '123',
       name: 'desch',
       status: 'true',
@@ -34,7 +34,7 @@ class StaffControllerTest < ActionController::TestCase
   test 'should not allow non-staff users' do
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       username: '486',
       name: 'desch',
       status: 'true',
@@ -51,7 +51,7 @@ class StaffControllerTest < ActionController::TestCase
   test 'should not allow non-fansubbed shows' do
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       username: '123',
       name: "Full Metal Panic! The Second Raid",
       status: 'true',
@@ -68,7 +68,7 @@ class StaffControllerTest < ActionController::TestCase
   test 'should not allow non-staff to update show' do
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       username: '1213',
       name: 'desch',
       position: 'qc',
@@ -86,7 +86,7 @@ class StaffControllerTest < ActionController::TestCase
   test 'should not allow invalid positions' do
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       username: '123',
       name: 'desch',
       position: 'memer',
@@ -104,7 +104,7 @@ class StaffControllerTest < ActionController::TestCase
   test 'should not require position when user has one position' do
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       username: '456',
       name: 'desch',
       status: 'true',
@@ -120,7 +120,7 @@ class StaffControllerTest < ActionController::TestCase
   test 'should require position when user has multiple positions' do
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       username: '789',
       name: 'desch',
       status: 'true',
@@ -137,7 +137,7 @@ class StaffControllerTest < ActionController::TestCase
   test 'should not allow incorrect staff position' do
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       username: '456',
       name: 'desch',
       position: 'editor',
@@ -154,7 +154,7 @@ class StaffControllerTest < ActionController::TestCase
   test 'should allow founders to update any position for any show' do
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       username: '123',
       name: 'desch',
       position: 'translator',
@@ -177,7 +177,7 @@ class StaffControllerTest < ActionController::TestCase
   test 'should correctly update show' do
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       username: '456',
       name: 'desch',
       position: 'translator',
@@ -200,7 +200,7 @@ class StaffControllerTest < ActionController::TestCase
   test 'should correctly revert staff as unfinished' do
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       username: '456',
       name: 'desch',
       position: 'translator',
@@ -212,7 +212,7 @@ class StaffControllerTest < ActionController::TestCase
 
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       username: '456',
       name: 'desch',
       status: 'false',
@@ -234,7 +234,7 @@ class StaffControllerTest < ActionController::TestCase
   test 'should handle marking staff as unfinished when unfinished' do
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       username: '456',
       name: 'desch',
       status: 'false',
@@ -256,7 +256,7 @@ class StaffControllerTest < ActionController::TestCase
   test 'should update current release' do
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       username: '456',
       name: 'desch',
       position: 'translator',
@@ -279,7 +279,7 @@ class StaffControllerTest < ActionController::TestCase
   test 'should update show based on term' do
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       username: '456',
       name: 'AOTY',
       status: 'true',
@@ -292,7 +292,7 @@ class StaffControllerTest < ActionController::TestCase
   test 'should handle multiple show matches' do
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       username: '456',
       name: 'shigatsu',
       status: 'true',
@@ -309,7 +309,7 @@ class StaffControllerTest < ActionController::TestCase
   test 'should support joint shows' do
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       username: '456',
       name: 'Subarashii',
       status: 'true',
@@ -320,7 +320,7 @@ class StaffControllerTest < ActionController::TestCase
 
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: '2',
+      channel: 'syndicate_discord',
       username: '123',
       name: 'Subarashii',
       position: 'tl',

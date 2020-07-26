@@ -7,7 +7,7 @@ class ReleasesController < ApplicationController
     @group = Group.find_by_discord(params[:channel])
     @user = @group.find_member(params[:username])
 
-    @fansub = @group.find_fansub_for_show_fuzzy(URI.decode(params[:name]))
+    @fansub = @group.find_fansub_for_show_fuzzy(URI.decode_www_form_component(params[:name]))
     @current = @fansub.current_release
 
     if @current.staff.pending.present?

@@ -39,3 +39,18 @@ konosuba_release:
   fansub: konosuba_fansub
   episode: konosuba_episode_one
   released: false
+
+kaguyas1_release:
+  fansub: kaguya_fansub
+  episode: kaguya_s1_ep1
+  released: true
+
+kaguyas2_release:
+  fansub: kaguya2_fansub
+  episode: kaguya_s2_ep1
+  released: false
+
+kagooya_release:
+  fansub: kagooya_fansub
+  episode: kagooya
+  released: false

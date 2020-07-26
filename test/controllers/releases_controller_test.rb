@@ -5,7 +5,7 @@ class ReleasesControllerTest < ActionController::TestCase
     put :update, params: {
       username: '123',
       auth: 'wrongpassword',
-      channel: '1',
+      channel: 'cartel_discord',
       name: 'desch',
       format: :json
     }
@@ -35,7 +35,7 @@ class ReleasesControllerTest < ActionController::TestCase
     put :update, params: {
       username: '123',
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       name: 'fmp',
       format: :json
     }
@@ -50,7 +50,7 @@ class ReleasesControllerTest < ActionController::TestCase
     put :update, params: {
       username: '123',
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       name: 'kimi no uso',
       format: :json
     }
@@ -65,7 +65,7 @@ class ReleasesControllerTest < ActionController::TestCase
     put :update, params: {
       username: '123',
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       name: 'desch',
       format: :json
     }
@@ -89,7 +89,7 @@ class ReleasesControllerTest < ActionController::TestCase
     put :update, params: {
       username: '123',
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       name: 'desch',
       format: :json
     }
@@ -110,7 +110,7 @@ class ReleasesControllerTest < ActionController::TestCase
     put :update, params: {
       username: '123',
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       name: 'aoty',
       format: :json
     }
@@ -121,7 +121,7 @@ class ReleasesControllerTest < ActionController::TestCase
     put :update, params: {
       username: '123',
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       name: 'shigatsu',
       format: :json
     }
@@ -144,7 +144,7 @@ class ReleasesControllerTest < ActionController::TestCase
     put :update, params: {
       username: '123',
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       name: 'Subarashii',
       format: :json
     }
@@ -157,7 +157,7 @@ class ReleasesControllerTest < ActionController::TestCase
     put :update, params: {
       username: '456',
       auth: ENV['AUTH'],
-      channel: '2',
+      channel: 'syndicate_discord',
       name: 'Subarashii',
       format: :json
     }
@@ -177,7 +177,7 @@ class ReleasesControllerTest < ActionController::TestCase
     put :update, params: {
       username: '132434896',
       auth: ENV['AUTH'],
-      channel: '1',
+      channel: 'cartel_discord',
       name: 'aoty',
       format: :json
     }

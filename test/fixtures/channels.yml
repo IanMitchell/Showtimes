@@ -15,9 +15,13 @@
 #
 
 cartel:
-  discord: '1'
+  discord: 'cartel_discord'
   group: cartel
 
 syndicate:
-  discord: '2'
+  discord: 'syndicate_discord'
   group: syndicate
+
+priority:
+  discord: 'priority_discord'
+  group: priority_test

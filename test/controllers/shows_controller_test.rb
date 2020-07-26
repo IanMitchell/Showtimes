@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ShowsControllerTest < ActionController::TestCase
   test "should get all shows" do
-    get :index, params: { channel: '1', format: :json }
+    get :index, params: { channel: 'cartel_discord', format: :json }
     assert_response :success
 
     body = JSON.parse(response.body)

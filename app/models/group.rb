@@ -73,6 +73,26 @@ class Group < ApplicationRecord
     self.fansubs.where(show: show).first
   end
 
+  def find_fansub_for_show_prioritized_fuzzy(name)
+    shows = self.shows.fuzzy_search(name)
+
+    case shows.length
+    when 0
+      raise Errors::FansubNotFoundError
+    when 1
+      return self.fansubs.where(show: shows.first).first
+    else
+      airing = shows.airing
+      return self.fansubs.where(show: airing.first).first if airing.length == 1
+
+      incomplete = self.active_fansubs.where(show: shows)
+      return self.fansubs.where(show: incomplete.first.show).first if incomplete.length == 1
+
+      names = shows.map { |show| show.name }.to_sentence
+      raise Errors::MultipleMatchingShowsError, "Multiple Matches: #{names}"
+    end
+  end
+
   def self.find_by_discord(discord)
     group = Channel.find_by(discord: discord)&.group
     raise Errors::GroupNotFoundError if group.nil?
