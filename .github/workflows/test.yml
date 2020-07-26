@@ -42,6 +42,7 @@ jobs:
         env:
           PGHOST: localhost
           PGUSER: postgres
+          DATABASE_USERNAME: postgres
           RAILS_ENV: test
         run: |
           bin/rails db:setup
@@ -49,6 +50,7 @@ jobs:
         env:
           PGHOST: localhost
           PGUSER: postgres
+          DATABASE_USERNAME: postgres
           RAILS_ENV: test
         run: |
           bin/rails test
