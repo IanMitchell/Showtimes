@@ -76,11 +76,29 @@ class BlameControllerTest < ActionController::TestCase
     assert body['name'], 'Name not in response'
   end
 
+  test 'should prioritize named fansub' do
+    get :show, params: { channel: 'priority_discord', show: 'kaguya-sama', format: :json }
+    assert_response 400
+
+    body = JSON.parse(response.body)
+    assert_equal body['message'],
+                 'The fansub for Kaguya-Sama is complete!',
+                 'Priority not given to named show'
+  end
+
+  test 'should prioritize airing fansubs' do
+    get :show, params: { channel: 'priority_discord', show: 'kag', format: :json }
+    assert_response 200
+
+    body = JSON.parse(response.body)
+    assert_equal body['name'], 'Kagooya', 'Priority not given to airing show'
+  end
+
   test 'should prioritize incomplete fansubs' do
     get :show, params: { channel: 'priority_discord', show: 'kaguya', format: :json }
     assert_response 200
 
     body = JSON.parse(response.body)
-    assert_equal body['name'], 'Kaguya S2', 'Priority not given to incomplete show'
+    assert_equal body['name'], 'Kaguya-Sama S2', 'Priority not given to incomplete show'
   end
 end

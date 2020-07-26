@@ -49,3 +49,8 @@ kaguyas2_release:
   fansub: kaguya2_fansub
   episode: kaguya_s2_ep1
   released: false
+
+kagooya_release:
+  fansub: kagooya_fansub
+  episode: kagooya
+  released: false

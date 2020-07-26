@@ -24,4 +24,4 @@ syndicate:
 
 priority:
   discord: 'priority_discord'
-  group: priority
+  group: priority_test

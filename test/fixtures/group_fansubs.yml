@@ -48,3 +48,7 @@ six:
 seven:
   group: priority_test
   fansub: kaguya2_fansub
+
+eight:
+  group: priority_test
+  fansub: kagooya_fansub

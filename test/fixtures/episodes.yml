@@ -63,3 +63,8 @@ kaguya_s2_ep1:
   show: Kaguya2
   number: 1
   air_date: <%= DateTime.now - 1.year %>
+
+kagooya:
+  show: Kagooya
+  number: 1
+  air_date: <%= DateTime.now + 1.day %>
