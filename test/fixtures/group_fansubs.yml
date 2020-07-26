@@ -40,3 +40,11 @@ four:
 five:
   group: syndicate
   fansub: konosuba_fansub
+
+six:
+  group: priority_test
+  fansub: kaguya_fansub
+
+seven:
+  group: priority_test
+  fansub: kaguya2_fansub

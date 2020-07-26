@@ -21,3 +21,7 @@ cartel:
 syndicate:
   discord: 'syndicate_discord'
   group: syndicate
+
+priority:
+  discord: 'priority_discord'
+  group: priority

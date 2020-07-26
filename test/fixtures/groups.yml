@@ -22,3 +22,7 @@ cartel:
 syndicate:
   name: Not Cartel
   acronym: TEL
+
+priority_test:
+  name: Priority Test
+  acronym: PT

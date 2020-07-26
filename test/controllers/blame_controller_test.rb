@@ -77,10 +77,10 @@ class BlameControllerTest < ActionController::TestCase
   end
 
   test 'should prioritize incomplete fansubs' do
-    get :show, params: { channel: 'cartel_discord', show: 'desch', format: :json }
+    get :show, params: { channel: 'priority_discord', show: 'kaguya', format: :json }
     assert_response 200
 
     body = JSON.parse(response.body)
-    assert_equal body['name'], 'name', 'Name not in response'
+    assert_equal body['name'], 'Kaguya S2', 'Priority not given to incomplete show'
   end
 end
