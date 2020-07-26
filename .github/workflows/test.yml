@@ -3,38 +3,39 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+
     services:
-      db:
-        image: postgres:11
-        ports: ['5432:5432']
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-      redis:
-        image: redis
-        ports: ['6379:6379']
-        options: --entrypoint redis-server
+      postgres:
+        image: postgres:11.6-alpine
+        env:
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
 
     steps:
       - uses: actions/checkout@v1
+      - name: Setup Environment
+        run: |
+          sudo apt-get -y install libpq-dev
+      - name: Setup Gem Cache
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gem-use-ruby-${{ hashFiles('**/Gemfile.lock') }}
       - name: Setup Ruby
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: 2.6.5
-      - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: install
+          ruby-version: 2.7.1
+      - name: Bundle Install
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
       - name: Build and run tests
         env:
-          DATABASE_URL: postgres://postgres:@localhost:5432/test
-          REDIS_URL: redis://localhost:6379/0
-          RAILS_ENV: test
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
-          sudo apt-get -yqq install libpq-dev
-          gem install bundler
-          bundle install --jobs 4 --retry 3
-          bundle exec rails db:prepare
+          bundle exec rails db:setup
           bundle exec rails test
