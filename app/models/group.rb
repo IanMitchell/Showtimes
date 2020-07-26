@@ -74,7 +74,7 @@ class Group < ApplicationRecord
   end
 
   def find_fansub_for_show_prioritized_fuzzy(name)
-    shows = self.shows.fuzzy_search(str)
+    shows = self.shows.fuzzy_search(name)
 
     case shows.length
     when 0
@@ -85,8 +85,8 @@ class Group < ApplicationRecord
       airing = shows.airing
       return self.fansubs.where(show: airing.first).first if airing.length == 1
 
-      incomplete = shows.fansubs.where(group: self).active
-      return self.fansubs.where(show: incomplete.first).first if incomplete.length == 1
+      incomplete = self.active_fansubs.where(show: shows)
+      return self.fansubs.where(show: incomplete.first.show).first if incomplete.length == 1
 
       names = shows.map { |show| show.name }.to_sentence
       raise Errors::MultipleMatchingShowsError, "Multiple Matches: #{names}"
