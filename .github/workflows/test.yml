@@ -10,13 +10,15 @@ jobs:
       postgres:
         image: postgres:11.6
         env:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: showtimes_test
           POSTGRES_PASSWORD: ""
+        ports: ["5432:5432"]
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-
 
     steps:
       - uses: actions/checkout@v1
@@ -41,7 +43,6 @@ jobs:
           PGHOST: localhost
           PGUSER: postgres
           RAILS_ENV: test
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
           bin/rails db:setup
       - name: Rails Tests
@@ -49,6 +50,5 @@ jobs:
           PGHOST: localhost
           PGUSER: postgres
           RAILS_ENV: test
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
           bin/rails test
