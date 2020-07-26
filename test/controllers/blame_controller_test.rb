@@ -59,7 +59,7 @@ class BlameControllerTest < ActionController::TestCase
   end
 
   test 'should support joint shows' do
-    ['1', '2'].each do |channel|
+    ['cartel_discord', 'syndicate_discord'].each do |channel|
       get :show, params: { channel: channel, show: 'Subarashii', format: :json }
       assert_response 200
 
