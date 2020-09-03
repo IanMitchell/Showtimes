@@ -42,30 +42,36 @@ class Fansub < ApplicationRecord
     self.groups.count > 1
   end
 
-  def notify_update(release, finished)
+  def notify_update(release, updated_staff_member)
     show = self.show
 
     self.groups.each do |group|
       positions = {}
 
+      # Determine current state
       release.staff.map do |staff|
         key = staff.position.acronym
         positions[key] = staff.finished? unless positions.include? key
         positions[key] = staff.finished? if positions[key] && !staff.finished
       end
 
+      # Create the stylized acronym list
+      positions_fields = positions.map do |key, value|
+        str = value ? "~~#{key}~~" : "**#{key}**"
+
+        if key == updated_staff_member.position.acronym
+          str = "__#{str}__"
+        end
+
+        return str
+      end
+
       if group.webhook?
         embed = Discord::Embed.new do
           title "#{show.name} ##{release.episode.number}"
-          color finished ? 0x008000 : 0x800000
+          color updated_staff_member.finished ? 0x008000 : 0x800000
           add_field name: 'Status',
-                    value: (positions.map do |key, value|
-                              if value == true
-                                "~~#{key}~~"
-                              else
-                                "**#{key}**"
-                              end
-                            end.join ' ')
+                    value: positions_fields.join " "
           footer text: DateTime.now.to_formatted_s(:long_ordinal)
         end
 

@@ -43,7 +43,7 @@ class StaffController < ApplicationController
     end
 
     if @staff.update_attribute :finished, fin
-      @fansub.notify_update(@fansub.current_release, fin)
+      @fansub.notify_update(@fansub.current_release, @staff)
 
       render json: { message: "Updated #{@fansub.show.name} ##{@staff.release.episode.number}" }, status: 200
     else
