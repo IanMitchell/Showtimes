@@ -71,7 +71,7 @@ class Fansub < ApplicationRecord
           title "#{show.name} ##{release.episode.number}"
           color updated_staff_member.finished ? 0x008000 : 0x800000
           add_field name: 'Status',
-                    value: positions_fields.join " "
+                    value: positions_fields.join(" ")
           footer text: DateTime.now.to_formatted_s(:long_ordinal)
         end
 
