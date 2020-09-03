@@ -60,10 +60,10 @@ class Fansub < ApplicationRecord
         str = value ? "~~#{key}~~" : "**#{key}**"
 
         if key == updated_staff_member.position.acronym
-          str = "__#{str}__"
+          "__#{str}__"
+        else
+          str
         end
-
-        return str
       end
 
       if group.webhook?
