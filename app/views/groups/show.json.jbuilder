@@ -14,10 +14,5 @@ json.shows @group.active_fansubs do |fansub|
     json.updated_at fansub.current_release.updated_at
   end
 
-  json.status fansub.current_release.staff do |staff|
-    json.position staff.position.name
-    json.acronym staff.position.acronym
-    json.staff staff.member.name
-    json.finished staff.finished
-  end
+  json.partial! 'staff/staff', release: fansub.current_release
 end
