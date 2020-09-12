@@ -34,6 +34,9 @@ gem 'uglifier', '>= 1.3.0'
 # APIs
 gem 'jbuilder', '~> 2.0'
 
+# Metrics
+gem "skylight"
+
 # Server
 # gem 'unicorn'
 # gem 'capistrano-rails', group: :development

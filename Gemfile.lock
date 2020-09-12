@@ -163,6 +163,10 @@ GEM
     sdoc (0.4.2)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    skylight (4.3.1)
+      skylight-core (= 4.3.1)
+    skylight-core (4.3.1)
+      activesupport (>= 4.2.0)
     spring (2.1.0)
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
@@ -221,6 +225,7 @@ DEPENDENCIES
   rails_12factor
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
+  skylight
   spring
   trestle
   trestle-auth
