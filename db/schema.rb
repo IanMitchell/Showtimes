@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_07_182813) do
+ActiveRecord::Schema.define(version: 2020_09_12_214947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(version: 2019_04_07_182813) do
     t.bigint "episode_id"
     t.index ["episode_id"], name: "index_releases_on_episode_id"
     t.index ["fansub_id"], name: "index_releases_on_fansub_id"
+    t.index ["released"], name: "index_releases_on_released"
   end
 
   create_table "shows", id: :serial, force: :cascade do |t|
