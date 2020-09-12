@@ -56,11 +56,7 @@ class Group < ApplicationRecord
   end
 
   def active_fansubs
-    Fansub.joins(:group_fansubs)
-          .where(group_fansubs: { group: self })
-          .active
-          .includes(show: :episodes)
-          .order("episodes.air_date DESC")
+    self.fansubs.active.includes(show: :episodes).order("episodes.air_date DESC")
   end
 
   def find_fansub_for_show_fuzzy(name)

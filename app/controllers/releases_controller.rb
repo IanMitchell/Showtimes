@@ -8,6 +8,11 @@ class ReleasesController < ApplicationController
     @user = @group.find_member(params[:username])
 
     @fansub = @group.find_fansub_for_show_fuzzy(URI.decode_www_form_component(params[:name]))
+
+    if @fansub.finished?
+      raise Errors::FansubFinishedError, "The fansub for #{@fansub.show.name} is complete!"
+    end
+
     @current = @fansub.current_release
 
     if @current.staff.pending.present?

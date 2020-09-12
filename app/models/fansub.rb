@@ -29,9 +29,7 @@ class Fansub < ApplicationRecord
   validates :show, presence: true
 
   def current_release
-    release = self.releases.pending.joins(:episode).merge(Episode.order(number: :asc)).limit(1).first
-    raise Errors::FansubFinishedError, "The fansub for #{self.show.name} is complete!" if release.nil?
-    return release
+    self.releases.pending.joins(:episode).merge(Episode.order(number: :asc)).first
   end
 
   def name
@@ -40,6 +38,10 @@ class Fansub < ApplicationRecord
 
   def joint?
     self.groups.count > 1
+  end
+
+  def finished?
+    self.current_release.nil?
   end
 
   def notify_update(release, updated_staff_member)
