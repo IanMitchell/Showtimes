@@ -29,7 +29,7 @@ class Fansub < ApplicationRecord
   validates :show, presence: true
 
   def current_release
-    release = self.releases.pending.sort_by { |release| release.episode.number }.first
+    release = self.releases.pending.joins(:episode).merge(Episode.order(number: :asc)).limit(1).first
     raise Errors::FansubFinishedError, "The fansub for #{self.show.name} is complete!" if release.nil?
     return release
   end
