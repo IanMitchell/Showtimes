@@ -13,7 +13,6 @@ Trestle.resource(:shows) do
     column :episodes do |instance|
       instance.episodes.count
     end
-    column :tvdb_name
 
     actions
   end
@@ -21,7 +20,6 @@ Trestle.resource(:shows) do
   form do |show|
     tab :show do
       text_field :name
-      text_field :tvdb_name
 
       if show.new_record?
         number_field :episode_count
