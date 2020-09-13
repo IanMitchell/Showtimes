@@ -22,7 +22,7 @@ desch_episode_one:
 desch_episode_two:
   show: desch
   number: 2
-  air_date: <%= DateTime.now - 1.minute %>
+  air_date: <%= DateTime.now - 5.minutes %>
 
 desch_episode_three:
   show: desch

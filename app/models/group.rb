@@ -90,7 +90,7 @@ class Group < ApplicationRecord
   end
 
   def self.find_by_discord(discord)
-    group = Channel.find_by(discord: discord)&.group
+    group = Group.joins(:channels).where(channels: { discord: discord}).first
     raise Errors::GroupNotFoundError if group.nil?
     return group
   end

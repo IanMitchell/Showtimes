@@ -5,7 +5,8 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '456',
+      username: '789',
+      position: 'timer',
       name: 'desch',
       status: 'true',
       format: :json
@@ -69,7 +70,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '1213',
+      username: 'fyurie',
       name: 'desch',
       position: 'qc',
       status: 'true',
@@ -80,6 +81,24 @@ class StaffControllerTest < ActionController::TestCase
 
     body = JSON.parse(response.body)
     assert body['message'].downcase.include?('not your position'),
+           "Incorrect error message: #{body['message']}"
+  end
+
+  test 'should not allow non-members to update show' do
+    put :update, params: {
+      auth: ENV['AUTH'],
+      channel: 'cartel_discord',
+      username: 'areki',
+      name: 'desch',
+      position: 'qc',
+      status: 'true',
+      format: :json
+    }
+
+    assert_response 404
+
+    body = JSON.parse(response.body)
+    assert body['message'].downcase.include?('have a group admin authorize'),
            "Incorrect error message: #{body['message']}"
   end
 
@@ -105,7 +124,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '456',
+      username: '1213',
       name: 'desch',
       status: 'true',
       format: :json
@@ -157,7 +176,7 @@ class StaffControllerTest < ActionController::TestCase
       channel: 'cartel_discord',
       username: '123',
       name: 'desch',
-      position: 'translator',
+      position: 'timer',
       status: 'true',
       format: :json
     }
@@ -169,7 +188,7 @@ class StaffControllerTest < ActionController::TestCase
 
     show = Show.find_by(name: "Desch's Slice of Life")
     release = show.fansubs.first.current_release
-    staff = release.staff.where(position: Position.find_by(name: 'Translator')).first
+    staff = release.staff.where(position: Position.find_by(name: 'Timer')).first
 
     assert staff.finished, 'Staff not updated correctly'
   end
@@ -178,9 +197,9 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '456',
+      username: '789',
       name: 'desch',
-      position: 'translator',
+      position: 'timer',
       status: 'true',
       format: :json
     }
@@ -192,24 +211,12 @@ class StaffControllerTest < ActionController::TestCase
 
     show = Show.find_by(name: "Desch's Slice of Life")
     release = show.fansubs.first.current_release
-    staff = release.staff.where(position: Position.find_by(name: 'Translator')).first
+    staff = release.staff.where(position: Position.find_by(name: 'Timer')).first
 
     assert staff.finished, 'Staff not updated correctly'
   end
 
   test 'should correctly revert staff as unfinished' do
-    put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
-      username: '456',
-      name: 'desch',
-      position: 'translator',
-      status: 'true',
-      format: :json
-    }
-
-    assert_response 200
-
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
@@ -231,7 +238,7 @@ class StaffControllerTest < ActionController::TestCase
     assert !staff.finished, 'Staff not updated correctly'
   end
 
-  test 'should handle marking staff as unfinished when unfinished' do
+  test 'should handle marking staff as unfinished when finished' do
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
@@ -257,9 +264,9 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '456',
+      username: '789',
       name: 'desch',
-      position: 'translator',
+      position: 'timer',
       status: 'true',
       format: :json
     }
@@ -269,9 +276,9 @@ class StaffControllerTest < ActionController::TestCase
     show = Show.find_by(name: "Desch's Slice of Life")
     release = Release.find_by(episode: Episode.find_by(show: show,
                                                        number: 2))
-    staff = Staff.where(member: Member.find_by(name: 'ARX-7'),
+    staff = Staff.where(member: Member.find_by(name: 'skiddiks'),
                         release: release,
-                        position: Position.find_by(name: 'Translator'))
+                        position: Position.find_by(name: 'Timer'))
 
     assert staff.finished, 'Incorrect staff entry modified'
   end
@@ -280,7 +287,8 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '456',
+      username: '789',
+      position: 'timer',
       name: 'AOTY',
       status: 'true',
       format: :json
@@ -334,17 +342,60 @@ class StaffControllerTest < ActionController::TestCase
   test 'should not allow updating an episode that has not aired yet' do
     put :update, params: {
       auth: ENV['AUTH'],
-      channel: 'cartel_discord',
-      username: '456',
+      channel: 'priority_discord',
+      username: '123',
       name: 'Kagooya',
       status: 'true',
       format: :json
     }
 
-    assert_response 200
+    assert_response 400
 
     body = JSON.parse(response.body)
     assert body['message'].downcase.include?('not aired yet'),
            "Incorrect error message: #{body['message']}"
+  end
+
+  test 'should alert user if progress already set' do
+    put :update, params: {
+      auth: ENV['AUTH'],
+      channel: 'cartel_discord',
+      username: '789',
+      position: 'tm',
+      name: 'AOTY',
+      status: 'false',
+      format: :json
+    }
+
+    assert_response 400
+    body = JSON.parse(response.body)
+    assert body['message'].downcase.include?('already marked your position as incomplete'),
+           "Incorrect alert message: #{body['message']}"
+
+    put :update, params: {
+      auth: ENV['AUTH'],
+      channel: 'cartel_discord',
+      username: '789',
+      position: 'tm',
+      name: 'AOTY',
+      status: 'true',
+      format: :json
+    }
+
+    put :update, params: {
+      auth: ENV['AUTH'],
+      channel: 'cartel_discord',
+      username: '789',
+      position: 'tm',
+      name: 'AOTY',
+      status: 'true',
+      format: :json
+    }
+
+    assert_response 400
+
+    body = JSON.parse(response.body)
+    assert body['message'].downcase.include?('already marked your position as complete'),
+            "Incorrect alert message: #{body['message']}"
   end
 end

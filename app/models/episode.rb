@@ -35,7 +35,7 @@ class Episode < ApplicationRecord
   end
 
   def aired?
-    self.air_date >= DateTime.now
+    self.air_date <= DateTime.now
   end
 
   def to_s

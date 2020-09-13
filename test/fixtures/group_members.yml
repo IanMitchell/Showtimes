@@ -37,3 +37,11 @@ member_five:
 member_six:
   group: syndicate
   member: arx
+
+kagooya_member:
+  group: priority_test
+  member: desch
+
+non_staff_member:
+  group: cartel
+  member: fyurie

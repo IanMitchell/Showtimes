@@ -11,7 +11,7 @@ class StaffController < ApplicationController
     @fansub = @group.find_fansub_for_show_fuzzy(URI.decode_www_form_component(params[:name]))
 
     @staff = @fansub.current_release&.staff
-    return render json: { message: "No staff for #{@show.name}" }, status: 400 if @staff.empty?
+    return render json: { message: "No staff for #{@fansub.show.name}" }, status: 400 if @staff.empty?
 
     unless @fansub.current_release.episode.aired?
       return render json:{ message: "The episode has not aired yet!" }, status: 400
@@ -46,9 +46,10 @@ class StaffController < ApplicationController
       end
     end
 
-    if @staff.update_attribute :finished, fin
+    if @staff.finished == fin
+      render json: { message: "It looks like you have already marked your position as #{fin ? 'complete' : 'incomplete'}" }, status: 400
+    elsif @staff.update_attribute :finished, fin
       @fansub.notify_update(@fansub.current_release, @staff)
-
       render json: { message: "Updated #{@fansub.show.name} ##{@staff.release.episode.number}" }, status: 200
     else
       render json: { message: "Error updating #{@fansub.show.name}" }, status: 500
