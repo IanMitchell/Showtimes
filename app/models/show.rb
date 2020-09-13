@@ -19,6 +19,7 @@ require "#{Rails.root}/lib/errors/multiple_matching_shows_error"
 class Show < ApplicationRecord
   attr_accessor :episode_count
   attr_accessor :air_date
+  attr_writer :first_episode_number
 
   after_create :create_episodes
 
@@ -34,6 +35,12 @@ class Show < ApplicationRecord
     .merge(Episode.where('air_date >= :current_date', current_date: DateTime.now))
     .distinct
   }
+
+  attr_writer :politics
+
+  def first_episode_number
+    @first_episode_number || 1
+  end
 
   def next_episode
     self.episodes.where('air_date >= :current_date', current_date: DateTime.now)
@@ -84,7 +91,7 @@ class Show < ApplicationRecord
       self.episode_count.to_i.times do |num|
         Episode.create(
           show: self,
-          number: num + 1,
+          number: self.first_episode_number.to_i + num,
           air_date: self.air_date.to_datetime + num.weeks
         )
       end

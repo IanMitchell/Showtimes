@@ -24,7 +24,8 @@ Trestle.resource(:shows) do
       text_field :tvdb_name
 
       if show.new_record?
-        text_field :episode_count
+        number_field :episode_count
+        number_field :first_episode_number, default: 0
         datetime_field :air_date
       end
     end
