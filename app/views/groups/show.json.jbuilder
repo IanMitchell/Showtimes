@@ -9,7 +9,7 @@ json.shows @group.active_fansubs do |fansub|
   json.episode do
     json.current fansub.current_release.episode.number
     json.airdate fansub.current_release.episode.air_date
-    json.total fansub.show.episodes.count
+    json.total fansub.show.last_episode.number
     json.updated_at fansub.current_release.updated_at
   end
 

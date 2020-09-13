@@ -38,6 +38,7 @@ class Show < ApplicationRecord
 
   attr_writer :politics
 
+  # Used when creating a show
   def first_episode_number
     @first_episode_number || 1
   end
@@ -45,8 +46,11 @@ class Show < ApplicationRecord
   def next_episode
     self.episodes.where('air_date >= :current_date', current_date: DateTime.now)
                  .order(number: :asc)
-                 .limit(1)
                  .first
+  end
+
+  def last_episode
+    self.episodes.order(air_date: :desc).first
   end
 
   def currently_airing?
