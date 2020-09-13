@@ -330,4 +330,21 @@ class StaffControllerTest < ActionController::TestCase
 
     assert_response 200
   end
+
+  test 'should not allow updating an episode that has not aired yet' do
+    put :update, params: {
+      auth: ENV['AUTH'],
+      channel: 'cartel_discord',
+      username: '456',
+      name: 'Kagooya',
+      status: 'true',
+      format: :json
+    }
+
+    assert_response 200
+
+    body = JSON.parse(response.body)
+    assert body['message'].downcase.include?('not aired yet'),
+           "Incorrect error message: #{body['message']}"
+  end
 end

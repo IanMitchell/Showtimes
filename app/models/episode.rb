@@ -34,6 +34,10 @@ class Episode < ApplicationRecord
     "#{Episode.month_to_season(self.air_date.month)} #{self.air_date.year}"
   end
 
+  def aired?
+    self.air_date >= DateTime.now
+  end
+
   def to_s
     "#{self.show.name} Episode #{self.number}"
   end

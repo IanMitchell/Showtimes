@@ -13,6 +13,10 @@ class StaffController < ApplicationController
     @staff = @fansub.current_release&.staff
     return render json: { message: "No staff for #{@show.name}" }, status: 400 if @staff.empty?
 
+    unless @fansub.current_release.episode.aired?
+      return render json:{ message: "The episode has not aired yet!" }, status: 400
+    end
+
     # Filter by assigned roles unless admin or founder
     @staff = @staff.where(member: @user) unless @user.admin? @group
 
