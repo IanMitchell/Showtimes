@@ -63,7 +63,7 @@ class Show < ApplicationRecord
   end
 
   def self.fuzzy_search(str)
-    show = Term.where('lower(name) = ?', str.downcase).first&.show
+    show = joins(:terms).where("lower(terms.name) = ?", str.downcase).first
     return [show] unless show.nil?
 
     shows = where('lower(name) = ?', str.downcase)
