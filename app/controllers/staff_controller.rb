@@ -8,7 +8,7 @@ class StaffController < ApplicationController
 
     @group = Group.find_by_discord(params[:channel])
     @user = @group.find_member(params[:username])
-    @fansub = @group.find_fansub_for_show_fuzzy(URI.decode_www_form_component(params[:name]))
+    @fansub = @group.find_fansub_for_show_prioritized_fuzzy(URI.decode_www_form_component(params[:name]))
 
     @staff = @fansub.current_release&.staff
     return render json: { message: "No staff for #{@fansub.show.name}" }, status: 400 if @staff.empty?
