@@ -21,3 +21,7 @@ aoty:
 fmp:
   show: fmp
   name: FMP
+
+aoty_fansub:
+  fansub: aoty_fansub
+  name: AOTY

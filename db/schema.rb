@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_17_015051) do
+ActiveRecord::Schema.define(version: 2020_09_17_020520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,10 +166,13 @@ ActiveRecord::Schema.define(version: 2020_09_17_015051) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "fansub_id"
+    t.index ["fansub_id"], name: "index_terms_on_fansub_id"
     t.index ["name"], name: "index_terms_on_name"
     t.index ["show_id"], name: "index_terms_on_show_id"
   end
 
   add_foreign_key "group_fansubs", "fansubs"
   add_foreign_key "group_fansubs", "groups"
+  add_foreign_key "terms", "fansubs"
 end

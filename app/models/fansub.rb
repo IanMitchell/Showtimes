@@ -16,18 +16,46 @@ require "#{Rails.root}/lib/errors/fansub_finished_error"
 
 class Fansub < ApplicationRecord
   attr_accessor :default_staff
+  attr_accessor :episode_count
+  attr_accessor :air_date
+  attr_writer :first_episode_number
 
   after_create :create_releases
 
   has_many :group_fansubs, inverse_of: :fansub, dependent: :destroy
   has_many :groups, through: :group_fansubs
   has_many :releases, inverse_of: :fansub, dependent: :destroy
+  has_many :terms
   belongs_to :show
 
+  scope :airing, -> {
+    joins(:releases)
+      .merge(Release.where('air_date >= :current_date', current_date: DateTime.now))
+      .distinct
+  }
   scope :active, -> { joins(:releases).where('releases.released = false') }
 
   validates :show, presence: true
 
+  # Used when creating a show
+  def first_episode_number
+    @first_episode_number || 1
+  end
+  
+  def next_episode
+    self.releases.where('air_date >= :current_date', current_date: DateTime.now)
+      .order(number: :asc)
+      .first
+  end
+  
+  def last_episode
+    self.releases.order(air_date: :desc).first
+  end
+  
+  def currently_airing?
+    self.releases.where('air_date >= :current_date', current_date: DateTime.now).any?
+  end
+    
   def current_release
     self.releases.pending.joins(:episode).merge(Episode.order(number: :asc)).first
   end
@@ -38,6 +66,33 @@ class Fansub < ApplicationRecord
 
   def finished?
     self.current_release.nil?
+  end
+  
+  def self.fuzzy_search(str)
+    fansub = joins(:terms).where("lower(terms.name) = ?", str.downcase).first
+    return [fansub] unless fansub.nil?
+
+    fansubs = where('lower(fansubs.name) = ?', str.downcase)
+    return fansubs unless fansubs.empty?
+
+    where('lower(fansubs.name) LIKE ?', "%#{sanitize_sql_like(str.downcase)}%")
+  end
+
+  def self.fuzzy_find(str)
+    shows = self.fuzzy_search(str)
+
+    case shows.length
+    when 0
+      raise Errors::ShowNotFoundError
+    when 1
+      return shows.first
+    else
+      airing = shows.airing
+      return airing.first if airing.length == 1
+
+      names = shows.map { |show| show.name }.to_sentence
+      raise Errors::MultipleMatchingShowsError, "Multiple Matches: #{names}"
+    end
   end
 
   def notify_update(release, updated_staff_member)

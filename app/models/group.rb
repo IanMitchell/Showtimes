@@ -48,7 +48,7 @@ class Group < ApplicationRecord
   end
 
   def fuzzy_search_subbed_shows(str)
-    self.shows.fuzzy_search(str)
+    self.fansubs.fuzzy_search(str)
   end
 
   def airing_shows
@@ -59,32 +59,26 @@ class Group < ApplicationRecord
     self.fansubs.active.includes(show: :episodes).order("episodes.air_date DESC")
   end
 
-  def find_fansub_for_show_fuzzy(name)
-    begin
-      show = self.shows.fuzzy_find(name)
-    rescue Errors::ShowNotFoundError
-      raise Errors::FansubNotFoundError
-    end
-
-    self.fansubs.where(show: show).first
+  def find_fansub_fuzzy(name)
+    self.fansubs.fuzzy_find(name).first
   end
 
-  def find_fansub_for_show_prioritized_fuzzy(name)
-    shows = self.shows.fuzzy_search(name)
+  def find_fansub_prioritized_fuzzy(name)
+    fansubs = self.fansubs.fuzzy_search(name)
 
-    case shows.length
+    case fansubs.length
     when 0
       raise Errors::FansubNotFoundError
     when 1
-      return self.fansubs.where(show: shows.first).first
+      return fansubs.first
     else
-      airing = shows.airing
-      return self.fansubs.where(show: airing.first).first if airing.length == 1
+      airing = fansubs.airing
+      return airing.first if airing.length == 1
 
-      incomplete = self.active_fansubs.where(show: shows)
-      return self.fansubs.where(show: incomplete.first.show).first if incomplete.length == 1
+      incomplete = fansubs.active
+      return incomplete.first if incomplete.length == 1
 
-      names = shows.map { |show| show.name }.to_sentence
+      names = fansubs.map { |fansub| fansub.name }.to_sentence
       raise Errors::MultipleMatchingShowsError, "Multiple Matches: #{names}"
     end
   end

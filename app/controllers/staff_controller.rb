@@ -8,12 +8,12 @@ class StaffController < ApplicationController
 
     @group = Group.find_by_discord(params[:channel])
     @user = @group.find_member(params[:username])
-    @fansub = @group.find_fansub_for_show_prioritized_fuzzy(URI.decode_www_form_component(params[:name]))
+    @fansub = @group.find_fansub_prioritized_fuzzy(URI.decode_www_form_component(params[:name]))
 
     @staff = @fansub.current_release&.staff
-    return render json: { message: "No staff for #{@fansub.show.name}" }, status: 400 if @staff.empty?
+    return render json: { message: "No staff for #{@fansub.name}" }, status: 400 if @staff.empty?
 
-    unless @fansub.current_release.episode.aired?
+    unless @fansub.current_release.aired?
       return render json:{ message: "The episode has not aired yet!" }, status: 400
     end
 
@@ -50,9 +50,9 @@ class StaffController < ApplicationController
       render json: { message: "It looks like you have already marked your position as #{fin ? 'complete' : 'incomplete'}" }, status: 400
     elsif @staff.update_attribute :finished, fin
       @fansub.notify_update(@fansub.current_release, @staff)
-      render json: { message: "Updated #{@fansub.show.name} ##{@staff.release.episode.number}" }, status: 200
+      render json: { message: "Updated #{@fansub.name} ##{@staff.release.number}" }, status: 200
     else
-      render json: { message: "Error updating #{@fansub.show.name}" }, status: 500
+      render json: { message: "Error updating #{@fansub.name}" }, status: 500
     end
   end
 end

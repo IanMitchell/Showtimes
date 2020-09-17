@@ -13,28 +13,37 @@
 #
 
 aoty_fansub:
+  name: Desch's Slice of Life
   show: desch
 
 shigatsu_fansub:
+  name: Shigatsu wa Kimi no Uso
   show: shigatsu
 
 tsuitachi_fansub:
+  name: Shigatsu Tsuitachi
   show: tsuitachi
 
 shomin_fansub:
+  name: Shomin Sample
   show: shomin
 
 konosuba_fansub:
+  name: Kono Subarashii Sekai ni Shukufuku wo!
   show: konosuba
 
 kaguya_fansub:
+  name: Kaguya-Sama
   show: Kaguya
 
 kaguya2_fansub:
+  name: Kaguya-Sama S2
   show: Kaguya2
 
 kagooya_fansub:
+  name: Kagooya
   show: Kagooya
 
 future_kagooya_fansub:
+  name: Kagooya
   show: Kagooya

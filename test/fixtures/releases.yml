@@ -17,40 +17,56 @@
 
 release_one:
   fansub: aoty_fansub
+  number: 1
+  air_date: <%= DateTime.now - 7.days %>
   episode: desch_episode_one
   released: true
 
 release_two:
   fansub: aoty_fansub
+  number: 2
+  air_date: <%= DateTime.now - 5.minutes %>
   episode: desch_episode_two
   released: false
 
 release_three:
   fansub: aoty_fansub
+  number: 3
+  air_date: <%= DateTime.now + 7.days %>
   episode: desch_episode_three
   released: false
 
 shigatsu_release:
   fansub: shigatsu_fansub
+  number: 1
+  air_date: <%= DateTime.now - 1.year %>
   episode: shigatsu_episode_one
   released: true
 
 konosuba_release:
   fansub: konosuba_fansub
+  number: 1
+  air_date: <%= DateTime.now - 1.year %>
   episode: konosuba_episode_one
   released: false
 
 kaguyas1_release:
   fansub: kaguya_fansub
+  number: 1
+  air_date: <%= DateTime.now - 2.year %>
   episode: kaguya_s1_ep1
   released: true
 
 kaguyas2_release:
   fansub: kaguya2_fansub
+  number: 1
+  air_date: <%= DateTime.now - 1.year %>
   episode: kaguya_s2_ep1
   released: false
 
 kagooya_release:
   fansub: kagooya_fansub
+  number: 1
+  air_date: <%= DateTime.now + 1.day %>
   episode: kagooya
   released: false

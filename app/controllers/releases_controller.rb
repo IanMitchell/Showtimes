@@ -7,10 +7,10 @@ class ReleasesController < ApplicationController
     @group = Group.find_by_discord(params[:channel])
     @user = @group.find_member(params[:username])
 
-    @fansub = @group.find_fansub_for_show_prioritized_fuzzy(URI.decode_www_form_component(params[:name]))
+    @fansub = @group.find_fansub_prioritized_fuzzy(URI.decode_www_form_component(params[:name]))
 
     if @fansub.finished?
-      raise Errors::FansubFinishedError, "The fansub for #{@fansub.show.name} is complete!"
+      raise Errors::FansubFinishedError, "The fansub for #{@fansub.name} is complete!"
     end
 
     @current = @fansub.current_release
@@ -24,6 +24,6 @@ class ReleasesController < ApplicationController
 
     @fansub.notify_release(@current)
 
-    render json: { message: "#{@fansub.show.name} ##{@current.episode.number} released!" }, status: 200
+    render json: { message: "#{@fansub.name} ##{@current.number} released!" }, status: 200
   end
 end
