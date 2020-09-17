@@ -45,7 +45,7 @@ class Fansub < ApplicationRecord
     self.releases.order(air_date: :desc).first
   end
   
-  def currently_airing?
+  def airing?
     self.releases.where('air_date >= :current_date', current_date: DateTime.now).any?
   end
     
@@ -139,4 +139,26 @@ class Fansub < ApplicationRecord
       end
     end
   end
+  
+  private
+    def create_releases
+      staff_list = self.default_staff.reject(&:empty?)
+      
+      self.episode_count.to_i.times do |num|	
+        release = Release.create(	
+          fansub: self,	
+          number: self.first_episode_number.to_i + num,	
+          air_date: self.air_date.to_datetime + num.weeks	
+        )
+        
+        staff_list.each do |staff|
+          arr = staff.scan(/\d+/).map(&:to_i)
+          Staff.create(
+            member: Member.find(arr[1]),
+            position: Position.find(arr[0]),
+            release: release
+          )
+        end
+      end
+    end
 end

@@ -18,7 +18,6 @@
 
 class Release < ApplicationRecord
   before_create :set_timezone
-  after_create :extend_fansubs
   before_update :set_timezone
   
   belongs_to :fansub
@@ -65,18 +64,6 @@ class Release < ApplicationRecord
     def set_timezone
       unless self.air_date.zone.eql? 'JST'
         self.air_date = self.air_date.change(zone: 'Japan')
-      end
-    end
-
-    def extend_fansubs
-      self.fansubs.each do |fansub|
-        last_release = fansub.releases.last
-
-        release = Release.create(fansub: fansub, episode: self)
-
-        last_release.staff.each do |staff|
-          Staff.create(member: staff.member, position: staff.position, release: release)
-        end
       end
     end
 end

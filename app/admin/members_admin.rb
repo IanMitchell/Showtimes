@@ -1,6 +1,6 @@
 Trestle.resource(:members) do
   menu do
-    item :members, icon: "fa fa-star", group: :fansubs
+    item :members, icon: "fa fa-user", group: :core
   end
 
   table do

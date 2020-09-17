@@ -1,12 +1,17 @@
 Trestle.resource(:fansubs) do
   menu do
-    item :fansubs, icon: "fa fa-star", group: :fansubs
+    item :fansubs, icon: "fa fa-tv", group: :fansubs
+  end
+  
+  collection do
+    current_user.groups.collect(&:fansubs).flatten.uniq
   end
 
   table do
     column :id
     column :name
-    column :show
+    column :airing, ->(fansub) { fansub.airing? }
+    column :finished, -> (fansub) { fansub.finished? }
 
     actions
   end
@@ -14,7 +19,11 @@ Trestle.resource(:fansubs) do
   form do |fansub|
     if fansub.new_record?
       tab :fansub do
-        select :show_id, Show.all
+        text_field :name
+        select :group_ids, current_user.groups
+        number_field :episode_count
+        number_field :first_episode_number
+        datetime_field :air_date
 
         Position.all.each do |position|
           collection_select :default_staff,
@@ -29,8 +38,16 @@ Trestle.resource(:fansubs) do
       tab :releases, badge: fansub.releases.count do
         table fansub.releases, admin: :releases do
           column :id
-          column :episode
+          column :number
+          column :air_date
           column :released
+        end
+      end
+      
+      tab :terms, badge: fansub.terms.count do
+        table fansub.terms, admin: :terms do
+          column :id
+          column :name
         end
       end
 

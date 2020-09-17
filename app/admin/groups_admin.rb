@@ -1,10 +1,10 @@
 Trestle.resource(:groups) do
-  menu do
-    item :groups, icon: "fa fa-star", group: :core
-  end
-
   collection do
-    Group.order(id: :asc)
+    current_user.groups
+  end
+  
+  menu do
+    item :groups, icon: "fa fa-user-friends", group: :fansubs
   end
 
   table do

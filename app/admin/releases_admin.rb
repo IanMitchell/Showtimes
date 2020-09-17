@@ -1,13 +1,21 @@
 Trestle.resource(:releases) do
+  collection do
+    current_user.groups.collect(&:fansubs).flatten.uniq.collect(&:releases).flatten.uniq
+  end
+
   table do
     column :id
     column :fansub
-    column :episode
+    column :number
+    column :air_date
     column :released
   end
 
   form do |release|
     tab :release do
+      number_field :number
+      datetime_field :air_date
+
       check_box :released
     end
 

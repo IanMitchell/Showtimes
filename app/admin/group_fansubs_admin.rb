@@ -10,6 +10,6 @@ Trestle.resource(:group_fansubs) do
   form dialog: true do |group_fansub|
     hidden_field :fansub_id
 
-    select :group_id, Group.all
+    select :group_id, current_user.groups
   end
 end
