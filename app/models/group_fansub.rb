@@ -5,8 +5,8 @@
 #  id         :integer          not null, primary key
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  fansub_id  :integer
-#  group_id   :integer
+#  fansub_id  :integer          not null
+#  group_id   :integer          not null
 #
 # Indexes
 #

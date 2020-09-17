@@ -3,10 +3,10 @@
 # Table name: channels
 #
 #  id         :integer          not null, primary key
-#  discord    :string
+#  discord    :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  group_id   :integer
+#  group_id   :integer          not null
 #
 # Indexes
 #

@@ -2,10 +2,10 @@
 #
 # Table name: administrators
 #
-#  id                        :bigint(8)        not null, primary key
+#  id                        :bigint           not null, primary key
 #  email                     :string
-#  password_digest           :string
 #  name                      :string
+#  password_digest           :string
 #  remember_token            :string
 #  remember_token_expires_at :datetime
 #  created_at                :datetime         not null

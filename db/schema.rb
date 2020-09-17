@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_17_161707) do
+ActiveRecord::Schema.define(version: 2020_09_17_165537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,8 +47,8 @@ ActiveRecord::Schema.define(version: 2020_09_17_161707) do
   end
 
   create_table "channels", id: :serial, force: :cascade do |t|
-    t.string "discord"
-    t.integer "group_id"
+    t.string "discord", null: false
+    t.integer "group_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["discord"], name: "index_channels_on_discord"
@@ -56,11 +56,9 @@ ActiveRecord::Schema.define(version: 2020_09_17_161707) do
   end
 
   create_table "fansubs", id: :serial, force: :cascade do |t|
-    t.integer "show_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
-    t.index ["show_id"], name: "index_fansubs_on_show_id"
+    t.string "name", null: false
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -76,8 +74,8 @@ ActiveRecord::Schema.define(version: 2020_09_17_161707) do
   end
 
   create_table "group_fansubs", id: :serial, force: :cascade do |t|
-    t.integer "group_id"
-    t.integer "fansub_id"
+    t.integer "group_id", null: false
+    t.integer "fansub_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["fansub_id"], name: "index_group_fansubs_on_fansub_id"
@@ -85,16 +83,16 @@ ActiveRecord::Schema.define(version: 2020_09_17_161707) do
   end
 
   create_table "group_members", force: :cascade do |t|
-    t.bigint "group_id"
-    t.bigint "member_id"
+    t.bigint "group_id", null: false
+    t.bigint "member_id", null: false
     t.boolean "admin", default: false
     t.index ["group_id"], name: "index_group_members_on_group_id"
     t.index ["member_id"], name: "index_group_members_on_member_id"
   end
 
   create_table "groups", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.string "acronym"
+    t.string "name", null: false
+    t.string "acronym", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
@@ -105,29 +103,27 @@ ActiveRecord::Schema.define(version: 2020_09_17_161707) do
   create_table "members", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
-    t.string "discord"
+    t.string "name", null: false
+    t.string "discord", null: false
     t.index ["discord"], name: "index_members_on_discord"
   end
 
   create_table "positions", id: :serial, force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "acronym"
+    t.string "acronym", null: false
     t.index ["acronym"], name: "index_positions_on_acronym"
     t.index ["name"], name: "index_positions_on_name"
   end
 
   create_table "releases", id: :serial, force: :cascade do |t|
-    t.integer "fansub_id"
+    t.integer "fansub_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "released", default: false
-    t.bigint "episode_id"
-    t.integer "number"
-    t.datetime "air_date"
-    t.index ["episode_id"], name: "index_releases_on_episode_id"
+    t.integer "number", null: false
+    t.datetime "air_date", null: false
     t.index ["fansub_id"], name: "index_releases_on_fansub_id"
     t.index ["released"], name: "index_releases_on_released"
   end
@@ -146,14 +142,12 @@ ActiveRecord::Schema.define(version: 2020_09_17_161707) do
   end
 
   create_table "terms", id: :serial, force: :cascade do |t|
-    t.integer "show_id"
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "fansub_id"
+    t.bigint "fansub_id", null: false
     t.index ["fansub_id"], name: "index_terms_on_fansub_id"
     t.index ["name"], name: "index_terms_on_name"
-    t.index ["show_id"], name: "index_terms_on_show_id"
   end
 
   add_foreign_key "group_fansubs", "fansubs"

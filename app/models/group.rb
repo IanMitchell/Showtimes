@@ -3,8 +3,8 @@
 # Table name: groups
 #
 #  id         :integer          not null, primary key
-#  acronym    :string
-#  name       :string
+#  acronym    :string           not null
+#  name       :string           not null
 #  slug       :string
 #  webhook    :string
 #  created_at :datetime         not null

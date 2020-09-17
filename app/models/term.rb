@@ -3,15 +3,19 @@
 # Table name: terms
 #
 #  id         :integer          not null, primary key
-#  name       :string
+#  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  show_id    :integer
+#  fansub_id  :bigint           not null
 #
 # Indexes
 #
-#  index_terms_on_name     (name)
-#  index_terms_on_show_id  (show_id)
+#  index_terms_on_fansub_id  (fansub_id)
+#  index_terms_on_name       (name)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (fansub_id => fansubs.id)
 #
 
 class Term < ApplicationRecord

@@ -3,16 +3,17 @@
 # Table name: releases
 #
 #  id         :integer          not null, primary key
+#  air_date   :datetime         not null
+#  number     :integer          not null
 #  released   :boolean          default(FALSE)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  episode_id :bigint(8)
-#  fansub_id  :integer
+#  fansub_id  :integer          not null
 #
 # Indexes
 #
-#  index_releases_on_episode_id  (episode_id)
-#  index_releases_on_fansub_id   (fansub_id)
+#  index_releases_on_fansub_id  (fansub_id)
+#  index_releases_on_released   (released)
 #
 
 require 'test_helper'

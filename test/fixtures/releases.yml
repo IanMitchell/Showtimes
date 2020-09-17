@@ -3,70 +3,63 @@
 # Table name: releases
 #
 #  id         :integer          not null, primary key
+#  air_date   :datetime         not null
+#  number     :integer          not null
 #  released   :boolean          default(FALSE)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  episode_id :bigint(8)
-#  fansub_id  :integer
+#  fansub_id  :integer          not null
 #
 # Indexes
 #
-#  index_releases_on_episode_id  (episode_id)
-#  index_releases_on_fansub_id   (fansub_id)
+#  index_releases_on_fansub_id  (fansub_id)
+#  index_releases_on_released   (released)
 #
 
 release_one:
   fansub: aoty_fansub
   number: 1
   air_date: <%= DateTime.now - 7.days %>
-  episode: desch_episode_one
   released: true
 
 release_two:
   fansub: aoty_fansub
   number: 2
   air_date: <%= DateTime.now - 5.minutes %>
-  episode: desch_episode_two
   released: false
 
 release_three:
   fansub: aoty_fansub
   number: 3
   air_date: <%= DateTime.now + 7.days %>
-  episode: desch_episode_three
   released: false
 
 shigatsu_release:
   fansub: shigatsu_fansub
   number: 1
   air_date: <%= DateTime.now - 1.year %>
-  episode: shigatsu_episode_one
   released: true
 
 konosuba_release:
   fansub: konosuba_fansub
   number: 1
   air_date: <%= DateTime.now - 1.year %>
-  episode: konosuba_episode_one
   released: false
 
 kaguyas1_release:
   fansub: kaguya_fansub
   number: 1
   air_date: <%= DateTime.now - 2.year %>
-  episode: kaguya_s1_ep1
   released: true
 
 kaguyas2_release:
   fansub: kaguya2_fansub
   number: 1
   air_date: <%= DateTime.now - 1.year %>
-  episode: kaguya_s2_ep1
   released: false
 
 kagooya_release:
   fansub: kagooya_fansub
   number: 1
   air_date: <%= DateTime.now + 1.day %>
-  episode: kagooya
   released: false

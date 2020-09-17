@@ -3,8 +3,8 @@
 # Table name: members
 #
 #  id         :integer          not null, primary key
-#  discord    :string
-#  name       :string
+#  discord    :string           not null
+#  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

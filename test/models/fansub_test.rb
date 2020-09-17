@@ -3,13 +3,9 @@
 # Table name: fansubs
 #
 #  id         :integer          not null, primary key
+#  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  show_id    :integer
-#
-# Indexes
-#
-#  index_fansubs_on_show_id  (show_id)
 #
 
 require 'test_helper'

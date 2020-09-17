@@ -2,10 +2,10 @@
 #
 # Table name: group_members
 #
-#  id        :bigint(8)        not null, primary key
+#  id        :bigint           not null, primary key
 #  admin     :boolean          default(FALSE)
-#  group_id  :bigint(8)
-#  member_id :bigint(8)
+#  group_id  :bigint           not null
+#  member_id :bigint           not null
 #
 # Indexes
 #

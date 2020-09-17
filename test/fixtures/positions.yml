@@ -3,8 +3,8 @@
 # Table name: positions
 #
 #  id         :integer          not null, primary key
-#  acronym    :string
-#  name       :string
+#  acronym    :string           not null
+#  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
