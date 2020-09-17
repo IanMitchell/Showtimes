@@ -21,14 +21,11 @@ class Release < ApplicationRecord
   after_create :extend_fansubs
   before_update :set_timezone
   
-  belongs_to :episode
   belongs_to :fansub
   has_many :staff, dependent: :destroy, inverse_of: :release
 
   scope :pending, -> { where(released: false) }
   scope :released, -> { where(released: true) }
-
-  validates :episode, presence: true
 
   validates :fansub, presence: true
   
@@ -40,7 +37,7 @@ class Release < ApplicationRecord
 
   # Active Admin
   def display_name
-    "#{self.fansub.display_name} ##{self.episode.number}"
+    "#{self.fansub.display_name} ##{self.number}"
   end
   
   def season
