@@ -58,18 +58,18 @@ class Show < ApplicationRecord
   end
 
   def self.find_by_name_or_term(name)
-    show = self.where('lower(name) = ?', name.downcase).first
-    show ||= Term.where('lower(name) = ?', name.downcase).first&.show
+    show = self.where('lower(shows.name) = ?', name.downcase).first
+    show ||= Term.where('lower(shows.name) = ?', name.downcase).first&.show
   end
 
   def self.fuzzy_search(str)
     show = joins(:terms).where("lower(terms.name) = ?", str.downcase).first
     return [show] unless show.nil?
 
-    shows = where('lower(name) = ?', str.downcase)
+    shows = where('lower(shows.name) = ?', str.downcase)
     return shows unless shows.empty?
 
-    where('lower(name) LIKE ?', "%#{sanitize_sql_like(str.downcase)}%")
+    where('lower(shows.name) LIKE ?', "%#{sanitize_sql_like(str.downcase)}%")
   end
 
   def self.fuzzy_find(str)

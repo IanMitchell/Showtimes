@@ -32,10 +32,6 @@ class Fansub < ApplicationRecord
     self.releases.pending.joins(:episode).merge(Episode.order(number: :asc)).first
   end
 
-  def name
-    "#{self.groups.map(&:acronym).join('/')} #{self.show.name}"
-  end
-
   def joint?
     self.groups.count > 1
   end
