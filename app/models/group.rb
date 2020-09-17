@@ -46,7 +46,7 @@ class Group < ApplicationRecord
   end
 
   def active_fansubs
-    self.fansubs.active.includes(fansub: :releases).order("releases.air_date DESC")
+    self.fansubs.includes(:releases).active.order("releases.air_date DESC")
   end
 
   def find_fansub_by_name_fuzzy_search(name)
