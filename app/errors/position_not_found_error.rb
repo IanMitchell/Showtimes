@@ -1,0 +1,2 @@
+class PositionNotFoundError < StandardError
+end

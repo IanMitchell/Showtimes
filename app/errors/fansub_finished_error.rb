@@ -1,0 +1,2 @@
+class FansubFinishedError < StandardError
+end

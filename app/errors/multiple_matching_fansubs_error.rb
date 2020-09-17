@@ -1,0 +1,2 @@
+class MultipleMatchingFansubsError < StandardError
+end

@@ -15,11 +15,6 @@
 #  index_groups_on_slug  (slug) UNIQUE
 #
 
-require "#{Rails.root}/lib/errors/show_not_found_error"
-require "#{Rails.root}/lib/errors/member_not_found_error"
-require "#{Rails.root}/lib/errors/fansub_not_found_error"
-require "#{Rails.root}/lib/errors/group_not_found_error"
-
 class Group < ApplicationRecord
   include FriendlyId
 
@@ -42,12 +37,8 @@ class Group < ApplicationRecord
 
   def find_member(discord)
     member = self.members.find_by(discord: discord)
-    raise Errors::MemberNotFoundError if member.nil?
+    raise MemberNotFoundError if member.nil?
     return member
-  end
-
-  def fuzzy_search_subbed_shows(str)
-    self.fansubs.fuzzy_search(str)
   end
 
   def airing_shows
@@ -58,16 +49,12 @@ class Group < ApplicationRecord
     self.fansubs.active.includes(fansub: :releases).order("releases.air_date DESC")
   end
 
-  def find_fansub_fuzzy(name)
-    self.fansubs.fuzzy_find(name).first
-  end
-
-  def find_fansub_prioritized_fuzzy(name)
+  def find_fansub_by_name_fuzzy_search(name)
     fansubs = self.fansubs.fuzzy_search(name)
 
     case fansubs.length
     when 0
-      raise Errors::FansubNotFoundError
+      raise FansubNotFoundError
     when 1
       return fansubs.first
     else
@@ -78,13 +65,13 @@ class Group < ApplicationRecord
       return incomplete.first if incomplete.length == 1
 
       names = fansubs.map { |fansub| fansub.name }.to_sentence
-      raise Errors::MultipleMatchingShowsError, "Multiple Matches: #{names}"
+      raise MultipleMatchingFansubsError, "Multiple Matches: #{names}"
     end
   end
 
   def self.find_by_discord(discord)
     group = Group.joins(:channels).where(channels: { discord: discord}).first
-    raise Errors::GroupNotFoundError if group.nil?
+    raise GroupNotFoundError if group.nil?
     return group
   end
 

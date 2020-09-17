@@ -3,10 +3,10 @@ class BlameController < ApplicationController
 
   def show
     @group = Group.find_by_discord(params[:channel])
-    @fansub = @group.find_fansub_prioritized_fuzzy(URI.decode_www_form_component(params[:show]))
+    @fansub = @group.find_fansub_by_name_fuzzy_search(URI.decode_www_form_component(params[:show]))
 
     if @fansub.finished?
-      raise Errors::FansubFinishedError, "The fansub for #{@fansub.name} is complete!"
+      raise FansubFinishedError, "The fansub for #{@fansub.name} is complete!"
     end
 
     @release = @fansub.current_release

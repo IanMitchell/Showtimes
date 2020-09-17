@@ -14,8 +14,6 @@
 #  index_positions_on_name     (name)
 #
 
-require "#{Rails.root}/lib/errors/position_not_found_error"
-
 class Position < ApplicationRecord
   validates :name, presence: true,
                    uniqueness: true
@@ -29,7 +27,7 @@ class Position < ApplicationRecord
       name.downcase)
       .first
 
-      raise Errors::PositionNotFoundError if position.nil?
+      raise PositionNotFoundError if position.nil?
     return position
   end
 end

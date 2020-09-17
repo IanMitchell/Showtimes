@@ -7,10 +7,10 @@ class ReleasesController < ApplicationController
     @group = Group.find_by_discord(params[:channel])
     @user = @group.find_member(params[:username])
 
-    @fansub = @group.find_fansub_prioritized_fuzzy(URI.decode_www_form_component(params[:name]))
+    @fansub = @group.find_fansub_by_name_fuzzy_search(URI.decode_www_form_component(params[:name]))
 
     if @fansub.finished?
-      raise Errors::FansubFinishedError, "The fansub for #{@fansub.name} is complete!"
+      raise FansubFinishedError, "The fansub for #{@fansub.name} is complete!"
     end
 
     @current = @fansub.current_release

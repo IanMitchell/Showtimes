@@ -12,8 +12,6 @@
 #  index_fansubs_on_name  (name)
 #
 
-require "#{Rails.root}/lib/errors/fansub_finished_error"
-
 class Fansub < ApplicationRecord
   attr_accessor :default_staff
   attr_accessor :episode_count
@@ -32,7 +30,8 @@ class Fansub < ApplicationRecord
       .merge(Release.where('air_date >= :current_date', current_date: DateTime.now))
       .distinct
   }
-  scope :active, -> { joins(:releases).where('releases.released = false') }
+
+  scope :active, -> { includes(:releases).where(releases: { released: false }) }
 
   # Used when creating a fansub
   def first_episode_number
@@ -73,23 +72,6 @@ class Fansub < ApplicationRecord
     return fansubs unless fansubs.empty?
 
     where('lower(fansubs.name) LIKE ?', "%#{sanitize_sql_like(str.downcase)}%")
-  end
-
-  def self.fuzzy_find(str)
-    fansubs = self.fuzzy_search(str)
-
-    case fansubs.length
-    when 0
-      raise Errors::ShowNotFoundError
-    when 1
-      return fansubs.first
-    else
-      airing = fansubs.airing
-      return airing.first if airing.length == 1
-
-      names = fansubs.map { |fansub| fansub.name }.to_sentence
-      raise Errors::MultipleMatchingShowsError, "Multiple Matches: #{names}"
-    end
   end
 
   def notify_update(release, updated_staff_member)

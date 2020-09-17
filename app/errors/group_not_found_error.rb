@@ -1,0 +1,2 @@
+class GroupNotFoundError < StandardError
+end
