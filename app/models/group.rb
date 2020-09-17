@@ -30,7 +30,6 @@ class Group < ApplicationRecord
   has_many :members, through: :group_members
   has_many :group_fansubs, inverse_of: :group, dependent: :destroy
   has_many :fansubs, through: :group_fansubs
-  has_many :shows, through: :fansubs
   has_many :channels, inverse_of: :group, dependent: :destroy
 
   friendly_id :name, use: :slugged
@@ -52,11 +51,11 @@ class Group < ApplicationRecord
   end
 
   def airing_shows
-    self.shows.airing
+    self.fansubs.airing
   end
 
   def active_fansubs
-    self.fansubs.active.includes(show: :episodes).order("episodes.air_date DESC")
+    self.fansubs.active.includes(fansub: :releases).order("releases.air_date DESC")
   end
 
   def find_fansub_fuzzy(name)

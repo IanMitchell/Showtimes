@@ -14,14 +14,6 @@
 #  index_terms_on_show_id  (show_id)
 #
 
-aoty:
-  show: desch
-  name: AOTY
-
-fmp:
-  show: fmp
-  name: FMP
-
 aoty_fansub:
   fansub: aoty_fansub
   name: AOTY

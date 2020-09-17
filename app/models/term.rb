@@ -15,11 +15,8 @@
 #
 
 class Term < ApplicationRecord
-  belongs_to :show
   belongs_to :fansub
 
   validates :name, presence: true,
                    uniqueness: true
-
-  validates :show, presence: true
 end

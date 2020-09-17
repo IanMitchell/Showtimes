@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_17_020520) do
+ActiveRecord::Schema.define(version: 2020_09_17_161707) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,15 +53,6 @@ ActiveRecord::Schema.define(version: 2020_09_17_020520) do
     t.datetime "updated_at", null: false
     t.index ["discord"], name: "index_channels_on_discord"
     t.index ["group_id"], name: "index_channels_on_group_id"
-  end
-
-  create_table "episodes", id: :serial, force: :cascade do |t|
-    t.integer "show_id"
-    t.integer "number"
-    t.datetime "air_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["show_id"], name: "index_episodes_on_show_id"
   end
 
   create_table "fansubs", id: :serial, force: :cascade do |t|
@@ -139,13 +130,6 @@ ActiveRecord::Schema.define(version: 2020_09_17_020520) do
     t.index ["episode_id"], name: "index_releases_on_episode_id"
     t.index ["fansub_id"], name: "index_releases_on_fansub_id"
     t.index ["released"], name: "index_releases_on_released"
-  end
-
-  create_table "shows", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_shows_on_name"
   end
 
   create_table "staff", id: :serial, force: :cascade do |t|

@@ -26,7 +26,6 @@ class Fansub < ApplicationRecord
   has_many :groups, through: :group_fansubs
   has_many :releases, inverse_of: :fansub, dependent: :destroy
   has_many :terms
-  belongs_to :show
 
   scope :airing, -> {
     joins(:releases)
@@ -35,9 +34,7 @@ class Fansub < ApplicationRecord
   }
   scope :active, -> { joins(:releases).where('releases.released = false') }
 
-  validates :show, presence: true
-
-  # Used when creating a show
+  # Used when creating a fansub
   def first_episode_number
     @first_episode_number || 1
   end
@@ -57,7 +54,7 @@ class Fansub < ApplicationRecord
   end
     
   def current_release
-    self.releases.pending.joins(:episode).merge(Episode.order(number: :asc)).first
+    self.releases.pending.order("releases.number ASC").first
   end
 
   def joint?
@@ -79,25 +76,23 @@ class Fansub < ApplicationRecord
   end
 
   def self.fuzzy_find(str)
-    shows = self.fuzzy_search(str)
+    fansubs = self.fuzzy_search(str)
 
-    case shows.length
+    case fansubs.length
     when 0
       raise Errors::ShowNotFoundError
     when 1
-      return shows.first
+      return fansubs.first
     else
-      airing = shows.airing
+      airing = fansubs.airing
       return airing.first if airing.length == 1
 
-      names = shows.map { |show| show.name }.to_sentence
+      names = fansubs.map { |fansub| fansub.name }.to_sentence
       raise Errors::MultipleMatchingShowsError, "Multiple Matches: #{names}"
     end
   end
 
   def notify_update(release, updated_staff_member)
-    show = self.show
-
     self.groups.each do |group|
       positions = {}
 
@@ -121,7 +116,7 @@ class Fansub < ApplicationRecord
 
       if group.webhook?
         embed = Discord::Embed.new do
-          title "#{show.name} ##{release.episode.number}"
+          title "#{self.name} ##{release.episode.number}"
           color updated_staff_member.finished ? 0x008000 : 0x800000
           add_field name: 'Status',
                     value: positions_fields.join(" ")
@@ -134,15 +129,13 @@ class Fansub < ApplicationRecord
   end
 
   def notify_release(release)
-    show = self.show
-
     self.groups.each do |group|
       if group.webhook?
         embed = Discord::Embed.new do
-          title show.name
+          title self.name
           color 0x008000
           add_field name: 'Released!',
-                    value: "#{show.name} ##{release.episode.number} was released!"
+                    value: "#{self.name} ##{release.episode.number} was released!"
           footer text: DateTime.now.to_formatted_s(:long_ordinal)
         end
 
@@ -150,21 +143,4 @@ class Fansub < ApplicationRecord
       end
     end
   end
-
-  private
-    def create_releases
-      staff_list = self.default_staff.reject(&:empty?)
-
-      self.show.episodes.each do |episode|
-        release = Release.create(fansub: self, episode: episode)
-        staff_list.each do |staff|
-          arr = staff.scan(/\d+/).map(&:to_i)
-          Staff.create(
-            member: Member.find(arr[1]),
-            position: Position.find(arr[0]),
-            release: release
-          )
-        end
-      end
-    end
 end

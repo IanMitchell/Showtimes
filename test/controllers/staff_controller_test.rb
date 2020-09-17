@@ -186,8 +186,7 @@ class StaffControllerTest < ActionController::TestCase
     body = JSON.parse(response.body)
     assert body['message'].downcase.include?('updated'), 'Incorrect success message'
 
-    show = Show.find_by(name: "Desch's Slice of Life")
-    release = show.fansubs.first.current_release
+    release = Fansub.where(name: "Desch's Slice of Life").first.current_release
     staff = release.staff.where(position: Position.find_by(name: 'Timer')).first
 
     assert staff.finished, 'Staff not updated correctly'
@@ -209,8 +208,7 @@ class StaffControllerTest < ActionController::TestCase
     body = JSON.parse(response.body)
     assert body['message'].downcase.include?('updated'), 'Incorrect success message'
 
-    show = Show.find_by(name: "Desch's Slice of Life")
-    release = show.fansubs.first.current_release
+    release = Fansub.where(name: "Desch's Slice of Life").first.current_release
     staff = release.staff.where(position: Position.find_by(name: 'Timer')).first
 
     assert staff.finished, 'Staff not updated correctly'
@@ -231,8 +229,7 @@ class StaffControllerTest < ActionController::TestCase
     body = JSON.parse(response.body)
     assert body['message'].downcase.include?('updated'), 'Incorrect success message'
 
-    show = Show.find_by(name: "Desch's Slice of Life")
-    release = show.fansubs.first.current_release
+    release = Fansub.where(name: "Desch's Slice of Life").first.current_release
     staff = release.staff.where(position: Position.find_by(name: 'Translator')).first
 
     assert !staff.finished, 'Staff not updated correctly'
@@ -253,8 +250,7 @@ class StaffControllerTest < ActionController::TestCase
     body = JSON.parse(response.body)
     assert body['message'].downcase.include?('updated'), 'Incorrect success message'
 
-    show = Show.find_by(name: "Desch's Slice of Life")
-    release = show.fansubs.first.current_release
+    release = Fansub.where(name: "Desch's Slice of Life").first.current_release
     staff = release.staff.where(position: Position.find_by(name: 'Translator')).first
 
     assert !staff.finished, 'Staff not updated correctly'
@@ -273,9 +269,9 @@ class StaffControllerTest < ActionController::TestCase
 
     assert_response 200
 
-    show = Show.find_by(name: "Desch's Slice of Life")
-    release = Release.find_by(episode: Episode.find_by(show: show,
-                                                       number: 2))
+    fansub = Fansub.where(name: "Desch's Slice of Life").first
+    release = Release.find_by(fansub: fansub, number: 2)
+                                                           
     staff = Staff.where(member: Member.find_by(name: 'skiddiks'),
                         release: release,
                         position: Position.find_by(name: 'Timer'))

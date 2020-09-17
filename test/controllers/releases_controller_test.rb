@@ -80,8 +80,7 @@ class ReleasesControllerTest < ActionController::TestCase
 
   test 'should succeed for correct show and ignore irrelevant show' do
     # Artificially set it as ready for release
-    show = Show.find_by(name: "Desch's Slice of Life")
-    release = show.fansubs.first.current_release
+    release = Fansub.where(name: "Desch's Slice of Life").first.current_release
     release.staff.each do |staff|
       staff.update_attribute :finished, true
     end
@@ -101,8 +100,7 @@ class ReleasesControllerTest < ActionController::TestCase
 
   test 'should release show based on term' do
     # Artificially set it as ready for release
-    show = Show.find_by(name: "Desch's Slice of Life")
-    release = show.fansubs.first.current_release
+    release = Fansub.where(name: "Desch's Slice of Life").first.current_release
     release.staff.each do |staff|
       staff.update_attribute :finished, true
     end
@@ -134,8 +132,8 @@ class ReleasesControllerTest < ActionController::TestCase
 
   test 'should support joint shows' do
     # Artificially set it as ready for release
-    show = Show.find_by(name: 'Kono Subarashii Sekai ni Shukufuku wo!')
-    release = show.fansubs.first.current_release
+    fansub = Fansub.where(name: 'Kono Subarashii Sekai ni Shukufuku wo!').first
+    release = fansub.current_release
 
     release.staff.each do |staff|
       staff.update_attribute :finished, true
@@ -152,7 +150,7 @@ class ReleasesControllerTest < ActionController::TestCase
     assert_response 200
 
     # Reset (`release` is stale, need to query again)
-    show.fansubs.first.releases.first.update_attribute :released, false
+    fansub.releases.first.update_attribute :released, false
 
     put :update, params: {
       username: '456',
@@ -168,8 +166,7 @@ class ReleasesControllerTest < ActionController::TestCase
 
   test 'should only allow Staff to release' do
     # Artificially set it as ready for release
-    show = Show.find_by(name: "Desch's Slice of Life")
-    release = show.fansubs.first.current_release
+    release = Fansub.where(name: "Desch's Slice of Life").first.current_release
     release.staff.each do |staff|
       staff.update_attribute :finished, true
     end
