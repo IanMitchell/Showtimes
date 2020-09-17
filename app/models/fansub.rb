@@ -7,6 +7,10 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# Indexes
+#
+#  index_fansubs_on_name  (name)
+#
 
 require "#{Rails.root}/lib/errors/fansub_finished_error"
 

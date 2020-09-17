@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_17_165537) do
+ActiveRecord::Schema.define(version: 2020_09_17_185543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2020_09_17_165537) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name", null: false
+    t.index ["name"], name: "index_fansubs_on_name"
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -124,7 +125,9 @@ ActiveRecord::Schema.define(version: 2020_09_17_165537) do
     t.boolean "released", default: false
     t.integer "number", null: false
     t.datetime "air_date", null: false
+    t.index ["air_date"], name: "index_releases_on_air_date"
     t.index ["fansub_id"], name: "index_releases_on_fansub_id"
+    t.index ["number"], name: "index_releases_on_number"
     t.index ["released"], name: "index_releases_on_released"
   end
 

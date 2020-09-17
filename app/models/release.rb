@@ -12,7 +12,9 @@
 #
 # Indexes
 #
+#  index_releases_on_air_date   (air_date)
 #  index_releases_on_fansub_id  (fansub_id)
+#  index_releases_on_number     (number)
 #  index_releases_on_released   (released)
 #
 
