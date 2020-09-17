@@ -1,4 +1,2 @@
-module Errors
-  class FansubNotFoundError < StandardError
-  end
+class FansubNotFoundError < StandardError
 end
