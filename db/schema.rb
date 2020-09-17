@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_17_014146) do
+ActiveRecord::Schema.define(version: 2020_09_17_015051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,6 +134,8 @@ ActiveRecord::Schema.define(version: 2020_09_17_014146) do
     t.datetime "updated_at", null: false
     t.boolean "released", default: false
     t.bigint "episode_id"
+    t.integer "number"
+    t.datetime "air_date"
     t.index ["episode_id"], name: "index_releases_on_episode_id"
     t.index ["fansub_id"], name: "index_releases_on_fansub_id"
     t.index ["released"], name: "index_releases_on_released"
