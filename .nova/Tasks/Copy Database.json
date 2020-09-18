@@ -1,0 +1,10 @@
+{
+  "actions" : {
+    "run" : {
+      "enabled" : true,
+      "script" : "dropdb showtimes_development\nheroku pg:pull DATABASE_URL showtimes_development"
+    }
+  },
+  "identifier" : "BE2032F2-810D-44CF-8D9B-121949BB2320",
+  "openLogOnRun" : "start"
+}

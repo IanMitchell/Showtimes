@@ -2,7 +2,7 @@ Trestle.resource(:fansubs) do
   menu do
     item :fansubs, icon: "fa fa-tv", group: :fansubs
   end
-  
+
   collection do
     current_user.groups.collect(&:fansubs).flatten.uniq
   end
@@ -35,6 +35,10 @@ Trestle.resource(:fansubs) do
         end
       end
     else
+      tab :fansub do
+        text_field :name
+      end
+
       tab :releases, badge: fansub.releases.count do
         table fansub.releases, admin: :releases do
           column :id
@@ -43,7 +47,7 @@ Trestle.resource(:fansubs) do
           column :released
         end
       end
-      
+
       tab :terms, badge: fansub.terms.count do
         table fansub.terms, admin: :terms do
           column :id
