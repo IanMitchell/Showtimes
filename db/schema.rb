@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_25_174355) do
+ActiveRecord::Schema.define(version: 2020_09_25_175856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 2020_09_25_174355) do
     t.string "name", null: false
     t.boolean "visible", default: true
     t.index ["name"], name: "index_fansubs_on_name"
+    t.index ["visible"], name: "index_fansubs_on_visible"
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|

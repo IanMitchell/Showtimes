@@ -10,7 +10,8 @@
 #
 # Indexes
 #
-#  index_fansubs_on_name  (name)
+#  index_fansubs_on_name     (name)
+#  index_fansubs_on_visible  (visible)
 #
 
 require 'test_helper'
