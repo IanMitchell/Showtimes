@@ -65,3 +65,9 @@ kagooya_release:
   number: 1
   air_date: <%= DateTime.now + 1.day %>
   released: false
+
+hidden_release:
+  fansub: hidden_fansub
+  number: 1
+  air_date: <%= DateTime.now - 1.day %>
+  released: false

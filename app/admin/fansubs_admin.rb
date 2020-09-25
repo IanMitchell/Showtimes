@@ -12,6 +12,7 @@ Trestle.resource(:fansubs) do
     column :name
     column :airing, ->(fansub) { fansub.airing? }
     column :finished, -> (fansub) { fansub.finished? }
+    column :visible
 
     actions
   end
@@ -23,6 +24,7 @@ Trestle.resource(:fansubs) do
         select :group_ids, current_user.groups
         number_field :episode_count
         number_field :first_episode_number
+        checkbox :visible
         datetime_field :air_date
 
         Position.all.each do |position|
@@ -37,6 +39,7 @@ Trestle.resource(:fansubs) do
     else
       tab :fansub do
         text_field :name
+        checkbox :visible
       end
 
       tab :releases, badge: fansub.releases.count do

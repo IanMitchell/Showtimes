@@ -4,6 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  name       :string           not null
+#  visible    :boolean          default(TRUE)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -38,3 +39,7 @@ kagooya_fansub:
 
 future_kagooya_fansub:
   name: Kagooya
+
+hidden_fansub:
+  name: Ninja Show
+  visible: false

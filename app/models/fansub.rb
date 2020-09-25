@@ -4,6 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  name       :string           not null
+#  visible    :boolean          default(TRUE)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -31,27 +32,29 @@ class Fansub < ApplicationRecord
       .distinct
   }
 
+  scope :visible, -> { where(visible: true) }
+
   scope :active, -> { includes(:releases).where(releases: { released: false }) }
 
   # Used when creating a fansub
   def first_episode_number
     @first_episode_number || 1
   end
-  
+
   def next_episode
     self.releases.where('air_date >= :current_date', current_date: DateTime.now)
       .order(number: :asc)
       .first
   end
-  
+
   def last_episode
     self.releases.order(air_date: :desc).first
   end
-  
+
   def airing?
     self.releases.where('air_date >= :current_date', current_date: DateTime.now).any?
   end
-    
+
   def current_release
     self.releases.pending.order("releases.number ASC").first
   end
@@ -63,7 +66,7 @@ class Fansub < ApplicationRecord
   def finished?
     self.current_release.nil?
   end
-  
+
   def self.fuzzy_search(str)
     fansub = joins(:terms).where("lower(terms.name) = ?", str.downcase).first
     return [fansub] unless fansub.nil?
@@ -113,7 +116,7 @@ class Fansub < ApplicationRecord
 
   def notify_release(release)
     name = self.name
-    
+
     self.groups.each do |group|
       if group.webhook?
         embed = Discord::Embed.new do
@@ -128,18 +131,18 @@ class Fansub < ApplicationRecord
       end
     end
   end
-  
+
   private
     def create_releases
       staff_list = self.default_staff.reject(&:empty?)
-      
-      self.episode_count.to_i.times do |num|	
-        release = Release.create(	
-          fansub: self,	
-          number: self.first_episode_number.to_i + num,	
-          air_date: self.air_date.to_datetime + num.weeks	
+
+      self.episode_count.to_i.times do |num|
+        release = Release.create(
+          fansub: self,
+          number: self.first_episode_number.to_i + num,
+          air_date: self.air_date.to_datetime + num.weeks
         )
-        
+
         staff_list.each do |staff|
           arr = staff.scan(/\d+/).map(&:to_i)
           Staff.create(

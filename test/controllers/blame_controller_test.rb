@@ -101,4 +101,13 @@ class BlameControllerTest < ActionController::TestCase
     body = JSON.parse(response.body)
     assert_equal body['name'], 'Kaguya-Sama S2', 'Priority not given to incomplete show'
   end
+
+  test 'should not include hidden shows' do
+    get :show, params: { channel: 'cartel_discord', show: 'Ninja Show', format: :json }
+    assert_response 400
+
+    body = JSON.parse(response.body)
+    assert body['message'].downcase.include?('fansub'),
+          "Incorrect error message: #{body['message']}"
+  end
 end

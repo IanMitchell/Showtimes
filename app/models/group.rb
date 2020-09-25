@@ -42,15 +42,15 @@ class Group < ApplicationRecord
   end
 
   def airing_shows
-    self.fansubs.airing
+    self.fansubs.airing.visible
   end
 
   def active_fansubs
-    self.fansubs.includes(:releases).active.order("releases.air_date DESC")
+    self.fansubs.visible.includes(:releases).active.order("releases.air_date DESC")
   end
 
   def find_fansub_by_name_fuzzy_search(name)
-    fansubs = self.fansubs.fuzzy_search(name)
+    fansubs = self.fansubs.visible.fuzzy_search(name)
 
     case fansubs.length
     when 0

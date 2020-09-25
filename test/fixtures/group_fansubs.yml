@@ -52,3 +52,7 @@ seven:
 eight:
   group: priority_test
   fansub: kagooya_fansub
+
+nine:
+  group: cartel
+  fansub: hidden_fansub
