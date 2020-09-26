@@ -19,9 +19,6 @@
 #
 
 class Release < ApplicationRecord
-  before_create :set_timezone
-  before_update :set_timezone
-  
   belongs_to :fansub
   has_many :staff, dependent: :destroy, inverse_of: :release
 
@@ -29,9 +26,9 @@ class Release < ApplicationRecord
   scope :released, -> { where(released: true) }
 
   validates :fansub, presence: true
-  
+
   validates :air_date, presence: true
-  
+
   validates :number, presence: true,
                      numericality: true,
                      uniqueness: { scope: :fansub, message: "fansub episodes should be unique" }
@@ -40,15 +37,15 @@ class Release < ApplicationRecord
   def display_name
     "#{self.fansub.display_name} ##{self.number}"
   end
-  
+
   def season
     "#{Release.month_to_season(self.air_date.month)} #{self.air_date.year}"
   end
-  
+
   def aired?
     self.air_date <= DateTime.now
   end
-  
+
   private
     def self.month_to_season(month)
       case month
@@ -60,12 +57,6 @@ class Release < ApplicationRecord
         "Summer"
       when 10..12
         "Fall"
-      end
-    end
-
-    def set_timezone
-      unless self.air_date.zone.eql? 'JST'
-        self.air_date = self.air_date.change(zone: 'Japan')
       end
     end
 end

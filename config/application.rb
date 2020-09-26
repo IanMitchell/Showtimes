@@ -21,5 +21,7 @@ module Showtimes
         resource '*', :headers => :any, :methods => [:get, :post, :options]
       end
     end
+
+    config.time_zone = 'Japan'
   end
 end
