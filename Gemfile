@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.7.1'
+ruby '2.7.2'
 
 gem 'rails', '6.0.3'
 gem 'bootsnap'
@@ -28,7 +28,7 @@ gem 'cocoon'
 gem 'discord-notifier'
 
 # Front-end
-gem 'sass-rails', '~> 5.0'
+gem 'sassc'
 gem 'uglifier', '>= 1.3.0'
 
 # APIs
