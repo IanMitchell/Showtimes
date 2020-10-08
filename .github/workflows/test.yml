@@ -25,15 +25,10 @@ jobs:
       - name: Setup PostgreSQL
         run: |
           sudo apt-get -y install libpq-dev
-      - name: Setup Gem Cache
-        uses: actions/cache@v1
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gem-use-ruby-${{ hashFiles('**/Gemfile.lock') }}
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7.1
+          ruby-version: 2.7.2
           bundler-cache: true
       - name: Setup Database
         env:
