@@ -33,7 +33,7 @@ jobs:
       - name: Setup Ruby
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: 2.7.1
+          ruby-version: 2.7.2
       - name: Bundle Install
         run: |
           bundle config path vendor/bundle
