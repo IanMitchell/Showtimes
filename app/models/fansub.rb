@@ -81,22 +81,11 @@ class Fansub < ApplicationRecord
   def notify_update(release, updated_staff_member)
     name = self.name
     self.groups.each do |group|
-      # Determine current state
+      # Create the stylized acronym list
       positions_fields = release.staff.map do |staff|
         str = staff.finished? ? "~~#{key}~~" : "**#{key}**"
 
         if staff == updated_staff_member
-          "__#{str}__"
-        else
-          str
-        end
-      end
-
-      # Create the stylized acronym list
-      positions_fields = positions.map do |key, value|
-        str = value ? "~~#{key}~~" : "**#{key}**"
-
-        if key == updated_staff_member.position.acronym
           "__#{str}__"
         else
           str
