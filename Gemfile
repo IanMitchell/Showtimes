@@ -28,7 +28,7 @@ gem 'cocoon'
 gem 'discord-notifier'
 
 # Front-end
-gem 'sassc'
+gem 'sass-rails', '>= 6'
 gem 'uglifier', '>= 1.3.0'
 
 # APIs
