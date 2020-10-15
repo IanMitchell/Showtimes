@@ -35,6 +35,12 @@ class StaffController < ApplicationController
         else
           @staff = @staff.where(finished: !fin).first
         end
+
+        unless @staff.present?
+          return render json: {
+            message: "All #{@position.name} positions are marked that way already!"
+          }, status: 400
+        end
       else
         @staff = @staff.first
       end

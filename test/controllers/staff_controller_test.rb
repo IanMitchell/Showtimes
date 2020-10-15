@@ -271,7 +271,7 @@ class StaffControllerTest < ActionController::TestCase
 
     fansub = Fansub.where(name: "Desch's Slice of Life").first
     release = Release.find_by(fansub: fansub, number: 2)
-                                                           
+
     staff = Staff.where(member: Member.find_by(name: 'skiddiks'),
                         release: release,
                         position: Position.find_by(name: 'Timer'))
@@ -393,5 +393,17 @@ class StaffControllerTest < ActionController::TestCase
     body = JSON.parse(response.body)
     assert body['message'].downcase.include?('already marked your position as complete'),
             "Incorrect alert message: #{body['message']}"
+  end
+
+  test "staff marking position as finished should notify all group webhooks" do
+  end
+
+  test "staff marking position as unfinished should notify all group webhooks" do
+  end
+
+  test "should not update when staff status does not change" do
+  end
+
+  test "should alert admin when marking a multi-position job as done if they are all done" do
   end
 end
