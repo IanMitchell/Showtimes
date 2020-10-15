@@ -1,9 +1,0 @@
-{
-  "actions" : {
-    "run" : {
-      "enabled" : true,
-      "script" : "rails server"
-    }
-  },
-  "identifier" : "944BD7BB-E2A0-489C-B20F-4FDEF6E7DBAB"
-}

@@ -119,3 +119,15 @@ desch_kagooya:
   position: editor
   release: kagooya_release
   finished: false
+
+skiddiks_kuma:
+  member: skiddiks
+  position: translator
+  release: kuma_release
+  finished: true
+
+arx_kuma:
+  member: arx
+  position: translator
+  release: kuma_release
+  finished: true

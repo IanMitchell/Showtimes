@@ -84,7 +84,6 @@ GEM
       concurrent-ruby (~> 1.0)
     jbuilder (2.10.1)
       activesupport (>= 5.0.0)
-    json (1.8.6)
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.1)
@@ -114,11 +113,11 @@ GEM
     mini_portile2 (2.4.0)
     minitest (5.14.2)
     msgpack (1.3.3)
-    nio4r (2.5.3)
+    nio4r (2.5.4)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
     pg (1.2.3)
-    puma (4.3.6)
+    puma (5.0.2)
       nio4r (~> 2.0)
     rack (2.2.3)
     rack-attack (6.3.1)
@@ -163,7 +162,6 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    rdoc (4.3.0)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -174,15 +172,12 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    sdoc (0.4.2)
-      json (~> 1.7, >= 1.7.7)
-      rdoc (~> 4.0)
     skylight (4.3.1)
       skylight-core (= 4.3.1)
     skylight-core (4.3.1)
       activesupport (>= 4.2.0)
     spring (2.1.1)
-    sprockets (3.7.2)
+    sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (3.2.2)
@@ -230,7 +225,7 @@ DEPENDENCIES
   discord-notifier
   dotenv-rails
   friendly_id
-  jbuilder (~> 2.0)
+  jbuilder
   listen
   pg
   puma
@@ -238,14 +233,13 @@ DEPENDENCIES
   rack-cors
   rails (= 6.0.3)
   rails_12factor
-  sass-rails (>= 6)
-  sdoc (~> 0.4.0)
+  sass-rails
   skylight
   spring
   trestle
   trestle-auth
   trestle-search
-  uglifier (>= 1.3.0)
+  uglifier
   unicorn
   web-console (~> 3.0)
 

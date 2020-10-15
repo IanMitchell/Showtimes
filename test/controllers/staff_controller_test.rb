@@ -5,7 +5,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '789',
+      username: 'skiddiks',
       position: 'timer',
       name: 'desch',
       status: 'true',
@@ -19,7 +19,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: 'lolno',
       channel: 'cartel_discord',
-      username: '123',
+      username: 'desch',
       name: 'desch',
       status: 'true',
       format: :json
@@ -53,7 +53,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '123',
+      username: 'desch',
       name: "Full Metal Panic! The Second Raid",
       status: 'true',
       format: :json
@@ -106,7 +106,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '123',
+      username: 'desch',
       name: 'desch',
       position: 'memer',
       status: 'true',
@@ -124,7 +124,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '1213',
+      username: 'jukey',
       name: 'desch',
       status: 'true',
       format: :json
@@ -140,7 +140,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '789',
+      username: 'skiddiks',
       name: 'desch',
       status: 'true',
       format: :json
@@ -157,7 +157,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '456',
+      username: 'arx',
       name: 'desch',
       position: 'editor',
       status: 'true',
@@ -174,7 +174,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '123',
+      username: 'desch',
       name: 'desch',
       position: 'timer',
       status: 'true',
@@ -196,7 +196,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '789',
+      username: 'skiddiks',
       name: 'desch',
       position: 'timer',
       status: 'true',
@@ -218,7 +218,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '456',
+      username: 'arx',
       name: 'desch',
       status: 'false',
       format: :json
@@ -239,7 +239,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '456',
+      username: 'arx',
       name: 'desch',
       status: 'false',
       format: :json
@@ -260,7 +260,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '789',
+      username: 'skiddiks',
       name: 'desch',
       position: 'timer',
       status: 'true',
@@ -283,7 +283,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '789',
+      username: 'skiddiks',
       position: 'timer',
       name: 'AOTY',
       status: 'true',
@@ -297,7 +297,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '456',
+      username: 'arx',
       name: 'shigatsu',
       status: 'true',
       format: :json
@@ -314,7 +314,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '456',
+      username: 'arx',
       name: 'Subarashii',
       status: 'true',
       format: :json
@@ -325,7 +325,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'syndicate_discord',
-      username: '123',
+      username: 'desch',
       name: 'Subarashii',
       position: 'tl',
       status: 'true',
@@ -339,7 +339,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'priority_discord',
-      username: '123',
+      username: 'desch',
       name: 'Kagooya',
       status: 'true',
       format: :json
@@ -356,7 +356,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '789',
+      username: 'skiddiks',
       position: 'tm',
       name: 'AOTY',
       status: 'false',
@@ -371,7 +371,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '789',
+      username: 'skiddiks',
       position: 'tm',
       name: 'AOTY',
       status: 'true',
@@ -381,7 +381,7 @@ class StaffControllerTest < ActionController::TestCase
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
-      username: '789',
+      username: 'skiddiks',
       position: 'tm',
       name: 'AOTY',
       status: 'true',
@@ -395,6 +395,101 @@ class StaffControllerTest < ActionController::TestCase
             "Incorrect alert message: #{body['message']}"
   end
 
+  test "should restrict non-admins to their role for marking multi-purpose jobs" do
+    put :update, params: {
+      auth: ENV['AUTH'],
+      channel: 'cartel_discord',
+      username: 'skiddiks',
+      position: 'tl',
+      name: 'kuma',
+      status: 'true',
+      format: :json
+    }
+
+    assert_response 400
+
+    body = JSON.parse(response.body)
+    assert body['message'].downcase.include?('already marked your position as complete')
+  end
+
+  test "should prioritize admins jobs when marking a job role for a multi-position job" do
+    # Mark ARX as an admin
+    group_member = GroupMember.find_by(
+      group: Fansub.find_by(name: 'Kuma').groups.first,
+      member: Member.find_by(name: 'arx')
+    )
+    group_member.update_attribute :admin, true
+
+    put :update, params: {
+      auth: ENV['AUTH'],
+      channel: 'cartel_discord',
+      username: 'arx',
+      position: 'tl',
+      name: 'kuma',
+      status: 'false',
+      format: :json
+    }
+
+    assert_response 200
+
+    staff = Fansub.find_by(name: 'Kuma')
+      .current_release
+      .staff
+      .where(member: Member.find_by(name: 'arx'))
+      .first
+
+    assert_equal staff.finished, false
+  end
+
+  test "should allow admins to mark non-job role as done for a multi-position job" do
+    # Set second position as unfinished
+    staff = Fansub.find_by(name: 'Kuma')
+      .current_release
+      .staff
+      .where(member: Member.find_by(name: 'skiddiks'))
+      .first
+
+    staff.update_attribute :finished, false
+
+    # Mark ARX as an admin
+    group_member = GroupMember.find_by(
+      group: Fansub.find_by(name: 'Kuma').groups.first,
+      member: Member.find_by(name: 'arx')
+    )
+    group_member.update_attribute :admin, true
+
+    put :update, params: {
+      auth: ENV['AUTH'],
+      channel: 'cartel_discord',
+      username: 'arx',
+      position: 'tl',
+      name: 'kuma',
+      status: 'true',
+      format: :json
+    }
+
+    assert_response 200
+    body = JSON.parse(response.body)
+    assert body['message'].include?('Updated Kuma')
+  end
+
+  test "should alert all jobs are done for admin without a job" do
+    put :update, params: {
+      auth: ENV['AUTH'],
+      channel: 'cartel_discord',
+      username: 'desch',
+      position: 'tl',
+      name: 'kuma',
+      status: 'true',
+      format: :json
+    }
+
+    assert_response 400
+
+    body = JSON.parse(response.body)
+    assert body['message'].include?('All Translator positions are marked that way already!')
+  end
+
   test "staff marking position as finished should notify all group webhooks" do
   end
 
@@ -402,8 +497,5 @@ class StaffControllerTest < ActionController::TestCase
   end
 
   test "should not update when staff status does not change" do
-  end
-
-  test "should alert admin when marking a multi-position job as done if they are all done" do
   end
 end

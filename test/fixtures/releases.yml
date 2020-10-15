@@ -71,3 +71,9 @@ hidden_release:
   number: 1
   air_date: <%= DateTime.now - 1.day %>
   released: false
+
+kuma_release:
+  fansub: multi_position_fansub
+  number: 1
+  air_date: <%= DateTime.now - 1.week %>
+  released: false

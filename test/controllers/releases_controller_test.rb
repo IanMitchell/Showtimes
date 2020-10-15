@@ -3,7 +3,7 @@ require 'test_helper'
 class ReleasesControllerTest < ActionController::TestCase
   test 'should require authentication' do
     put :update, params: {
-      username: '123',
+      username: 'desch',
       auth: 'wrongpassword',
       channel: 'cartel_discord',
       name: 'desch',
@@ -18,7 +18,7 @@ class ReleasesControllerTest < ActionController::TestCase
 
   test 'should fail with incorrect channel' do
     put :update, params: {
-      username: '123',
+      username: 'desch',
       auth: ENV['AUTH'],
       channel: '1234',
       name: 'desch',
@@ -33,7 +33,7 @@ class ReleasesControllerTest < ActionController::TestCase
 
   test 'should fail with incorrect fansub' do
     put :update, params: {
-      username: '123',
+      username: 'desch',
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
       name: 'fmp',
@@ -48,7 +48,7 @@ class ReleasesControllerTest < ActionController::TestCase
 
   test 'should fail with finished show' do
     put :update, params: {
-      username: '123',
+      username: 'desch',
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
       name: 'kimi no uso',
@@ -63,7 +63,7 @@ class ReleasesControllerTest < ActionController::TestCase
 
   test 'should require all positions to be complete' do
     put :update, params: {
-      username: '123',
+      username: 'desch',
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
       name: 'desch',
@@ -86,7 +86,7 @@ class ReleasesControllerTest < ActionController::TestCase
     end
 
     put :update, params: {
-      username: '123',
+      username: 'desch',
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
       name: 'desch',
@@ -106,7 +106,7 @@ class ReleasesControllerTest < ActionController::TestCase
     end
 
     put :update, params: {
-      username: '123',
+      username: 'desch',
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
       name: 'aoty',
@@ -117,7 +117,7 @@ class ReleasesControllerTest < ActionController::TestCase
 
   test 'should handle multiple show matches' do
     put :update, params: {
-      username: '123',
+      username: 'desch',
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
       name: 'shigatsu',
@@ -140,7 +140,7 @@ class ReleasesControllerTest < ActionController::TestCase
     end
 
     put :update, params: {
-      username: '123',
+      username: 'desch',
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
       name: 'Subarashii',
@@ -153,7 +153,7 @@ class ReleasesControllerTest < ActionController::TestCase
     fansub.releases.first.update_attribute :released, false
 
     put :update, params: {
-      username: '456',
+      username: 'arx',
       auth: ENV['AUTH'],
       channel: 'syndicate_discord',
       name: 'Subarashii',

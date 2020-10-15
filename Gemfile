@@ -28,11 +28,11 @@ gem 'cocoon'
 gem 'discord-notifier'
 
 # Front-end
-gem 'sass-rails', '>= 6'
-gem 'uglifier', '>= 1.3.0'
+gem 'sass-rails'
+gem 'uglifier'
 
 # APIs
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder'
 
 # Metrics
 gem "skylight"
@@ -66,8 +66,4 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'listen'
-end
-
-group :doc do
-  gem 'sdoc', '~> 0.4.0', group: :doc
 end

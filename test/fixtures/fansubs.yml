@@ -44,3 +44,6 @@ future_kagooya_fansub:
 hidden_fansub:
   name: Ninja Show
   visible: false
+
+multi_position_fansub:
+  name: Kuma

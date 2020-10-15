@@ -56,3 +56,7 @@ eight:
 nine:
   group: cartel
   fansub: hidden_fansub
+
+ten:
+  group: cartel
+  fansub: multi_position_fansub
