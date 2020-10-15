@@ -83,6 +83,7 @@ class Fansub < ApplicationRecord
     self.groups.each do |group|
       # Create the stylized acronym list
       positions_fields = release.staff.map do |staff|
+        key = staff.position.acronym
         str = staff.finished? ? "~~#{key}~~" : "**#{key}**"
 
         if staff == updated_staff_member
