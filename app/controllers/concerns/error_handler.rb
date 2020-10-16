@@ -4,7 +4,6 @@ module ErrorHandler
   included do
     rescue_from GroupNotFoundError, with: :unknown_group
     rescue_from FansubNotFoundError, with: :unknown_fansub
-    rescue_from MemberNotFoundError, with: :unknown_member
     rescue_from PositionNotFoundError, with: :unknown_position
 
     rescue_from FansubFinishedError, with: :fansub_finished
@@ -18,10 +17,6 @@ module ErrorHandler
 
   def unknown_group
     render_error 404, "Unknown Discord server. If you'd like to use Showtimes, please contact Desch#3091"
-  end
-
-  def unknown_member
-    render_error 404, "Unknown user. If you're a new fansubber, have a group admin authorize you"
   end
 
   def unknown_position

@@ -1,16 +1,17 @@
 Trestle.resource(:members) do
-  menu do
-    item :members, icon: "fa fa-user", group: :core
+  build_instance do |attrs, params|
+    if params[:group_id]
+      Member.new(group: Group.find(params[:group_id]))
+    else
+      Member.new(attrs)
+    end
   end
 
-  table do
-    column :id
-    column :name
-    column :discord
-  end
+  form dialog: true do |member|
+    hidden_field :group_id
 
-  form do |member|
     text_field :name
     text_field :discord
+    check_box :admin
   end
 end

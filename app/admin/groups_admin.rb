@@ -2,7 +2,7 @@ Trestle.resource(:groups) do
   collection do
     current_user.groups
   end
-  
+
   menu do
     item :groups, icon: "fa fa-user-friends", group: :fansubs
   end
@@ -24,9 +24,10 @@ Trestle.resource(:groups) do
 
     unless group.new_record?
       tab :members, badge: group.members.count do
-        table group.group_members, admin: :group_members do
+        table group.members, admin: :members do
           column :id
-          column :member
+          column :name
+          column :discord
           column :admin
 
           actions
@@ -34,7 +35,7 @@ Trestle.resource(:groups) do
 
         concat admin_link_to(
           "Add Member",
-          admin: :group_members,
+          admin: :members,
           action: :new,
           params: {
             group_id: instance.id,
