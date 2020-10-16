@@ -3,35 +3,63 @@
 # Table name: members
 #
 #  id         :integer          not null, primary key
+#  admin      :boolean          default(FALSE)
 #  discord    :string           not null
 #  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  group_id   :bigint
 #
 # Indexes
 #
-#  index_members_on_discord  (discord)
+#  index_members_on_discord   (discord)
+#  index_members_on_group_id  (group_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (group_id => groups.id)
 #
 
-desch:
+cartel_desch:
   name: desch
   discord: desch
+  group: cartel
+  admin: true
 
-arx:
+syndicate_desch:
+  name: desch
+  discord: desch
+  group: syndicate
+
+priority_test_desch:
+  name: desch
+  discord: desch
+  group: priority_test
+
+cartel_arx:
   name: arx
   discord: arx
+  group: cartel
 
-skiddiks:
+syndicate_arx:
+  name: arx
+  discord: arx
+  group: syndicate
+
+cartel_skiddiks:
   name: skiddiks
   discord: skiddiks
+  group: cartel
 
-jukey:
+cartel_jukey:
   name: jukey
   discord: jukey
+  group: cartel
 
-fyurie:
+cartel_fyurie:
   name: fyurie
   discord: fyurie
+  group: cartel
 
 areki:
   name: areki

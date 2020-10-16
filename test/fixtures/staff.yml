@@ -19,115 +19,115 @@
 #
 
 desch_ep_1:
-  member: desch
+  member: cartel_desch
   position: editor
   release: release_one
   finished: true
 
 arx_ep_1:
-  member: arx
+  member: cartel_arx
   position: translator
   release: release_one
   finished: true
 
 skiddiks_ep_1_tm:
-  member: skiddiks
+  member: cartel_skiddiks
   position: timer
   release: release_one
   finished: true
 
 skiddiks_ep_1_ts:
-  member: skiddiks
+  member: cartel_skiddiks
   position: typesetter
   release: release_one
   finished: true
 
 desch_ep_2:
-  member: desch
+  member: cartel_desch
   position: editor
   release: release_two
   finished: false
 
 arx_ep_2:
-  member: arx
+  member: cartel_arx
   position: translator
   release: release_two
   finished: true
 
 skiddiks_ep_2_tm:
-  member: skiddiks
+  member: cartel_skiddiks
   position: timer
   release: release_two
   finished: false
 
 skiddiks_ep_2_ts:
-  member: skiddiks
+  member: cartel_skiddiks
   position: typesetter
   release: release_two
   finished: false
 
 jukey_ep_2_qc:
-  member: jukey
+  member: cartel_jukey
   position: quality_control
   release: release_two
   finished: false
 
 desch_ep_3:
-  member: desch
+  member: cartel_desch
   position: editor
   release: release_three
   finished: false
 
 arx_ep_3:
-  member: arx
+  member: cartel_arx
   position: translator
   release: release_three
   finished: false
 
 skiddiks_ep_3_tm:
-  member: skiddiks
+  member: cartel_skiddiks
   position: timer
   release: release_three
   finished: false
 
 skiddiks_ep_3_ts:
-  member: skiddiks
+  member: cartel_skiddiks
   position: typesetter
   release: release_three
   finished: false
 
 desch_shigatsu:
-  member: desch
+  member: cartel_desch
   position: translator
   release: shigatsu_release
   finished: true
 
 desch_konosuba:
-  member: desch
+  member: syndicate_desch
   position: translator
   release: konosuba_release
   finished: false
 
 arx_konosuba:
-  member: arx
+  member: cartel_arx
   position: editor
   release: konosuba_release
   finished: false
 
 desch_kagooya:
-  member: desch
+  member: priority_test_desch
   position: editor
   release: kagooya_release
   finished: false
 
 skiddiks_kuma:
-  member: skiddiks
+  member: cartel_skiddiks
   position: translator
   release: kuma_release
   finished: true
 
 arx_kuma:
-  member: arx
+  member: cartel_arx
   position: translator
   release: kuma_release
   finished: true

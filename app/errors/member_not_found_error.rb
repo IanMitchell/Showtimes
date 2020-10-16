@@ -1,2 +1,0 @@
-class MemberNotFoundError < StandardError
-end

@@ -7,7 +7,15 @@ class StaffController < ApplicationController
     fin = ActiveRecord::Type::Boolean.new.deserialize(params[:status])
 
     @group = Group.find_by_discord(params[:channel])
-    @user = @group.find_member(params[:username])
+    @user = @group.members.find_by(discord: params[:username])
+
+    if @user.nil?
+      return render json: {
+        message: "Unknown user. If you're a new fansubber, have a group admin authorize you"
+      },
+      status: 404
+    end
+
     @fansub = @group.find_fansub_by_name_fuzzy_search(URI.decode_www_form_component(params[:name]))
 
     @staff = @fansub.current_release&.staff
@@ -18,7 +26,7 @@ class StaffController < ApplicationController
     end
 
     # Filter by assigned roles unless admin or founder
-    @staff = @staff.where(member: @user) unless @user.admin? @group
+    @staff = @staff.where(member: @user) unless @user.admin?
 
     # TODO: This is really nasty and needs to be refactored
     if params[:position]
@@ -50,6 +58,13 @@ class StaffController < ApplicationController
       else
         @staff = @staff.first
       end
+    end
+
+    if @staff.nil?
+      return render json: {
+        message: "Unknown user. If you're a new fansubber (or posting from a different group's Discord), have a group admin authorize you!"
+      },
+      status: 400
     end
 
     if @staff.finished == fin

@@ -37,6 +37,10 @@ class Fansub < ApplicationRecord
 
   scope :active, -> { includes(:releases).where(releases: { released: false }) }
 
+  validates :name, presence: true,
+                   uniqueness: { scope: :group, message: "fansub names should be unique" }
+
+
   # Used when creating a fansub
   def first_episode_number
     @first_episode_number || 1

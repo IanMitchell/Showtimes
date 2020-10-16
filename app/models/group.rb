@@ -21,8 +21,7 @@ class Group < ApplicationRecord
   before_destroy :cleanup_fansubs, prepend: true
 
   has_and_belongs_to_many :administrators
-  has_many :group_members, inverse_of: :group, dependent: :destroy
-  has_many :members, through: :group_members
+  has_many :members, inverse_of: :group, dependent: :destroy
   has_many :group_fansubs, inverse_of: :group, dependent: :destroy
   has_many :fansubs, through: :group_fansubs
   has_many :channels, inverse_of: :group, dependent: :destroy
@@ -34,12 +33,6 @@ class Group < ApplicationRecord
 
   validates :acronym, presence: true,
                       uniqueness: true
-
-  def find_member(discord)
-    member = self.members.find_by(discord: discord)
-    raise MemberNotFoundError if member.nil?
-    return member
-  end
 
   def airing_shows
     self.fansubs.airing.visible

@@ -335,6 +335,19 @@ class StaffControllerTest < ActionController::TestCase
     assert_response 200
   end
 
+  test 'should not allow accounts to mark joint shows on non-member discords' do
+    put :update, params: {
+      auth: ENV['AUTH'],
+      channel: 'syndicate_discord',
+      username: 'arx',
+      name: 'Subarashii',
+      status: 'true',
+      format: :json
+    }
+
+    assert_response 400
+  end
+
   test 'should not allow updating an episode that has not aired yet' do
     put :update, params: {
       auth: ENV['AUTH'],
@@ -414,11 +427,12 @@ class StaffControllerTest < ActionController::TestCase
 
   test "should prioritize admins jobs when marking a job role for a multi-position job" do
     # Mark ARX as an admin
-    group_member = GroupMember.find_by(
-      group: Fansub.find_by(name: 'Kuma').groups.first,
-      member: Member.find_by(name: 'arx')
+    group = Fansub.find_by(name: 'Kuma').groups.first
+    member = Member.find_by(
+      group: group,
+      name: 'arx'
     )
-    group_member.update_attribute :admin, true
+    member.update_attribute :admin, true
 
     put :update, params: {
       auth: ENV['AUTH'],
@@ -435,7 +449,7 @@ class StaffControllerTest < ActionController::TestCase
     staff = Fansub.find_by(name: 'Kuma')
       .current_release
       .staff
-      .where(member: Member.find_by(name: 'arx'))
+      .where(member: Member.find_by(name: 'arx', group: group))
       .first
 
     assert_equal staff.finished, false
@@ -452,11 +466,11 @@ class StaffControllerTest < ActionController::TestCase
     staff.update_attribute :finished, false
 
     # Mark ARX as an admin
-    group_member = GroupMember.find_by(
+    member = Member.find_by(
       group: Fansub.find_by(name: 'Kuma').groups.first,
-      member: Member.find_by(name: 'arx')
+      name: 'arx'
     )
-    group_member.update_attribute :admin, true
+    member.update_attribute :admin, true
 
     put :update, params: {
       auth: ENV['AUTH'],
