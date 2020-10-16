@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   root 'home#show'
-  resources :shows, only: [:index, :show]
-  resources :releases, only: [:show]
+  resources :shows, only: [:index]
   resources :groups, only: [:show]
+  resources :members, only: [:create]
   get 'blame' => 'blame#show'
+  get 'members' => 'members#show'
   put 'staff' => 'staff#update'
   put 'release' => 'releases#update'
 
