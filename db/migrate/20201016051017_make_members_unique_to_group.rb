@@ -85,8 +85,6 @@ class MakeMembersUniqueToGroup < ActiveRecord::Migration[6.0]
     drop_table :group_members
 
     # Drop all members without a group or staff
-    puts "Members not in Staff: #{Member.where.not(id: Staff.all).count}"
-    Member.where.not(id: Staff.all).destroy_all
     puts "Members without Groups: #{Member.where(group_id: nil).count}"
     Member.where(group_id: nil).destroy_all
   end
