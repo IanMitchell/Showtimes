@@ -1,10 +1,9 @@
 class ReleasesController < ApplicationController
   include ErrorHandler
 
-  before_action :require_authorization, only: [:update]
+  before_action :authorize_group, only: [:update]
 
   def update
-    @group = Group.find_by_discord(params[:channel])
     @user = @group.members.find_by(discord: params[:username])
 
     if @user.nil?
@@ -15,10 +14,7 @@ class ReleasesController < ApplicationController
     end
 
     @fansub = @group.find_fansub_by_name_fuzzy_search(URI.decode_www_form_component(params[:name]))
-
-    if @fansub.finished?
-      raise FansubFinishedError, "The fansub for #{@fansub.name} is complete!"
-    end
+    raise FansubFinishedError if @fansub.finished?
 
     @current = @fansub.current_release
 

@@ -1,26 +1,26 @@
 require 'test_helper'
 
 class ReleasesControllerTest < ActionController::TestCase
-  test 'should require authentication' do
+  test 'should authenticate token' do
     put :update, params: {
       username: 'desch',
-      auth: 'wrongpassword',
-      channel: 'cartel_discord',
+      token: 'incorrect_token',
+      discord: 'cartel_discord',
       name: 'desch',
       format: :json
     }
     assert_response 401
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('unauthorized'),
+    assert body['message'].downcase.include?('token'),
            "Incorrect error message: #{body['message']}"
   end
 
-  test 'should fail with incorrect channel' do
+  test 'should fail with incorrect discord' do
     put :update, params: {
       username: 'desch',
-      auth: ENV['AUTH'],
-      channel: '1234',
+      token: 'syndicate_password',
+      discord: '1234',
       name: 'desch',
       format: :json
     }
@@ -34,8 +34,8 @@ class ReleasesControllerTest < ActionController::TestCase
   test 'should fail with incorrect fansub' do
     put :update, params: {
       username: 'desch',
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       name: 'fmp',
       format: :json
     }
@@ -49,8 +49,8 @@ class ReleasesControllerTest < ActionController::TestCase
   test 'should fail with finished show' do
     put :update, params: {
       username: 'desch',
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       name: 'kimi no uso',
       format: :json
     }
@@ -64,8 +64,8 @@ class ReleasesControllerTest < ActionController::TestCase
   test 'should require all positions to be complete' do
     put :update, params: {
       username: 'desch',
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       name: 'desch',
       format: :json
     }
@@ -87,8 +87,8 @@ class ReleasesControllerTest < ActionController::TestCase
 
     put :update, params: {
       username: 'desch',
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       name: 'desch',
       format: :json
     }
@@ -107,8 +107,8 @@ class ReleasesControllerTest < ActionController::TestCase
 
     put :update, params: {
       username: 'desch',
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       name: 'aoty',
       format: :json
     }
@@ -118,8 +118,8 @@ class ReleasesControllerTest < ActionController::TestCase
   test 'should handle multiple show matches' do
     put :update, params: {
       username: 'desch',
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       name: 'shigatsu',
       format: :json
     }
@@ -141,8 +141,8 @@ class ReleasesControllerTest < ActionController::TestCase
 
     put :update, params: {
       username: 'desch',
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       name: 'Subarashii',
       format: :json
     }
@@ -154,8 +154,8 @@ class ReleasesControllerTest < ActionController::TestCase
 
     put :update, params: {
       username: 'arx',
-      auth: ENV['AUTH'],
-      channel: 'syndicate_discord',
+      token: 'syndicate_token',
+      discord: 'syndicate_discord',
       name: 'Subarashii',
       format: :json
     }
@@ -173,8 +173,8 @@ class ReleasesControllerTest < ActionController::TestCase
 
     put :update, params: {
       username: '132434896',
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       name: 'aoty',
       format: :json
     }

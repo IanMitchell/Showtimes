@@ -3,8 +3,8 @@ require 'test_helper'
 class StaffControllerTest < ActionController::TestCase
   test 'should ignore multiple matches for irrelevant shows' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'skiddiks',
       position: 'timer',
       name: 'desch',
@@ -17,8 +17,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should restrict command to authorized requests' do
     put :update, params: {
-      auth: 'lolno',
-      channel: 'cartel_discord',
+      token: 'invalid_token',
+      discord: 'cartel_discord',
       username: 'desch',
       name: 'desch',
       status: 'true',
@@ -28,14 +28,14 @@ class StaffControllerTest < ActionController::TestCase
     assert_response 401
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('unauthorized'),
+    assert body['message'].downcase.include?('token'),
            "Incorrect error message: #{body['message']}"
   end
 
   test 'should not allow non-staff users' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: '486',
       name: 'desch',
       status: 'true',
@@ -51,8 +51,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should not allow non-fansubbed shows' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'desch',
       name: "Full Metal Panic! The Second Raid",
       status: 'true',
@@ -68,8 +68,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should not allow non-staff to update show' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'fyurie',
       name: 'desch',
       position: 'qc',
@@ -86,8 +86,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should not allow non-members to update show' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'areki',
       name: 'desch',
       position: 'qc',
@@ -104,8 +104,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should not allow invalid positions' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'desch',
       name: 'desch',
       position: 'memer',
@@ -122,8 +122,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should require position' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'jukey',
       name: 'desch',
       status: 'true',
@@ -138,8 +138,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should not allow incorrect staff position' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'arx',
       name: 'desch',
       position: 'editor',
@@ -155,8 +155,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should allow founders to update any position for any show' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'desch',
       name: 'desch',
       position: 'timer',
@@ -177,8 +177,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should correctly update show' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'skiddiks',
       name: 'desch',
       position: 'timer',
@@ -199,8 +199,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should correctly revert staff as unfinished' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'arx',
       name: 'desch',
       position: 'translator',
@@ -221,8 +221,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should handle marking staff as unfinished when finished' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'arx',
       name: 'desch',
       position: 'translator',
@@ -243,8 +243,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should update current release' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'skiddiks',
       name: 'desch',
       position: 'timer',
@@ -266,8 +266,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should update show based on term' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'skiddiks',
       position: 'timer',
       name: 'AOTY',
@@ -280,8 +280,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should handle multiple show matches' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'arx',
       name: 'shigatsu',
       status: 'true',
@@ -297,8 +297,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should support joint shows' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'arx',
       name: 'Subarashii',
       position: 'editor',
@@ -309,8 +309,8 @@ class StaffControllerTest < ActionController::TestCase
     assert_response 200
 
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'syndicate_discord',
+      token: 'syndicate_token',
+      discord: 'syndicate_discord',
       username: 'desch',
       name: 'Subarashii',
       position: 'tl',
@@ -323,8 +323,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should not allow accounts to mark joint shows on non-member discords' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'syndicate_discord',
+      token: 'syndicate_token',
+      discord: 'syndicate_discord',
       username: 'arx',
       position: 'editor',
       name: 'Subarashii',
@@ -337,8 +337,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should not allow updating an episode that has not aired yet' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'priority_discord',
+      token: 'priority_test_token',
+      discord: 'priority_discord',
       username: 'desch',
       name: 'Kagooya',
       status: 'true',
@@ -354,8 +354,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test 'should alert user if progress already set' do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'skiddiks',
       position: 'tm',
       name: 'AOTY',
@@ -369,8 +369,8 @@ class StaffControllerTest < ActionController::TestCase
            "Incorrect alert message: #{body['message']}"
 
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'skiddiks',
       position: 'tm',
       name: 'AOTY',
@@ -379,8 +379,8 @@ class StaffControllerTest < ActionController::TestCase
     }
 
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'skiddiks',
       position: 'tm',
       name: 'AOTY',
@@ -397,8 +397,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test "should restrict non-admins to their role for marking multi-purpose jobs" do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'skiddiks',
       position: 'tl',
       name: 'kuma',
@@ -422,8 +422,8 @@ class StaffControllerTest < ActionController::TestCase
     member.update_attribute :admin, true
 
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'arx',
       position: 'tl',
       name: 'kuma',
@@ -460,8 +460,8 @@ class StaffControllerTest < ActionController::TestCase
     member.update_attribute :admin, true
 
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'arx',
       position: 'tl',
       name: 'kuma',
@@ -476,8 +476,8 @@ class StaffControllerTest < ActionController::TestCase
 
   test "should alert all jobs are done for admin without a job" do
     put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
+      token: 'cartel_token',
+      discord: 'cartel_discord',
       username: 'desch',
       position: 'tl',
       name: 'kuma',

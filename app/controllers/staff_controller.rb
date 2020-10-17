@@ -1,12 +1,11 @@
 class StaffController < ApplicationController
   include ErrorHandler
 
-  before_action :require_authorization, only: [:update]
+  before_action :authorize_group, only: [:update]
 
   def update
     fin = ActiveRecord::Type::Boolean.new.deserialize(params[:status])
 
-    @group = Group.find_by_discord(params[:channel])
     @user = @group.members.find_by(discord: params[:username])
 
     if @user.nil?

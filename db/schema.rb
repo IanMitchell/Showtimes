@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_16_051017) do
+ActiveRecord::Schema.define(version: 2020_10_17_051003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,7 +92,9 @@ ActiveRecord::Schema.define(version: 2020_10_16_051017) do
     t.datetime "updated_at", null: false
     t.string "slug"
     t.string "webhook"
+    t.string "token"
     t.index ["slug"], name: "index_groups_on_slug", unique: true
+    t.index ["token"], name: "index_groups_on_token", unique: true
   end
 
   create_table "members", id: :serial, force: :cascade do |t|

@@ -2,40 +2,17 @@ module ErrorHandler
   extend ActiveSupport::Concern
 
   included do
-    rescue_from GroupNotFoundError, with: :unknown_group
-    rescue_from FansubNotFoundError, with: :unknown_fansub
-    rescue_from PositionNotFoundError, with: :unknown_position
+    rescue_from UnauthorizedError, with: :render_error_response
+    rescue_from GroupNotFoundError, with: :render_error_response
+    rescue_from FansubNotFoundError, with: :render_error_response
+    rescue_from PositionNotFoundError, with: :render_error_response
 
-    rescue_from FansubFinishedError, with: :fansub_finished
-    rescue_from MultipleMatchingFansubsError, with: :multiple_fansubs
+    rescue_from FansubFinishedError, with: :render_error_response
+    rescue_from MultipleMatchingFansubsError, with: :render_error_response
   end
 
-  def render_error(status, message)
-    render json: { message: message },
-           status: status
-  end
-
-  def unknown_group
-    render_error 404, "Unknown Discord server. If you'd like to use Showtimes, please contact Desch#3091"
-  end
-
-  def unknown_position
-    render_error 400, "Invalid position."
-  end
-
-  def fansub_finished(exception)
-    render_error 400, exception.message
-  end
-
-  def unknown_fansub
-    render_error 400, 'No associated fansub'
-  end
-
-  def unknown_show
-    render_error 404, 'Unknown show'
-  end
-
-  def multiple_fansubs(exception)
-    render_error 400, exception.message
+  def render_error_response(exception)
+    render json: { message: exception.message },
+           status: exception.status
   end
 end

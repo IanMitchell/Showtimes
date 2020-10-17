@@ -2,7 +2,7 @@ require 'test_helper'
 
 class BlameControllerTest < ActionController::TestCase
   test 'should succeed for subbed show' do
-    get :show, params: { channel: 'cartel_discord', show: 'aoty', format: :json }
+    get :show, params: { discord: 'cartel_discord', show: 'aoty', format: :json }
     assert_response :success
 
     body = JSON.parse(response.body)
@@ -13,7 +13,7 @@ class BlameControllerTest < ActionController::TestCase
   end
 
   test 'should fail with unknown discord' do
-    get :show, params: { channel: '3', show: 'aoty', format: :json }
+    get :show, params: { discord: '3', show: 'aoty', format: :json }
     assert_response 404
 
     body = JSON.parse(response.body)
@@ -22,7 +22,7 @@ class BlameControllerTest < ActionController::TestCase
   end
 
   test 'should fail with incorrect fansub' do
-    get :show, params: { channel: 'cartel_discord', show: 'shomin', format: :json }
+    get :show, params: { discord: 'cartel_discord', show: 'shomin', format: :json }
     assert_response 400
 
     body = JSON.parse(response.body)
@@ -31,7 +31,7 @@ class BlameControllerTest < ActionController::TestCase
   end
 
   test 'should fail with completed fansub' do
-    get :show, params: { channel: 'cartel_discord', show: 'kimi', format: :json }
+    get :show, params: { discord: 'cartel_discord', show: 'kimi', format: :json }
     assert_response 400
 
     body = JSON.parse(response.body)
@@ -40,17 +40,17 @@ class BlameControllerTest < ActionController::TestCase
   end
 
   test 'should ignore multiple matches for irrelevant shows' do
-    get :show, params: { channel: 'cartel_discord', show: 'desch', format: :json }
+    get :show, params: { discord: 'cartel_discord', show: 'desch', format: :json }
     assert_response 200
   end
 
   test 'should respond to term' do
-    get :show, params: { channel: 'cartel_discord', show: 'aoty', format: :json }
+    get :show, params: { discord: 'cartel_discord', show: 'aoty', format: :json }
     assert_response 200
   end
 
   test 'should handle multiple show matches' do
-    get :show, params: { channel: 'cartel_discord', show: 'shigatsu', format: :json }
+    get :show, params: { discord: 'cartel_discord', show: 'shigatsu', format: :json }
     assert_response 400
 
     body = JSON.parse(response.body)
@@ -59,8 +59,8 @@ class BlameControllerTest < ActionController::TestCase
   end
 
   test 'should support joint shows' do
-    ['cartel_discord', 'syndicate_discord'].each do |channel|
-      get :show, params: { channel: channel, show: 'Subarashii', format: :json }
+    ['cartel_discord', 'syndicate_discord'].each do |discord|
+      get :show, params: { discord: discord, show: 'Subarashii', format: :json }
       assert_response 200
 
       body = JSON.parse(response.body)
@@ -69,7 +69,7 @@ class BlameControllerTest < ActionController::TestCase
   end
 
   test 'should find show based on partial encoded name' do
-    get :show, params: { channel: 'cartel_discord', show: 'Sekai%20Ni', format: :json }
+    get :show, params: { discord: 'cartel_discord', show: 'Sekai%20Ni', format: :json }
     assert_response :success
 
     body = JSON.parse(response.body)
@@ -77,17 +77,17 @@ class BlameControllerTest < ActionController::TestCase
   end
 
   test 'should prioritize named fansub' do
-    get :show, params: { channel: 'priority_discord', show: 'kaguya-sama', format: :json }
+    get :show, params: { discord: 'priority_discord', show: 'kaguya-sama', format: :json }
     assert_response 400
 
     body = JSON.parse(response.body)
     assert_equal body['message'],
-                 'The fansub for Kaguya-Sama is complete!',
+                 'The fansub is complete!',
                  'Priority not given to named show'
   end
 
   test 'should prioritize airing fansubs' do
-    get :show, params: { channel: 'priority_discord', show: 'kag', format: :json }
+    get :show, params: { discord: 'priority_discord', show: 'kag', format: :json }
     assert_response 200
 
     body = JSON.parse(response.body)
@@ -95,7 +95,7 @@ class BlameControllerTest < ActionController::TestCase
   end
 
   test 'should prioritize incomplete fansubs' do
-    get :show, params: { channel: 'priority_discord', show: 'kaguya', format: :json }
+    get :show, params: { discord: 'priority_discord', show: 'kaguya', format: :json }
     assert_response 200
 
     body = JSON.parse(response.body)
@@ -103,7 +103,7 @@ class BlameControllerTest < ActionController::TestCase
   end
 
   test 'should not include hidden shows' do
-    get :show, params: { channel: 'cartel_discord', show: 'Ninja Show', format: :json }
+    get :show, params: { discord: 'cartel_discord', show: 'Ninja Show', format: :json }
     assert_response 400
 
     body = JSON.parse(response.body)

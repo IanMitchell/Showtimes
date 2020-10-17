@@ -1,9 +1,11 @@
 class MembersController < ApplicationController
-  before_action :require_authorization, only: [:create]
+  include ErrorHandler
+
+  before_action :authorize_group, only: [:create]
 
   def show
-    @group = Group.find_by_discord(params[:channel])
-    @member = Member.find_by(group: @group, discord: params[:discord])
+    @group = Group.find_by_discord(params[:discord])
+    @member = Member.find_by(group: @group, discord: params[:user_id])
 
     if @member.nil?
       return render json: { message: "That member is not part of this group!" }, status: 404
@@ -11,13 +13,11 @@ class MembersController < ApplicationController
   end
 
   def create
-    @group = Group.find_by_discord(params[:channel])
+    member = Member.find_or_create_by(group: @group, discord: params[:user_id])
+    member.update(name: params[:user_name], admin: params[:admin])
 
-    if Member.exists?(group: @group, discord: params[:discord])
-      return render json: { message: "They're already a member of your group!" }, status: 400
-    end
-
-    @member = Member.create(group: @group, discord: params[:discord], name: params[:name])
-    render json: { message: "Added #{params[:name]} to your group!" }, status: 200
+    render json: {
+      message: "Added #{params[:name]} to your group!"
+    }, status: 200
   end
 end
