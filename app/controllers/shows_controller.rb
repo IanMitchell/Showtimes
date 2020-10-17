@@ -3,6 +3,6 @@ class ShowsController < ApplicationController
 
   def index
     @group = Group.find_by_discord(params[:channel])
-    @shows = @group.airing_shows
+    @shows = @group.fansubs.airing.visible
   end
 end

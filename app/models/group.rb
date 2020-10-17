@@ -34,14 +34,6 @@ class Group < ApplicationRecord
   validates :acronym, presence: true,
                       uniqueness: true
 
-  def airing_shows
-    self.fansubs.airing.visible
-  end
-
-  def active_fansubs
-    self.fansubs.visible.includes(:releases).active.order("releases.air_date DESC")
-  end
-
   def find_fansub_by_name_fuzzy_search(name)
     fansubs = self.fansubs.visible.fuzzy_search(name)
 

@@ -29,35 +29,31 @@ class StaffController < ApplicationController
     @staff = @staff.where(member: @user) unless @user.admin?
 
     # TODO: This is really nasty and needs to be refactored
-    if params[:position]
-      @position = Position.find_by_name_or_acronym(params[:position])
+    if params[:position].nil?
+      return render json:{ message: "You need to specify a position!" }, status: 400
+    end
 
-      @staff = @staff.where(position: @position)
-      return render json: { message: "That's not your position!" }, status: 400 if @staff.empty?
+    @position = Position.find_by_name_or_acronym(params[:position])
 
-      if @staff.count > 1
-        # Admin - first, find by own name. If none, or if one and done, then
-        staff = @staff.where(member: @user, finished: !fin)
-        if staff.present?
-          @staff = staff.first
-        else
-          @staff = @staff.where(finished: !fin).first
-        end
+    @staff = @staff.where(position: @position)
+    return render json: { message: "That's not your position!" }, status: 400 if @staff.empty?
 
-        unless @staff.present?
-          return render json: {
-            message: "All #{@position.name} positions are marked that way already!"
-          }, status: 400
-        end
+    if @staff.count > 1
+      # Admin - first, find by own name. If none, or if one and done, then
+      staff = @staff.where(member: @user, finished: !fin)
+      if staff.present?
+        @staff = staff.first
       else
-        @staff = @staff.first
+        @staff = @staff.where(finished: !fin).first
+      end
+
+      unless @staff.present?
+        return render json: {
+          message: "All #{@position.name} positions are marked that way already!"
+        }, status: 400
       end
     else
-      if @staff.count > 1
-        return render json: { message: 'Please specify position' }, status: 400
-      else
-        @staff = @staff.first
-      end
+      @staff = @staff.first
     end
 
     if @staff.nil?

@@ -1,6 +1,6 @@
 json.(@group, :name, :acronym)
 
-json.shows @group.active_fansubs do |fansub|
+json.shows @group.fansubs.active.visible do |fansub|
   current_release = fansub.current_release
   next if current_release.nil?
 

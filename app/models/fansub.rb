@@ -35,11 +35,14 @@ class Fansub < ApplicationRecord
 
   scope :visible, -> { where(visible: true) }
 
-  scope :active, -> { includes(:releases).where(releases: { released: false }) }
+  scope :active, -> {
+    includes(:releases)
+      .where(releases: { released: false })
+      .order("releases.air_date DESC")
+  }
 
   validates :name, presence: true,
                    uniqueness: { scope: :group, message: "fansub names should be unique" }
-
 
   # Used when creating a fansub
   def first_episode_number
@@ -54,6 +57,16 @@ class Fansub < ApplicationRecord
 
   def last_episode
     self.releases.order(air_date: :desc).first
+  end
+
+  def state
+    if self.airing?
+      "Airing"
+    elsif self.finished?
+      "Complete"
+    else
+      "Incomplete"
+    end
   end
 
   def airing?

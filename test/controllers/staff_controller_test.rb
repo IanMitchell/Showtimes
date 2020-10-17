@@ -120,7 +120,7 @@ class StaffControllerTest < ActionController::TestCase
            "Incorrect error message: #{body['message']}"
   end
 
-  test 'should not require position when user has one position' do
+  test 'should require position' do
     put :update, params: {
       auth: ENV['AUTH'],
       channel: 'cartel_discord',
@@ -130,27 +130,10 @@ class StaffControllerTest < ActionController::TestCase
       format: :json
     }
 
-    assert_response 200
-
-    body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('updated'), 'Incorrect success message'
-  end
-
-  test 'should require position when user has multiple positions' do
-    put :update, params: {
-      auth: ENV['AUTH'],
-      channel: 'cartel_discord',
-      username: 'skiddiks',
-      name: 'desch',
-      status: 'true',
-      format: :json
-    }
-
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('specify position'),
-           "Incorrect error message: #{body['message']}"
+    assert body['message'].downcase.include?('specify a position'), 'Incorrect success message'
   end
 
   test 'should not allow incorrect staff position' do
@@ -220,6 +203,7 @@ class StaffControllerTest < ActionController::TestCase
       channel: 'cartel_discord',
       username: 'arx',
       name: 'desch',
+      position: 'translator',
       status: 'false',
       format: :json
     }
@@ -241,6 +225,7 @@ class StaffControllerTest < ActionController::TestCase
       channel: 'cartel_discord',
       username: 'arx',
       name: 'desch',
+      position: 'translator',
       status: 'false',
       format: :json
     }
@@ -316,6 +301,7 @@ class StaffControllerTest < ActionController::TestCase
       channel: 'cartel_discord',
       username: 'arx',
       name: 'Subarashii',
+      position: 'editor',
       status: 'true',
       format: :json
     }
@@ -340,6 +326,7 @@ class StaffControllerTest < ActionController::TestCase
       auth: ENV['AUTH'],
       channel: 'syndicate_discord',
       username: 'arx',
+      position: 'editor',
       name: 'Subarashii',
       status: 'true',
       format: :json
