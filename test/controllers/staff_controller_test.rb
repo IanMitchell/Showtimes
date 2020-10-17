@@ -45,7 +45,7 @@ class StaffControllerTest < ActionController::TestCase
     assert_response 404
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('user'),
+    assert body['message'].downcase.include?("you aren't a group member"),
            "Incorrect error message: #{body['message']}"
   end
 
@@ -133,7 +133,7 @@ class StaffControllerTest < ActionController::TestCase
     assert_response 400
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('specify a position'), 'Incorrect success message'
+    assert body['message'].downcase.include?('invalid position'), 'Incorrect success message'
   end
 
   test 'should not allow incorrect staff position' do

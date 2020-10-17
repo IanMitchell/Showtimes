@@ -3,13 +3,13 @@ class MembersController < ApplicationController
 
   before_action :authorize_group, only: [:create]
 
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    render_error 404, "That member is not part of this group!"
+  end
+
   def show
     @group = Group.find_by_discord(params[:discord])
-    @member = Member.find_by(group: @group, discord: params[:user_id])
-
-    if @member.nil?
-      return render json: { message: "That member is not part of this group!" }, status: 404
-    end
+    @member = Member.find_by!(group: @group, discord: params[:user_id])
   end
 
   def create

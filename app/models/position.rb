@@ -23,11 +23,11 @@ class Position < ApplicationRecord
 
   def self.find_by_name_or_acronym(name)
     position = self.where('lower(name) = ? OR lower(acronym) = ?',
-      name.downcase,
-      name.downcase)
+      name&.downcase,
+      name&.downcase)
       .first
 
-      raise PositionNotFoundError if position.nil?
+    raise PositionNotFoundError if position.nil?
     return position
   end
 end

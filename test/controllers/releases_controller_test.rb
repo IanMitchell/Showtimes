@@ -74,8 +74,8 @@ class ReleasesControllerTest < ActionController::TestCase
     body = JSON.parse(response.body)
     assert body['message'].downcase.include?('still pending'),
            "Incorrect error message: #{body['message']}"
-    assert body['message'].downcase.include?('desch, skiddiks, skiddiks'), 'Not all jobs listed'
-    assert !body['message'].downcase.include?('arx-7'), 'Incorrect jobs listed'
+    assert body['message'].downcase.include?('quality control, editor, timer'), 'Not all jobs listed'
+    assert !body['message'].downcase.include?('translator'), 'Incorrect jobs listed'
   end
 
   test 'should succeed for correct show and ignore irrelevant show' do
@@ -181,7 +181,7 @@ class ReleasesControllerTest < ActionController::TestCase
     assert_response 404
 
     body = JSON.parse(response.body)
-    assert body['message'].downcase.include?('user'),
+    assert body['message'].downcase.include?("you aren't a group member!"),
            "Incorrect error message: #{body['message']}"
   end
 end

@@ -33,7 +33,6 @@ class Release < ApplicationRecord
                      numericality: true,
                      uniqueness: { scope: :fansub, message: "fansub episodes should be unique" }
 
-  # Active Admin
   def display_name
     "#{self.fansub.display_name} ##{self.number}"
   end
@@ -44,6 +43,14 @@ class Release < ApplicationRecord
 
   def aired?
     self.air_date <= DateTime.now
+  end
+
+  def positions_pending?
+    self.staff.pending.present?
+  end
+
+  def position_pending_list
+    self.staff.pending.map(&:position).map(&:name).join(', ')
   end
 
   private
