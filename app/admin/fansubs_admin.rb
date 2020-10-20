@@ -19,22 +19,20 @@ Trestle.resource(:fansubs) do
 
   form do |fansub|
     if fansub.new_record?
-      tab :fansub do
-        text_field :name
-        select :group_ids, current_user.groups
-        number_field :episode_count
-        number_field :first_episode_number
-        check_box :visible
-        datetime_field :air_date
+      text_field :name
+      select :initial_group, current_user.groups
+      number_field :episode_count
+      number_field :first_episode_number
+      check_box :visible
+      datetime_field :air_date
 
-        Position.all.each do |position|
-          collection_select :default_staff,
-                            Member.all,
-                            Proc.new {|m| [position.id, m.id]},
-                            :name,
-                            { label: "#{position.name}(s)" },
-                            { multiple: true }
-        end
+      Position.all.each do |position|
+        collection_select :default_staff,
+          Member.where(group: current_user.groups),
+          Proc.new {|m| [position.id, m.id]},
+          :display_name,
+          { label: "#{position.name}(s)" },
+          { multiple: true }
       end
     else
       tab :fansub do
