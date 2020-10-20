@@ -15,12 +15,13 @@
 #
 
 class Fansub < ApplicationRecord
+  attr_accessor :initial_group
+  attr_accessor :air_date
   attr_accessor :default_staff
   attr_accessor :episode_count
-  attr_accessor :air_date
   attr_writer :first_episode_number
 
-  after_create :create_releases
+  after_create :set_group, :create_releases
 
   has_many :group_fansubs, inverse_of: :fansub, dependent: :destroy
   has_many :groups, through: :group_fansubs
@@ -41,8 +42,8 @@ class Fansub < ApplicationRecord
       .order("releases.air_date DESC")
   }
 
-  validates :name, presence: true,
-                   uniqueness: { scope: :group, message: "fansub names should be unique" }
+  # TODO: Fix and re-enable uniqueness check
+  validates :name, presence: true
 
   # Used when creating a fansub
   def first_episode_number
@@ -143,6 +144,10 @@ class Fansub < ApplicationRecord
   end
 
   private
+    def set_group
+      self.groups << Group.find(self.initial_group)
+    end
+
     def create_releases
       staff_list = self.default_staff.reject(&:empty?)
 
