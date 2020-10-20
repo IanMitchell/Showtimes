@@ -21,7 +21,7 @@ Trestle.resource(:fansubs) do
     if fansub.new_record?
       tab :fansub do
         text_field :name
-        select :group_ids, current_user.groups
+        select :group, current_user.groups, { label: 'Group' }
         number_field :episode_count
         number_field :first_episode_number
         check_box :visible
@@ -29,11 +29,11 @@ Trestle.resource(:fansubs) do
 
         Position.all.each do |position|
           collection_select :default_staff,
-                            Member.all,
-                            Proc.new {|m| [position.id, m.id]},
-                            :name,
-                            { label: "#{position.name}(s)" },
-                            { multiple: true }
+            Member.where(group: current_user.groups),
+            Proc.new {|m| [position.id, m.id]},
+            :display_name,
+            { label: "#{position.name}(s)" },
+            { multiple: true }
         end
       end
     else
