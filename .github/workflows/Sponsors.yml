@@ -1,0 +1,12 @@
+name: Add Sponsor Labels
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add Sponsor Labels
+        uses: ianmitchell/sponsor-labels@v0.1.1
