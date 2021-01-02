@@ -9,4 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Add Sponsor Labels
-        uses: ianmitchell/sponsor-labels
+        uses: ianmitchell/sponsor-labels@main
