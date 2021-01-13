@@ -4,6 +4,7 @@ json.shows @group.fansubs.active.visible do |fansub|
   current_release = fansub.current_release
   next if current_release.nil?
 
+  json.id fansub.id
   json.name fansub.name
   json.season current_release.season
 
