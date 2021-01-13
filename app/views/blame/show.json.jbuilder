@@ -1,5 +1,6 @@
 json.(@group, :name, :acronym)
 
+json.id @fansub.id
 json.name @fansub.name
 json.season @release.season
 json.episode @release.number
