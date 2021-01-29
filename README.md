@@ -1,5 +1,7 @@
 # Showtimes
 
+**This project has been deprecated in favor of [Deschtimes](https://deschtimes.com) which you can find at [https://github.com/ianmitchell/deschtimes](https://github.com/ianmitchell/deschtimes)**
+
 Showtimes is a fansub progress tracker that exposes an API for groups to use. It goes alongside [Aquarius](https://github.com/IanMitchell/aquarius) on Discord. It's intended to serve multiple groups, but needs some more development before I can open access.
 
 ## Getting Access
