@@ -6,13 +6,15 @@
 #  acronym    :string           not null
 #  name       :string           not null
 #  slug       :string
+#  token      :string
 #  webhook    :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 # Indexes
 #
-#  index_groups_on_slug  (slug) UNIQUE
+#  index_groups_on_slug   (slug) UNIQUE
+#  index_groups_on_token  (token) UNIQUE
 #
 
 class Group < ApplicationRecord
@@ -33,6 +35,9 @@ class Group < ApplicationRecord
 
   validates :acronym, presence: true,
                       uniqueness: true
+
+  validates :token, presence: true,
+                    uniqueness: true
 
   def find_fansub_by_name_fuzzy_search(name)
     fansubs = self.fansubs.visible.fuzzy_search(name)
@@ -55,9 +60,25 @@ class Group < ApplicationRecord
   end
 
   def self.find_by_discord(discord)
-    group = Group.joins(:channels).where(channels: { discord: discord}).first
+    group = Group.joins(:channels).find_by(channels: { discord: discord})
     raise GroupNotFoundError if group.nil?
     return group
+  end
+
+  # TODO: Rename?
+  def self.find_by_discord_and_authorize(discord, token)
+    group = Group.find_by_discord(discord)
+    raise UnauthorizedError if group.token != token
+    return group
+  end
+
+  def generate_token
+    new_token = loop do
+      token = SecureRandom.urlsafe_base64
+      break token unless Group.exists?(token: token)
+    end
+
+    self.update(token: new_token)
   end
 
   private

@@ -1,36 +1,27 @@
 class ReleasesController < ApplicationController
   include ErrorHandler
 
-  before_action :require_authorization, only: [:update]
+  before_action :authorize_group, only: [:update]
+
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    render_error 404,
+                 "You aren't a group member! If you're new, have a group admin authorize you"
+  end
 
   def update
-    @group = Group.find_by_discord(params[:channel])
-    @user = @group.members.find_by(discord: params[:username])
-
-    if @user.nil?
-      return render json: {
-        message: "Unknown user. If you're a new fansubber, have a group admin authorize you"
-      },
-      status: 404
-    end
-
+    @user = @group.members.find_by!(discord: params[:username])
     @fansub = @group.find_fansub_by_name_fuzzy_search(URI.decode_www_form_component(params[:name]))
-
-    if @fansub.finished?
-      raise FansubFinishedError, "The fansub for #{@fansub.name} is complete!"
-    end
+    raise FansubFinishedError if @fansub.finished?
 
     @current = @fansub.current_release
 
-    if @current.staff.pending.present?
-      positions = @current.staff.pending.map(&:member).map(&:name).join(', ')
-      return render json: { message: "Positions still pending: #{positions}" }, status: 400
+    if @current.positions_pending?
+      raise PendingPositionError, "Positions still pending: #{@current.position_pending_list}"
     end
 
     @current.update_attribute :released, true
 
     @fansub.notify_release(@current)
-
     render json: { message: "#{@fansub.name} ##{@current.number} released!" }, status: 200
   end
 end

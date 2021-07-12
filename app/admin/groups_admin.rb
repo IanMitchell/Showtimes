@@ -11,6 +11,7 @@ Trestle.resource(:groups) do
     column :id
     column :name
     column :acronym
+    column :token
     column :slug
     column :webhook
   end
